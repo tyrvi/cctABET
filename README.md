@@ -1,2 +1,2 @@
-# senior-seminar
+# seniorSeminar
 Lipscomb University Senior Seminar Project
