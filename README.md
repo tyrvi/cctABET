@@ -1,2 +1,2 @@
-# seniorSeminar
-Lipscomb University Senior Seminar Project
+# Lipscomb ABET Data Website
+Website for Lipscomb ABET Data Collection
