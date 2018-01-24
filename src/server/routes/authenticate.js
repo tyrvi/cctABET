@@ -5,6 +5,9 @@ var db = require('./db');
 	Authenticates a user with url params:
 	?username -- The username
 	?password -- The password
+
+	Returns:
+		json response with attribute 'valid' that is true on success 
 */
 function authenticate(req, res, next) {
 	let user = req.query.user;
