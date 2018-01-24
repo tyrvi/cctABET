@@ -1,5 +1,11 @@
 var db = require('./db');
 
+/*
+	Authentication route function
+	Authenticates a user with url params:
+	?username -- The username
+	?password -- The password
+*/
 function authenticate(req, res, next) {
 	let user = req.query.user;
     let pass = req.query.pass;
@@ -25,7 +31,11 @@ function authenticate(req, res, next) {
     }
 }
 
-// Middleware to ensure the user is logged in
+/*
+	Middleware function to ensure a user is logged in
+	Redirects to the constant defined in the function if login fails
+	Continues with the request otherwise
+*/
 function require_login(req, res, next) {
 	const login_failed_redirect = '/login';
 
