@@ -1,4 +1,4 @@
-var db = require('./db');
+var db = require('../db');
 
 /*
 	Authentication route function
@@ -16,6 +16,7 @@ function authenticate(req, res, next) {
         res.json({'valid': false});
     } else {
         db.query("SELECT * FROM users WHERE username=$1::text AND password=$2::text", [user, pass], (err, result) => {
+                        
             if(result['rows'].length > 0) {
                 // Get the user from the result
                 let user = result['rows'][0];
