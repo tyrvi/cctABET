@@ -20,5 +20,3 @@ console.log('Connected to DB');
 module.exports.query = (query, params, callback) => {
 	db.query(query, params, callback);
 };
-
-module.exports.
