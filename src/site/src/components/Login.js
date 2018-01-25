@@ -11,7 +11,7 @@ class Login extends Component {
             },
             retry: false,
         };
-        
+
         this.onLoginClick = this.onLoginClick.bind(this);
     }
 
@@ -32,9 +32,8 @@ class Login extends Component {
         //headers.append('Access-Control-Allow-Origin');
         // console.log(query);
 
-        fetch("http://localhost:3001/authenticate?" + query, {
+        fetch("/authenticate?" + query, {
             method: 'GET',
-            //headers: headers
         }).then(res => res.json())
         .then(json => {
             if (json.valid) {
@@ -55,12 +54,12 @@ class Login extends Component {
         return (
             <div id="Login">
                 <div>
-                    <input type="text" value={this.state.user} 
+                    <input type="text" value={this.state.user}
                     onChange={event => this.setState({user: event.target.value})}
                     placeholder="Username"/>
                 </div>
                 <div>
-                    <input type="password" value={this.state.pass} 
+                    <input type="password" value={this.state.pass}
                     onChange={event => this.setState({pass: event.target.value})}
                     placeholder="Password"/>
                 </div>
