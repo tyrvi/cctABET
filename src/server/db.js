@@ -14,8 +14,12 @@ var db = new pg.Client({
 });
 
 // Connect to database
-db.connect();
-console.log('Connected to DB');
+db.connect().then((result) => {
+    console.log('Connected to DB');
+}, (err) => {
+    console.log('ERROR: Failed to connect to DB.');
+    console.log(err);
+});
 
 module.exports.query = (query, params, callback) => {
 	db.query(query, params, callback);
