@@ -26,10 +26,10 @@ class Login extends Component {
 
         let esc = encodeURIComponent;
         let query = Object.keys(this.state.userInfo).map(k => esc(k) + '=' + esc(this.state[k])).join('&');
-        //var headers = new Headers();
-        //headers.append('Content-Type', 'application/json');
-        //headers.append('Accept', 'application/json');
-        //headers.append('Access-Control-Allow-Origin');
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        headers.append('Access-Control-Allow-Origin', 'http://localhost:3001');
         // console.log(query);
 
         fetch("/authenticate?" + query, {
