@@ -1,34 +1,38 @@
-//import { store } from '../index.js';
-
-export const LOGGING_IN = 'LOGGING_IN';
-export function loggingIn(sending) {
+export const REQUEST_AUTH = 'REQUEST_AUTH';
+export function requestAuth() {
     return {
-        type: LOGGING_IN,
-        sending,
+        type: REQUEST_AUTH,
     }
 }
 
-export const LOG_IN = 'LOG_IN';
-export function login(user, pass) {
-    return (dispatch)
-    if (!user || !pass) {
-        store.dispatch(loggingIn(false))
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export function authSuccess(response) {
+    return {
+        type: AUTH_SUCCESS,
     }
-
-    return {};
 }
 
-export const LOG_OUT = 'LOG_OUT';
-export function logout() {
+export const AUTH_FAIL = 'AUTH_FAIL';
+export function authFail(response) {
     return {
-        type: LOG_OUT,
+        type: AUTH_FAIL,
     };
 }
 
-export const LOGGING_OUT = 'LOGGING_OUT';
-export function logginOut(sending) {
-    return {
-        type: LOGGING_OUT,
-        sending,
-    };
+export function authenticate(user, pass) {
+    let query = 'user=' + user + '&pass=' + pass;
+    // console.log(query);
+    return dispatch => {
+        dispatch(requestAuth());
+        return fetch('/authenticate?' + query, {
+            method: 'GET',
+        }).then(res => res.json())
+        .then(json => {
+            if (json.valid) {
+                dispatch(authSuccess(json));
+            } else {
+                dispatch(authFail(json));
+            }
+        })
+    }
 }
