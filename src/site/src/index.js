@@ -7,17 +7,18 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 import reducer from './reducers/reducers.js';
+import thunk from 'redux-thunk';
 
-// const middleWares = [];
+const middleware = [ thunk, logger ];
+
 // let NODE_ENV = 'development';
 
 // if (NODE_ENV === 'development') {
 //     const { logger } = require('redux-logger');
-
-//     middleWares.push(logger);
+//     middleware.push(logger);
 // }
 
-export const store = createStore(reducer, applyMiddleware(logger));
+export const store = createStore(reducer, applyMiddleware(...middleware));
 
 ReactDOM.render(
     <Provider store={store}>

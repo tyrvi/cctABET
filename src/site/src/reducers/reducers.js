@@ -1,26 +1,32 @@
 import { combineReducers } from 'redux';
 import { 
-    LOG_IN,
-    LOG_OUT,
-    LOGGING_IN,
-    LOGGING_OUT 
+    REQUEST_AUTH,
+    AUTH_FAIL,
+    AUTH_SUCCESS,
 } from '../actions/actions.js';
 
-const initialState = {
-    loggedIn: false,
-    loggingIn: false,
-}
-
-export function loginReducer(state = initialState, action) {
+export function loginReducer(state = {
+    isAuthenticating: false,
+    isLoggedIn: false,
+    authError: null,
+}, action) {
     switch (action.type) {
-        case LOG_IN:
-            return state;
-        case LOGGING_IN:
-            return state;
-        case LOG_OUT:
-            return state;
-        case LOGGING_OUT:
-            return state;
+        case REQUEST_AUTH:
+            return Object.assign({}, state, {
+                isAuthenticating: true,
+            });
+        case AUTH_FAIL:
+            return Object.assign({}, state, {
+                isAuthenticating: false,
+                isLoggedIn: false,
+                authError: 'invalid credentials',
+            });
+        case AUTH_SUCCESS:
+            return Object.assign({}, state, {
+                isAuthenticating: false,
+                isLoggedIn: true,
+                authError: 'invalid credentials',
+            });
         default:
             return state;
     }
