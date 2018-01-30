@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 
 const middleware = [ thunk, logger ];
 
+// TODO: set up so logger is not enabled in production
 // let NODE_ENV = 'development';
 
 // if (NODE_ENV === 'development') {
