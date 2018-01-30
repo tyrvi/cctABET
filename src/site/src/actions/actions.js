@@ -19,9 +19,18 @@ export function authFail(response) {
     };
 }
 
+/*
+    Dispatches fetch request with username and password
+    Params:
+        user: username
+        pass: password
+    Returns:
+        A function (thunk) that dispatchs requestAuth to the store
+        and fetches credentials.
+*/
 export function authenticate(user, pass) {
     let query = 'user=' + user + '&pass=' + pass;
-    // console.log(query);
+    
     return dispatch => {
         dispatch(requestAuth());
         return fetch('/authenticate?' + query, {
