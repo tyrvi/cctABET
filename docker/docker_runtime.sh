@@ -1,5 +1,7 @@
 # The Docker container runs this on startup. See the Dockerfile
 
+export NODE_ENV=production
+
 # Start postgresql
 echo "Starting postgresql"
 service postgresql start
