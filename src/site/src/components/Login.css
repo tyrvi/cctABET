@@ -1,0 +1,16 @@
+/* #login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.visible {
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+}
+
+.hidden {
+    /* visibility: hidden; */
+    display: none;
+}
