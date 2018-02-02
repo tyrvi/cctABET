@@ -10,7 +10,7 @@ echo "Starting site"
 # Start site
 echo "Starting site"
 cd /app/src/site
-npm start &
+PORT=8000 npm start &
 
 # Start server
 echo "Starting server"

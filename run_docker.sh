@@ -10,7 +10,7 @@ server_docker_port='3001'
 
 # Port bindings for the site
 site_host_port='3000'
-site_docker_port='3000'
+site_docker_port='8000'
 
 docker run \
 --mount type=bind,source=$server_path,target=/app \
