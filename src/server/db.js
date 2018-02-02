@@ -21,6 +21,7 @@ db.connect().then((result) => {
     console.log(err);
 });
 
-module.exports.query = (query, params, callback) => {
-	db.query(query, params, callback);
+module.exports.query = (...args) => {
+    // Forward arguments to db.query();
+    return db.query.apply(db, args);
 };
