@@ -1,6 +1,6 @@
 # The Docker container runs this on startup. See the Dockerfile
 
-export NODE_ENV=production
+export NODE_ENV=development
 
 # Start postgresql
 echo "Starting postgresql"
@@ -10,7 +10,7 @@ echo "Starting site"
 # Start site
 echo "Starting site"
 cd /app/src/site
-PORT=3000 npm start &
+npm start &
 
 # Start server
 echo "Starting server"
