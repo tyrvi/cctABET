@@ -7,7 +7,7 @@ var db = require('../db');
 	?password -- The password
 
 	Returns:
-		json response with attribute 'valid' that is true on success 
+		json response with attribute 'valid' that is true on success
 */
 function authenticate(req, res, next) {
 	let user = req.query.user;
