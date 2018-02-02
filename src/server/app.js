@@ -1,3 +1,5 @@
+const PORT = 3001;
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -44,3 +46,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+app.listen(PORT, '0.0.0.0');
+console.log('Running');
