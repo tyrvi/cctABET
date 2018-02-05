@@ -1,4 +1,5 @@
 var db = require('../db');
+var encrypt = require('sha3');
 
 /*
 	Authentication route function
@@ -16,7 +17,10 @@ function authenticate(req, res, next) {
         res.json({'valid': false});
     } else {
         db.query("SELECT * FROM users WHERE username=$1::text AND password=$2::text", [user, pass], (err, result) => {
-
+            if(err) {
+                console.log('Error in authenticate: ' + err);
+                return;
+            }
             if(result['rows'].length > 0) {
                 // Get the user from the result
                 let user = result['rows'][0];
