@@ -6,7 +6,7 @@ var pg = require('pg');
 
 // DB credentials
 var db = new pg.Client({
-    host: 'localhost',
+    host: '127.0.0.1',
     port: '5432',
     user: 'postgres',
     password: 'admin',
