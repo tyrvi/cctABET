@@ -12,5 +12,8 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get -y install postgresql postgresql-contrib
 RUN apt-get -y install nodejs
 
+# Set postgres password to admin
+RUN echo "postgres:admin" | chpasswd
+
 # Tell docker to run script on startup
 CMD ./app/docker/docker_runtime.sh
