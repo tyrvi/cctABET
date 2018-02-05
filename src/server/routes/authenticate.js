@@ -1,5 +1,4 @@
 var db = require('../db');
-var encrypt = require('sha3');
 
 /*
 	Authentication route function
