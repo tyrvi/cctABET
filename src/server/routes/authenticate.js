@@ -38,6 +38,17 @@ function authenticate(req, res, next) {
     }
 }
 
+function logout(req, res, next) {
+    console.log(req.session);
+
+    if (req.session) {
+        delete req.session.user;
+        res.json({'logout': true});
+    } else {
+        res.json({'logout': false});
+    }
+}
+
 /*
 	Helper route function that returns whether a user is logged in
 
@@ -91,6 +102,7 @@ async function logged_in(req) {
 // Routes
 module.exports.authenticate = authenticate;
 module.exports.is_logged_in = is_logged_in;
+module.exports.logout = logout;
 
 // Middleware
 module.exports.require_login = require_login;

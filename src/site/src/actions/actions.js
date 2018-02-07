@@ -35,6 +35,44 @@ export function isLoggedIn(response) {
     }
 }
 
+export const REQUEST_LOGOUT = 'REQUEST_LOGOUT';
+export function requestLogout() {
+    return {
+        type: REQUEST_LOGOUT,
+    }
+}
+
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export function logoutSuccess() {
+    return {
+        type: LOGOUT_SUCCESS,
+    }
+}
+
+export const LOGOUT_FAIL = 'LOGOUT_FAIL';
+export function logoutFail() {
+    return {
+        type: LOGOUT_FAIL
+    }
+}
+
+export function doLogout() {
+    return dispatch => {
+        dispatch(requestLogout());
+        return fetch('/logout', {
+            method: 'GET',
+            credentials: 'same-origin',
+        }).then(res => res.json())
+            .then(json => {
+                if (json.logout) {
+                    dispatch(logoutSuccess());
+                } else {
+                    dispatch(logoutFail());
+                }
+            })
+    }
+}
+
 /*
     Dispatches fetch request with username and password
     Params:
