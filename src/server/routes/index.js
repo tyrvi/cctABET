@@ -41,5 +41,6 @@ router.get('/testsignup', async function(req, res, next) {
 // Setup authentication routes
 router.get('/authenticate', auth.authenticate);
 router.get('/is_logged_in', auth.is_logged_in);
+router.get('/logout', auth.logout);
 
 module.exports = router;
