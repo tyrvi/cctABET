@@ -56,6 +56,15 @@ export function logoutFail() {
     }
 }
 
+
+/*
+    Dispatches fetch request to logout which deletes the cookie
+    Params:
+        None
+    Returns:
+        A function (thunk) that dispatchs requestLogout to the store
+        and returns if the operation was successful
+*/
 export function doLogout() {
     return dispatch => {
         dispatch(requestLogout());
