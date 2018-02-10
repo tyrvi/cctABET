@@ -1,21 +1,21 @@
-export const REQUEST_AUTH = 'REQUEST_AUTH';
-export function requestAuth() {
+export const REQUEST_LOGIN = 'REQUEST_LOGIN';
+export function requestLogin() {
     return {
-        type: REQUEST_AUTH,
+        type: REQUEST_LOGIN,
     }
 }
 
-export const AUTH_SUCCESS = 'AUTH_SUCCESS';
-export function authSuccess(response) {
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export function loginSuccess(response) {
     return {
-        type: AUTH_SUCCESS,
+        type: LOGIN_SUCCESS,
     }
 }
 
-export const AUTH_FAIL = 'AUTH_FAIL';
-export function authFail(response) {
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export function loginFail(response) {
     return {
-        type: AUTH_FAIL,
+        type: LOGIN_FAIL,
     };
 }
 
@@ -65,10 +65,10 @@ export function logoutFail() {
         A function (thunk) that dispatchs requestLogout to the store
         and returns if the operation was successful
 */
-export function doLogout() {
+export function authLogout() {
     return dispatch => {
         dispatch(requestLogout());
-        return fetch('/logout', {
+        return fetch('auth/logout', {
             method: 'GET',
             credentials: 'same-origin',
         }).then(res => res.json())
@@ -91,20 +91,20 @@ export function doLogout() {
         A function (thunk) that dispatchs requestAuth to the store
         and fetches credentials.
 */
-export function authenticate(user, pass) {
+export function authLogin(user, pass) {
     let query = 'user=' + user + '&pass=' + pass;
 
     return dispatch => {
-        dispatch(requestAuth());
-        return fetch('/authenticate?' + query, {
+        dispatch(requestLogin());
+        return fetch('auth/login?' + query, {
             method: 'GET',
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
                 if (json.valid) {
-                    dispatch(authSuccess(json));
+                    dispatch(loginSuccess(json));
                 } else {
-                    dispatch(authFail(json));
+                    dispatch(loginFail(json));
                 }
             })
     };
@@ -118,10 +118,10 @@ export function authenticate(user, pass) {
         A function (thunk) that dispatchs checkingLoggedIn to the store
         and checks if the user is logged in.
 */
-export function checkLoggedIn() {
+export function authCheckLoggedIn() {
     return dispatch => {
         dispatch(checkingLoggedIn());
-        return fetch('/is_logged_in', {
+        return fetch('auth/is_logged_in', {
             method: 'GET',
             credentials: 'same-origin',
         }).then(res => res.json())

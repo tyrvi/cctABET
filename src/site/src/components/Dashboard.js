@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
-import { doLogout } from '../actions/actions';
+import { authLogout } from '../actions/actions';
 import { connect } from 'react-redux';
 
 class Dashboard extends Component {
@@ -16,7 +16,7 @@ class Dashboard extends Component {
 
     onLogoutClick() {
         // TODO: dispatch logout action
-        this.props.doLogout();
+        this.props.authLogout();
     }
 
     render() {
@@ -31,8 +31,8 @@ class Dashboard extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        doLogout: () => {
-            dispatch(doLogout())
+        authLogout: () => {
+            dispatch(authLogout())
         }
     };
 }

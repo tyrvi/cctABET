@@ -3,13 +3,11 @@ import Login from './components/Login.js';
 import Dashboard from './components/Dashboard.js';
 import './App.css';
 import { connect } from 'react-redux';
-import { checkLoggedIn } from './actions/actions.js';
+import { authCheckLoggedIn } from './actions/actions.js';
 
 class App extends Component {
-
-    // TO-DO check if user is already logged in
     componentDidMount() {
-        this.props.checkLoggedIn();
+        this.props.authCheckLoggedIn();
     }
 
     render() {
@@ -27,8 +25,8 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        checkLoggedIn: () => {
-            dispatch(checkLoggedIn())
+        authCheckLoggedIn: () => {
+            dispatch(authCheckLoggedIn())
         }
     };
 }
