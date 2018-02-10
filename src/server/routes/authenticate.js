@@ -9,7 +9,7 @@ var db = require('../db');
 	Returns:
 		json response with attribute 'valid' that is true on success
 */
-function authenticate(req, res, next) {
+function login(req, res, next) {
 	let user = req.query.user;
     let pass = req.query.pass;
     if(!user || !pass) {
@@ -39,8 +39,6 @@ function authenticate(req, res, next) {
 }
 
 function logout(req, res, next) {
-    console.log(req.session);
-
     if (req.session) {
         delete req.session.user;
         res.json({'logout': true});
@@ -100,7 +98,7 @@ async function logged_in(req) {
 }
 
 // Routes
-module.exports.authenticate = authenticate;
+module.exports.login = login;
 module.exports.is_logged_in = is_logged_in;
 module.exports.logout = logout;
 
