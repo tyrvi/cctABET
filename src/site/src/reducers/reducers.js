@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import {
-    REQUEST_AUTH,
-    AUTH_FAIL,
-    AUTH_SUCCESS,
+    REQUEST_LOGIN,
+    LOGIN_FAIL,
+    LOGIN_SUCCESS,
     CHECKING_LOGGED_IN,
     IS_LOGGED_IN,
     REQUEST_LOGOUT,
@@ -18,17 +18,17 @@ export function loginReducer(state = {
     authError: null,
 }, action) {
     switch (action.type) {
-        case REQUEST_AUTH:
+        case REQUEST_LOGIN:
             return Object.assign({}, state, {
                 isAuthenticating: true,
             });
-        case AUTH_FAIL:
+        case LOGIN_FAIL:
             return Object.assign({}, state, {
                 isAuthenticating: false,
                 loggedIn: false,
                 authError: 'invalid credentials',
             });
-        case AUTH_SUCCESS:
+        case LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 isAuthenticating: false,
                 loggedIn: true,

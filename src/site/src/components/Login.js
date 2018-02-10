@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { authenticate } from '../actions/actions';
+import { authLogin } from '../actions/actions';
 import { connect } from 'react-redux';
 
 class Login extends Component {
@@ -26,7 +26,7 @@ class Login extends Component {
             return;
         }
 
-        this.props.authenticate(this.state.user, this.state.pass);
+        this.props.authLogin(this.state.user, this.state.pass);
     }
 
     render() {
@@ -58,8 +58,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        authenticate: (user, pass) => {
-            dispatch(authenticate(user, pass))
+        authLogin: (user, pass) => {
+            dispatch(authLogin(user, pass))
         }
     };
 }
