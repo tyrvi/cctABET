@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { authenticate } from '../actions/actions';
+import { authLogin } from '../actions/actions';
 import { connect } from 'react-redux';
 
 class Login extends Component {
@@ -22,11 +22,11 @@ class Login extends Component {
 
         // don't authenticate if user or pass is not provided
         if (!this.state.user || !this.state.pass) {
-            this.setState({retry: true});
+            this.setState({ retry: true });
             return;
         }
 
-        this.props.authenticate(this.state.user, this.state.pass);
+        this.props.authLogin(this.state.user, this.state.pass);
     }
 
     render() {
@@ -35,13 +35,13 @@ class Login extends Component {
                 <h1>CCT ABET</h1>
                 <div>
                     <input type="text" value={this.state.user}
-                    onChange={event => this.setState({user: event.target.value})}
-                    placeholder="Username"/>
+                        onChange={event => this.setState({ user: event.target.value })}
+                        placeholder="Username" />
                 </div>
                 <div>
                     <input type="password" value={this.state.pass}
-                    onChange={event => this.setState({pass: event.target.value})}
-                    placeholder="Password"/>
+                        onChange={event => this.setState({ pass: event.target.value })}
+                        placeholder="Password" />
                 </div>
                 <div>
                     <p className={this.state.retry ? "visible" : "hidden"} >
@@ -58,8 +58,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        authenticate: (user, pass) => {
-            dispatch(authenticate(user, pass))
+        authLogin: (user, pass) => {
+            dispatch(authLogin(user, pass))
         }
     };
 }

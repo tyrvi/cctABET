@@ -1,12 +1,14 @@
+const PORT = 3001;
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var router = require('./routes/router');
 
 var app = express();
 
@@ -22,8 +24,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+// Setup the express session middleware
+router.use(session({
+    secret: 'donocopy_simmons',
+    cookie: { maxAge: 60 * (1000 * 60) },
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,3 +53,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+app.listen(PORT, '0.0.0.0');
+console.log('Running Server');
