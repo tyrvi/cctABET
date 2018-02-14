@@ -17,7 +17,7 @@ class App extends Component {
             <div><Login {...this.props} /></div>;
 
         return (
-            <div>
+            <div id="App">
                 {Home}
             </div>
         );
