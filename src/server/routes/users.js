@@ -1,29 +1,22 @@
-var express = require('express');
-var router = express.Router();
+var db = require('../db');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-	// Comment out this line:
-  //res.send('respond with a resource');
+/*
+    Route function that creates a new user in the database
+    ?user - the user name
+    ?pass - the password
 
-  // And insert something like this instead:
-  res.json([{
-  	id: 1,
-  	username: "samsepi0l"
-  }, {
-  	id: 2,
-  	username: "D0loresH4ze"
-  }]);
-});
+    Returns json response with error variable on failure
+*/
+async function create_user(req, res, next) {
+    let user = req.query.user;
+    let pass = req.query.pass;
 
-module.exports = router;
+    if(user && pass) {
+        await db.query("INSERT INTO users (username, password) VALUES ($1::text, $2::text)", [user, pass]);
+        res.json({message: 'Success'});
+    } else {
+        res.json({error: 'Could not create user'});
+    }
+}
 
-// var express = require('express');
-// var router = express.Router();
-
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-
-// module.exports = router;
+module.exports.create_user = create_user;

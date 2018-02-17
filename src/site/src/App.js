@@ -1,47 +1,43 @@
 import React, { Component } from 'react';
+import Login from './components/Login.js';
+import Dashboard from './components/Dashboard.js';
 import './App.css';
+import { connect } from 'react-redux';
+import { authCheckLoggedIn } from './actions/actions.js';
 
 class App extends Component {
-  state = {users: []}
+    componentDidMount() {
+        this.props.authCheckLoggedIn();
+    }
 
-  componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
+    render() {
+        const Home = this.props.loggedIn ?
+            <div><Dashboard {...this.props} /></div> :
+            <div><Login {...this.props} /></div>;
 
-  render() {
-    return (
-      <div className="App">
-        <h1>Users</h1>
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
-        )}
-      </div>
-    );
-  }
+        return (
+            <div>
+                {Home}
+            </div>
+        );
+    }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+    return {
+        authCheckLoggedIn: () => {
+            dispatch(authCheckLoggedIn())
+        }
+    };
+}
 
-// import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.loginReducer.loggedIn,
+    };
+}
 
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
-
-// export default App;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);
