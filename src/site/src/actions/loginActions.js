@@ -126,7 +126,6 @@ export function authCheckLoggedIn() {
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
-                //console.log(json);
                 dispatch(isLoggedIn(json));
             })
     };

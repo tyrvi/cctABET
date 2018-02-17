@@ -9,6 +9,7 @@ import {
     LOGOUT_SUCCESS
 } from '../actions/loginActions.js';
 
+
 function loginReducer(state = {
     checkingLoggedIn: false,
     isAuthenticating: false,
