@@ -14,6 +14,7 @@ router.use(session({
 var index = require('./index');
 var users = require('./users');
 var auth = require('./authenticate');
+var admin = require('./admin');
 
 router.get('/', index.index);
 
@@ -22,5 +23,7 @@ router.get('/users/create', users.create_user);
 router.get('/auth/login', auth.login);
 router.get('/auth/is_logged_in', auth.is_logged_in);
 router.get('/auth/logout', auth.logout);
+
+router.get('/admin/create_db', admin.create_db);
 
 module.exports = router;
