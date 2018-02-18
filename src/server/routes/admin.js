@@ -1,4 +1,3 @@
-var fs = require('fs')
 var db = require('../db');
 
 /*
@@ -13,30 +12,34 @@ var db = require('../db');
 function create_db(req, res, next) {
     const path_to_create_db_script = __dirname + '/../dbscripts/init.sql';
 
-    if(req.query.db && req.query.db.toLowerCase() === 'cctabet') {
+    if (req.query.db && req.query.db.toLowerCase() === db.DBNAME) {
         db.reset_database().then(() => {
-            fs.readFile(path_to_create_db_script, 'utf8', (err, query) => {
-                if (err) {
-                    console.error('Could not read file ', path_to_create_db_script + '\n' + err);
-                    res.json({error: err});
-                } else {
-                    db.query(query, (err, data) => {
-                        if (err) {
-                            console.error('error: ', err);
-                            res.json({error: 'DB Error'});
-                        } else {
-                            res.json({valid: true});
-                        }
-                    });
-                }
+            db.run_script(path_to_create_db_script).then(() => {
+                res.json({valid: true});
+            }).catch(err => {
+                console.log(err);
+                res.json({error: '0 DB Error'});
             });
-        }).catch((err) => {
+        }).catch(err => {
             console.error(err);
-            res.json({error: 'DB error'});
+            res.json({error: '1 DB Error'});
         });
     } else {
         res.json({error: 'Incorrect DB name.'});
     }
 }
 
+function insert_test_data(req, res, next) {
+    const path_to_test_data_script = __dirname + '/../dbscripts/testdata.sql';
+
+    if (req.query.db && req.query.db.toLowerCase() === db.DBNAME) {
+        db.run_script(path_to_test_data_script).then(() => {
+            res.json({valid: true});
+        }).catch(err => {
+            res.json({error: '3 DB Error'});
+        });
+    }
+}
+
 module.exports.create_db = create_db;
+module.exports.insert_test_data = insert_test_data;

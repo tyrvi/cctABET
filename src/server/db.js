@@ -2,7 +2,10 @@
     db.js
     Provides helper functions to interact with database
 */
+var fs = require('fs');
 var pg = require('pg');
+
+const DBNAME = 'cctabet';
 
 function create_client(database) {
     client_info = {
@@ -19,7 +22,7 @@ function create_client(database) {
     return new pg.Client(client_info);
 }
 
-var db = create_client('cctabet');
+var db = create_client(DBNAME);
 
 // Connect to database
 db.connect().then((result) => {
@@ -44,13 +47,34 @@ async function reset_database() {
     await psql.end();
 
     // Reconnect to database
-    db = create_client('cctabet');
+    db = create_client(DBNAME);
     return db.connect();
 }
 
+async function run_script(path) {
+    fs.readFile(path, 'utf8', (err, query) => {
+        if (err) {
+            console.error('Could not read file ', path + '\n' + err);
+            throw 'IO error';
+        } else {
+            db.query(query, (err, data) => {
+                if (err) {
+                    console.error('error: ', err);
+                    throw '2 DB Error';
+                }
+            });
+        }
+    });
+}
+
+module.exports.DBNAME = DBNAME;
 module.exports.reset_database = reset_database;
+module.exports.run_script = run_script;
 
 module.exports.query = (...args) => {
     // Forward arguments to db.query();
     return db.query.apply(db, args);
 };
+
+
+

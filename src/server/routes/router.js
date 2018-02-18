@@ -25,5 +25,6 @@ router.get('/auth/is_logged_in', auth.is_logged_in);
 router.get('/auth/logout', auth.logout);
 
 router.get('/admin/create_db', admin.create_db);
+router.get('/admin/insert_test_data', admin.insert_test_data);
 
 module.exports = router;
