@@ -32,6 +32,8 @@ class Login extends Component {
     render() {
         return (
             <div id="Login">
+            <div class="background"></div>
+            <div class="userEntry">
                 <h1>CCT ABET</h1>
                 <div>
                     <input type="text" value={this.state.user}
@@ -50,6 +52,7 @@ class Login extends Component {
                 </div>
                 <div>
                     <button onClick={this.onLoginClick}>Login</button>
+                </div>
                 </div>
             </div>
         );
