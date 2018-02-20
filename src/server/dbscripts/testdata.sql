@@ -59,37 +59,34 @@ INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
 VALUES(9, 'Comparative Programming', 'taylor@lipscomb.edu', 'Spring', 2018);
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(0, 0, 'Knowledge Application', 0, );
+VALUES(0, 0, 'Knowledge Application', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(1, 1, 'Problem Analysis', 1, );
+VALUES(1, 1, 'Problem Analysis', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(2, 2, 'Solution Des, Impl & Eval', 2, );
+VALUES(2, 2, 'Solution Des, Impl & Eval', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(3, 3, 'Teamwork', 3, );
+VALUES(3, 3, 'Teamwork', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(4, 4, 'Ethical Responsibilities', 4, );
+VALUES(4, 4, 'Ethical Responsibilities', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(5, 5, 'Effective Communication', 5, );
+VALUES(5, 5, 'Effective Communication', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(6, 6, 'Understanding Impact', 6, );
+VALUES(6, 6, 'Understanding Impact', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(7, 7, 'Professional Development', 7, );
+VALUES(7, 7, 'Professional Development', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(8, 8, 'Use of Current Technologies', 8, );
+VALUES(8, 8, 'Use of Current Technologies', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(9, 9, 'Theoretical Foundation', 9, );
-
-INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(10, 10, 'Application of Design & Devt', 10, );
+VALUES(9, 9, 'Theoretical Foundation', '{}');
 
 INSERT INTO FILES (FILE_ID, FILE_NAME, FORM_ID)
 VALUES(0, 'DoNoCopy0.pdf', 0);
