@@ -1,62 +1,62 @@
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('SMITH', '5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8', 'SMITH@lipscomb.edu', 0);
+VALUES('smith', '123', 'smith@lipscomb.edu', 0);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('JOHNSON', '8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92', 'JOHNSON@lipscomb.edu', 1);
+VALUES('johnson', '123', 'johnson@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('WILLIAMS', 'EF797C8118F02DFB649607DD5D3F8C7623048C9C063D532CC95C5ED7A898A64F', 'WILLIAMS@lipscomb.edu', 2);
+VALUES('williams', '123', 'williams@lipscomb.edu', 2);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('JONES', '6CA13D52CA70C883E0F0BB101E425A89E8624DE51DB2D2392593AF6A84118090', 'JONES@lipscomb.edu', 3);
+VALUES('jones', '123', 'jones@lipscomb.edu', 3);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('BROWN', '35029A33A4321A1577432430A8520A406D1DE641BEA7DD96ADE6311A90050A81', 'BROWN@lipscomb.edu', 4);
+VALUES('brown', '123', 'brown@lipscomb.edu', 4);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('DAVIS', '000C285457FC971F862A79B786476C78812C8897063C6FA9C045F579A3B2D63F', 'DAVIS@lipscomb.edu', 5);
+VALUES('davis', '123', 'davis@lipscomb.edu', 5);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('MILLER', '1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032', 'MILLER@lipscomb.edu', 6);
+VALUES('miller', '123', 'miller@lipscomb.edu', 6);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('WILSON', 'A9C43BE948C5CABD56EF2BACFFB77CDAA5EEC49DD5EB0CC4129CF3EDA5F0E74C', 'WILSON@lipscomb.edu', 7);
+VALUES('wilson', '123', 'wilson@lipscomb.edu', 7);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('MOORE', 'BCB15F821479B4D5772BD0CA866C00AD5F926E3580720659CC80D39C9D09802A', 'MOORE@lipscomb.edu', 8);
+VALUES('moore', '123', 'moore@lipscomb.edu', 8);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('TAYLOR', 'A01EDAD91C00ABE7BE5B72B5E36BF4CE3C6F26E8BCE3340EBA365642813AB8B6', 'TAYLOR@lipscomb.edu', 9);
+VALUES('taylor', '123', 'taylor@lipscomb.edu', 9);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(0, 'Intro to Computer Science', 'SMITH@lipscomb.edu', 'Fall', 2017);
+VALUES(0, 'Intro to Computer Science', 'smith@lipscomb.edu', 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(1, 'Intro to Computer Programming', 'JOHNSON@lipscomb.edu', 'Fall', 2017);
+VALUES(1, 'Intro to Computer Programming', 'johnson@lipscomb.edu', 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(2, 'Object Oriented Systems and Design', 'WILLIAMS@lipscomb.edu', 'Fall', 2017);
+VALUES(2, 'Object Oriented Systems and Design', 'williams@lipscomb.edu', 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(3, 'Data Structures & Algorithms', 'JONES@lipscomb.edu', 'Fall', 2017);
+VALUES(3, 'Data Structures & Algorithms', 'jones@lipscomb.edu', 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(4, 'Computer Organization', 'BROWN@lipscomb.edu', 'Fall', 2017);
+VALUES(4, 'Computer Organization', 'brown@lipscomb.edu', 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(5, 'Operating Systems', 'DAVIS@lipscomb.edu', 'Spring', 2018);
+VALUES(5, 'Operating Systems', 'davis@lipscomb.edu', 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(6, 'Design and Analysis of Algorithms', 'MILLER@lipscomb.edu', 'Spring', 2018);
+VALUES(6, 'Design and Analysis of Algorithms', 'miller@lipscomb.edu', 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(7, 'Artificial Intelligence', 'WILSON@lipscomb.edu', 'Spring', 2018);
+VALUES(7, 'Artificial Intelligence', 'wilson@lipscomb.edu', 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(8, 'Compiler Construction', 'MOORE@lipscomb.edu', 'Spring', 2018);
+VALUES(8, 'Compiler Construction', 'moore@lipscomb.edu', 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
-VALUES(9, 'Comparative Programming', 'TAYLOR@lipscomb.edu', 'Spring', 2018);
+VALUES(9, 'Comparative Programming', 'taylor@lipscomb.edu', 'Spring', 2018);
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
 VALUES(0, 0, 'Knowledge Application', 0, );
