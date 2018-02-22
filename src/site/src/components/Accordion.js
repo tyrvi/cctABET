@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Accordion.css';
+import AccordionItem from './AccordionItem';
 
 
 class Accordion extends Component {
@@ -51,22 +52,9 @@ class Accordion extends Component {
 
     render() {
         const items = this.state.courseData.map(course => {
-            let forms = course.forms.map(form => {
-                return (
-                    <div key={form.formID}>
-                        <h5>{form.outcome}</h5>
-                    </div>
-                );
-            });
-
-            return (
-                <div key={course.courseID}>
-                    <h3>{course.courseName}</h3>
-                    <div>
-                        {forms}
-                    </div>
-                </div>
-            );
+            return <AccordionItem key={course.courseID}
+                    courseName={course.courseName}
+                    forms={course.forms} />
         });
 
         return (
