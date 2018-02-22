@@ -13,14 +13,14 @@ function login(req, res, next) {
 	let user = req.query.user;
     let pass = req.query.pass;
     if(!user || !pass) {
-        res.json({'valid': false});
+        res.json({error: 'Missing username or password'});
     } else {
         db.query("SELECT * FROM users WHERE username=$1::text AND password=$2::text", [user, pass], (err, result) => {
             if(err) {
                 console.log('Error in authenticate: ' + err);
-                return;
+                res.json({error: 'Authentication error'});
             }
-            if(result['rows'].length > 0) {
+            else if(result['rows'].length > 0) {
                 // Get the user from the result
                 let user = result['rows'][0];
 
@@ -30,9 +30,9 @@ function login(req, res, next) {
                 // Store the user in the session
                 req.session.user = user;
 
-                res.json({'valid': true});
+                res.json({valid: true});
             } else {
-                res.json({'valid': false});
+                res.json({error: 'Incorrect username or password'});
             }
         });
     }
@@ -41,9 +41,9 @@ function login(req, res, next) {
 function logout(req, res, next) {
     if (req.session) {
         delete req.session.user;
-        res.json({'logout': true});
+        res.json({logout: true});
     } else {
-        res.json({'logout': false});
+        res.json({logout: false});
     }
 }
 
