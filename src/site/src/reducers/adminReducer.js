@@ -10,6 +10,8 @@ import {
 
 function adminReducer(state = {
     isDoingRequest: false,
+    createDBResponse: false,
+    insertTestResponse: false,
     createdDB: false,
     insertedTestData: false,
     requestError: null,
@@ -22,12 +24,14 @@ function adminReducer(state = {
         case CREATE_DB_SUCCESS:
             return Object.assign({}, state, {
                 isDoingRequest: false,
+                createDBResponse: true,
                 createdDB: true,
                 requestError: null,
             });
         case CREATE_DB_FAIL:
             return Object.assign({}, state, {
                 isDoingRequest: false,
+                createDBResponse: true,
                 createdDB: false,
                 requestError: action.response.error,
             });
@@ -38,12 +42,14 @@ function adminReducer(state = {
         case INSERT_TEST_DATA_SUCCESS:
             return Object.assign({}, state, {
                 isDoingRequest: false,
+                insertTestResponse: true,
                 insertedTestData: true,
                 requestError: null,
             });
         case INSERT_TEST_DATA_FAIL:
             return Object.assign({}, state, {
                 isDoingRequest: false,
+                insertTestResponse: true,
                 insertedTestData: false,
                 requestError: action.response.error,
             });

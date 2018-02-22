@@ -1,0 +1,20 @@
+.successText {
+    color: green;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+}
+
+.failText {
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+}
+
+.visible {
+    display: inline-block;
+}
+
+.hidden {
+    /* visibility: hidden; */
+    display: none;
+}

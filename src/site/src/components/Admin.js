@@ -12,14 +12,19 @@ class Admin extends Component {
             resetDB: '',
             testDataDB: '',
         }
+
+        this.onResetDBClick = this.onResetDBClick.bind(this);
+        this.onInsertDataClick = this.onInsertDataClick.bind(this);
     }
 
     onResetDBClick() {
         this.props.adminCreateDB(this.state.resetDB);
+        this.setState({resetDB: ''});
     }
 
     onInsertDataClick() {
         this.props.insertTestData(this.state.testDataDB);
+        this.setState({testDataDB: ''});
     }
 
     render() {
@@ -31,12 +36,24 @@ class Admin extends Component {
                         onChange={event => this.setState({ resetDB: event.target.value })}
                         placeholder="Database Name" />
                     <button onClick={this.onResetDBClick}>Reset Database</button>
+                    <div className={this.props.createdDB ? "visible successText" : "hidden"}>
+                        Success!
+                    </div>
+                    <div className={this.props.requestError && this.props.createDBResponse ? "visible failText" : "hidden"}>
+                        Error: {this.props.requestError}
+                    </div>
                 </div>
                 <div>
                     <input type="text" value={this.state.testDataDB}
                         onChange={event => this.setState({ testDataDB: event.target.value })}
                         placeholder="Database Name" />
                     <button onClick={this.onInsertDataClick}>Insert Test Data</button>
+                    <div className={this.props.insertedTestData ? "visible successText" : "hidden"}>
+                        Success!
+                    </div>
+                    <div className={this.props.requestError && this.props.insertTestResponse ? "visible failText" : "hidden"}>
+                        Error: {this.props.requestError}
+                    </div>
                 </div>
             </div>
         );
@@ -61,6 +78,8 @@ const mapStateToProps = state => {
         createdDB: state.adminReducer.createdDB,
         insertedTestData: state.adminReducer.insertedTestData,
         requestError: state.adminReducer.requestError,
+        createDBResponse: state.adminReducer.createDBResponse,
+        insertTestResponse: state.adminReducer.insertTestResponse,
     }
 }
 
