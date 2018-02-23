@@ -11,17 +11,26 @@ class AccordionItem extends Component {
         }
 
         this.onCourseClick = this.onCourseClick.bind(this);
+        this.onFormClick = this.onFormClick.bind(this);
     }
 
     onCourseClick() {
         this.setState({isOpen: !this.state.isOpen})
     }
 
+    onFormClick(formID, outcome) {
+        console.log("formID = " + formID + " outcome = " + outcome);
+        // TODO: Load corresponding form component passing the formID and outcome
+        // so it can fetch the data
+    }
 
     render() {
         const forms = this.props.forms.map(form => {
             return (
-                <div key={form.formID}>{form.outcome}</div>
+                <div key={form.formID}
+                    onClick={() => this.onFormClick(form.formID, form.outcome)} >
+                    {form.outcome}
+                </div>
             );
         });
 
