@@ -45,7 +45,11 @@ export function insertTestDataFail(response) {
 }
 
 /*
+<<<<<<< HEAD
     Dispatches fetch request with a db name
+=======
+    Dispatches fetch request with username and password
+>>>>>>> 0fe77855524741d34f67c467c5c51b9c800b7d23
     Params:
         db: the database name. This must match the remote database name
             to be successful.
