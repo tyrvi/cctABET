@@ -19,4 +19,23 @@ async function create_user(req, res, next) {
     }
 }
 
+function course_data(req, res, next) {
+    let email = req.query.email;
+
+    if (!email) {
+        res.json({error: 'Missing email'});
+    } else {
+        db.query("SELECT course_id, course_name FROM courses WHERE email=$1::text", [email], (err, result) => {
+            if (err) {
+                console.error('Error in users: ', err);
+                res.json({error: 'Error fetching course data'});
+            } else {
+                console.log(result.rows);
+                res.json({courseData: true});
+            }
+        })
+    }
+}
+
 module.exports.create_user = create_user;
+module.exports.course_data = course_data;

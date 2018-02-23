@@ -72,7 +72,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
         isDoingRequest: state.adminReducer.isDoingRequest,
         createdDB: state.adminReducer.createdDB,

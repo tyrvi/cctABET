@@ -19,6 +19,7 @@ var admin = require('./admin');
 router.get('/', index.index);
 
 router.get('/users/create', users.create_user);
+router.get('/users/course_data', users.course_data);
 
 router.get('/auth/login', auth.login);
 router.get('/auth/is_logged_in', auth.is_logged_in);

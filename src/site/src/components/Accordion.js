@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { usersCourseData } from '../actions/dashboardActions.js';
 import './Accordion.css';
 import AccordionItem from './AccordionItem';
 
@@ -48,6 +49,7 @@ class Accordion extends Component {
 
     componentDidMount() {
         // TODO: fetch course list
+        this.props.usersCourseData('smith@lipscomb.edu');
     }
 
     render() {
@@ -65,7 +67,21 @@ class Accordion extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        usersCourseData: (email) => {
+            dispatch(usersCourseData(email))
+        }
+    };
+}
+
+const mapStateToProps = state => {
+    return {
+        courseData: state.dashboardReducer.courseData,
+    }
+}
+
 export default connect(
-    null,
-    null
+    mapStateToProps,
+    mapDispatchToProps
 )(Accordion);
