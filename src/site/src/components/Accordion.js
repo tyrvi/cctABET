@@ -53,11 +53,15 @@ class Accordion extends Component {
     }
 
     render() {
-        const items = this.state.courseData.map(course => {
-            return <AccordionItem key={course.courseID}
-                    courseName={course.courseName}
-                    forms={course.forms} />
-        });
+        console.log(this.props.courseData);
+        let items = null;
+        if (this.props.courseData) {
+            items = this.props.courseData.map(course => {
+                return <AccordionItem key={course.course_id}
+                        courseName={course.course_name}
+                        forms={course.forms} />
+            });
+        }
 
         return (
             <div id="Accordion">

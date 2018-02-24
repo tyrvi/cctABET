@@ -19,6 +19,12 @@ async function create_user(req, res, next) {
     }
 }
 
+/*
+    Route function that creates a new user in the database
+    ?email - the email (primary key) of the user
+
+    Returns json response with error variable on failure
+*/
 function course_data(req, res, next) {
     let email = req.query.email;
 
@@ -30,11 +36,44 @@ function course_data(req, res, next) {
                 console.error('Error in users: ', err);
                 res.json({error: 'Error fetching course data'});
             } else {
-                console.log(result.rows);
-                res.json({courseData: true});
+                Promise.all(result.rows.map(course => {
+                    return get_forms(course).then(forms => {
+                        // there was an error
+                        if (!forms) {
+                            res.json({error: 'Error fetching course data'});
+                            return;
+                        } else {
+                            course.forms = forms;
+                            return course;
+                        }
+                    })
+                })).then(data => {
+                    res.json({courseData: data});
+                });
             }
         })
     }
+}
+
+/*
+    Helper function that gets the form data for a course
+    Params:
+        course: a course row from the course table
+    Returns:
+        A Promise that will contain the results of the query into the
+        forms table for the given course
+
+*/
+async function get_forms(course) {
+    try {
+        let result = await db.query("SELECT form_id, outcome FROM forms WHERE course_id=$1::int", [course.course_id]);
+        // console.log(result.rows);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+    }
+
+    return Promise.resolve(false);
 }
 
 module.exports.create_user = create_user;

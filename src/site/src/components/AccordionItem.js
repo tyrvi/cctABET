@@ -27,8 +27,8 @@ class AccordionItem extends Component {
     render() {
         const forms = this.props.forms.map(form => {
             return (
-                <div key={form.formID}
-                    onClick={() => this.onFormClick(form.formID, form.outcome)} >
+                <div key={form.form_id}
+                    onClick={() => this.onFormClick(form.form_id, form.outcome)} >
                     {form.outcome}
                 </div>
             );
