@@ -6,54 +6,12 @@ import AccordionItem from './AccordionItem';
 
 
 class Accordion extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            courseData: [
-                {
-                    courseID: 0,
-                    courseName: 'hello',
-                    forms: [
-                        {
-                            formID: 2,
-                            outcome: 'arisoa graphs'
-                        },
-                        {
-                            formID: 3,
-                            outcome: 'lasdfjlk'
-                        },
-                        {
-                            formID: 4,
-                            outcome: 'alwjkfsd'
-                        }
-                    ],
-                },
-                {
-                    courseID: 1,
-                    courseName: 'billy',
-                    forms: [
-                        {
-                            formID: 5,
-                            outcome: 'yeha budy'
-                        },
-                        {
-                            formID: 6,
-                            outcome: 'victor'
-                        }
-                    ],
-                },
-            ]
-        }
-    }
 
     componentDidMount() {
-        // TODO: fetch course list
-        this.props.usersCourseData('smith@lipscomb.edu');
+        this.props.usersCourseData(this.props.email);
     }
 
     render() {
-        console.log(this.props.courseData);
         let items = null;
         if (this.props.courseData) {
             items = this.props.courseData.map(course => {
@@ -82,6 +40,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return {
         courseData: state.dashboardReducer.courseData,
+        email: state.loginReducer.userData.email,
     }
 }
 

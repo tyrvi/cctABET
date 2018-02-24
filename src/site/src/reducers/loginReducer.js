@@ -16,6 +16,11 @@ function loginReducer(state = {
     loggedIn: false,
     isLoggingOut: false,
     authError: null,
+    userData: {
+        user: null,
+        email: null,
+        type: null,
+    },
 }, action) {
     switch (action.type) {
         case REQUEST_LOGIN:
@@ -26,30 +31,24 @@ function loginReducer(state = {
             return Object.assign({}, state, {
                 isAuthenticating: false,
                 loggedIn: false,
-                authError: 'invalid credentials',
+                authError: action.response.error,
             });
         case LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 isAuthenticating: false,
                 loggedIn: true,
                 authError: null,
+                userData: action.response.userData,
             });
         case CHECKING_LOGGED_IN:
             return Object.assign({}, state, {
                 checkingLoggedIn: true,
             });
         case IS_LOGGED_IN:
-            if (action.loggedIn) {
-                return Object.assign({}, state, {
-                    loggedIn: true,
-                    checkingLoggedIn: false,
-                });
-            } else {
-                return Object.assign({}, state, {
-                    loggedIn: false,
-                    checkingLoggedIn: false,
-                });
-            }
+            return Object.assign({}, state, {
+                loggedIn: action.response.logged_in,
+                userData: action.response.userData,
+            });
         case REQUEST_LOGOUT:
             return Object.assign({}, state, {
                 isLoggingOut: true,

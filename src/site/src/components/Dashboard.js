@@ -8,10 +8,6 @@ import Admin from './Admin.js';
 
 class Dashboard extends Component {
 
-    componentDidMount() {
-        // TODO: fetch user data here
-    }
-
     render() {
         return (
             <div id="Dashboard">

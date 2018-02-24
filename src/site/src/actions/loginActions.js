@@ -9,6 +9,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export function loginSuccess(response) {
     return {
         type: LOGIN_SUCCESS,
+        response,
     }
 }
 
@@ -16,6 +17,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export function loginFail(response) {
     return {
         type: LOGIN_FAIL,
+        response
     };
 }
 
@@ -28,10 +30,9 @@ export function checkingLoggedIn() {
 
 export const IS_LOGGED_IN = 'IS_LOGGED_IN';
 export function isLoggedIn(response) {
-    let loggedIn = response.logged_in;
     return {
         type: IS_LOGGED_IN,
-        loggedIn,
+        response,
     }
 }
 
@@ -101,7 +102,7 @@ export function authLogin(user, pass) {
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
-                if (json.valid) {
+                if (!json.error) {
                     dispatch(loginSuccess(json));
                 } else {
                     dispatch(loginFail(json));

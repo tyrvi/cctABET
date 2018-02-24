@@ -30,7 +30,10 @@ function login(req, res, next) {
                 // Store the user in the session
                 req.session.user = user;
 
-                res.json({valid: true});
+                res.json({
+                    valid: true,
+                    userData: user,
+                });
             } else {
                 res.json({error: 'Incorrect username or password'});
             }
@@ -55,9 +58,10 @@ function logout(req, res, next) {
 		{ logged_in: false } otherwise
 */
 function is_logged_in(req, res, next) {
-	response = {};
+    response = {};
 	logged_in(req).then((logged_in) => {
         response.logged_in = logged_in;
+        response.userData = req.session.user;
         res.json(response);
     });
 }
