@@ -16,7 +16,6 @@ class Menu extends Component {
     }
 
     render() {
-        console.log(this.props.user);
         return (
             <div id="Menu">
                 <h1>Hello, {this.props.user}</h1>
