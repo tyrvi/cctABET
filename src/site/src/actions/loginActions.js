@@ -1,3 +1,8 @@
+export const USER_TYPES = {
+    ADMIN_USER: 0,
+    STANDARD_USER: 1,
+}
+
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
 export function requestLogin() {
     return {

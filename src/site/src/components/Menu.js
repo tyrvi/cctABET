@@ -16,9 +16,10 @@ class Menu extends Component {
     }
 
     render() {
+        console.log(this.props.user);
         return (
             <div id="Menu">
-                <h1>Hello, {this.props.username}</h1>
+                <h1>Hello, {this.props.user}</h1>
                 <button type="button" onClick={this.onLogoutClick}>Logout</button>
             </div>
         );
@@ -35,7 +36,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        username: null,
+        user: state.loginReducer.userData.username,
     }
 }
 

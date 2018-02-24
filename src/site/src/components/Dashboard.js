@@ -4,22 +4,38 @@ import './Dashboard.css';
 import Accordion from './Accordion.js';
 import Menu from './Menu.js';
 import Admin from './Admin.js';
+import { USER_TYPES } from '../actions/loginActions.js';
 
 
 class Dashboard extends Component {
 
     render() {
-        return (
-            <div id="Dashboard">
-                <Menu />
-                <Accordion />
-                <Admin />
-            </div>
-        );
+        if (this.props.userType === USER_TYPES.ADMIN_USER) {
+            return (
+                <div id="Dashboard">
+                    <Menu />
+                    <Accordion />
+                    <Admin />
+                </div>
+            );
+        } else {
+            return (
+                <div id="Dashboard">
+                    <Menu />
+                    <Accordion />
+                </div>
+            );
+        }
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        userType: state.loginReducer.userData.type,
     }
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     null
 )(Dashboard);

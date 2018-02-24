@@ -30,7 +30,7 @@ class Admin extends Component {
     render() {
         return (
             <div id="Admin">
-                <h1>THIS IS SPARTA!!!</h1>
+                <h3>UNLIMITED POWAH!!!</h3>
                 <div>
                     <input type="text" value={this.state.resetDB}
                         onChange={event => this.setState({ resetDB: event.target.value })}
