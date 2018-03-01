@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard.js';
 import './App.css';
 import { connect } from 'react-redux';
 import { authCheckLoggedIn } from './actions/actions.js';
-import Forms from './components/Forms.js';
+import Form from './components/Form.js';
 const feature = "Forms";
 
 class App extends Component {
@@ -19,7 +19,7 @@ class App extends Component {
     render() {
         let Home;
         if (feature === "Forms") {
-            Home = <div><Forms /></div>
+            Home = <div><Form /></div>
         } else {
             Home = this.props.loggedIn ?
                 <div><Dashboard {...this.props} /></div> :
