@@ -20,7 +20,10 @@ router.get('/', index.index);
 
 router.get('/users/create', auth.require_admin, users.create_user);
 router.get('/users/course_data', auth.require_login, users.course_data);
-router.get('/users/secret', users.create_user);
+
+// secret API endpoint to create user in case of DB reset where cannot
+// insert test data
+// router.get('/users/secret', users.create_user);
 
 router.get('/auth/login', auth.login);
 router.get('/auth/is_logged_in', auth.is_logged_in);

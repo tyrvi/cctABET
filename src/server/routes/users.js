@@ -14,8 +14,6 @@ async function create_user(req, res, next) {
     let email = req.query.email;
     let type = req.query.type;
 
-    console.log(req.query);
-
     if(user && pass && email && type != null && type != undefined) {
         await db.query("INSERT INTO users (username, password, email, type) VALUES ($1::text, $2::text, $3::text, $4::int)",
         [user, pass, email, type]);
