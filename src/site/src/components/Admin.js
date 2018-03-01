@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Admin.css';
-import { adminCreateDB, insertTestData } from '../actions/adminActions.js';
+import {
+    adminCreateDB,
+    insertTestData,
+    adminCreateUser
+} from '../actions/adminActions.js';
 import { USER_TYPES } from '../actions/loginActions.js';
 
 
@@ -14,8 +18,8 @@ class Admin extends Component {
             testDataDB: '',
             createUser: {
                 user: '',
-                email: '',
                 pass: '',
+                email: '',
                 type: USER_TYPES.STANDARD_USER,
             },
         }
@@ -37,11 +41,17 @@ class Admin extends Component {
 
     onCreateUserClick() {
         // TODO: create actions for calling create user API
-        console.log("creating user");
+        this.props.createUser(
+            this.state.createUser.user,
+            this.state.createUser.pass,
+            this.state.createUser.email,
+            this.state.createUser.type,
+        );
+
         this.setState({createUser: Object.assign({}, this.state.createUser, {
             user: '',
-            email: '',
             pass: '',
+            email: '',
             type: USER_TYPES.STANDARD_USER,
         })});
     }
@@ -51,28 +61,24 @@ class Admin extends Component {
             <div id="Admin">
                 <h3>UNLIMITED POWAH!!!</h3>
                 <div>
+                    <div className={this.props.requestError ? "visible failText" : "hidden"}>
+                        Error: {this.props.requestError}
+                    </div>
+                    <div className={this.props.requestMessage ? "visible successText" : "hidden"}>
+                        Success: {this.props.requestMessage}
+                    </div>
+                </div>
+                <div>
                     <input type="text" value={this.state.resetDB}
                         onChange={event => this.setState({ resetDB: event.target.value })}
                         placeholder="Database Name" />
                     <button onClick={this.onResetDBClick}>Reset Database</button>
-                    <div className={this.props.createdDB ? "visible successText" : "hidden"}>
-                        Success!
-                    </div>
-                    <div className={this.props.requestError && this.props.createDBResponse ? "visible failText" : "hidden"}>
-                        Error: {this.props.requestError}
-                    </div>
                 </div>
                 <div>
                     <input type="text" value={this.state.testDataDB}
                         onChange={event => this.setState({ testDataDB: event.target.value })}
                         placeholder="Database Name" />
                     <button onClick={this.onInsertDataClick}>Insert Test Data</button>
-                    <div className={this.props.insertedTestData ? "visible successText" : "hidden"}>
-                        Success!
-                    </div>
-                    <div className={this.props.requestError && this.props.insertTestResponse ? "visible failText" : "hidden"}>
-                        Error: {this.props.requestError}
-                    </div>
                 </div>
                 <div>
                     <input type="text" value={this.state.createUser.user}
@@ -97,7 +103,7 @@ class Admin extends Component {
                         <option value={USER_TYPES.STANDARD_USER}>Standard</option>
                         <option value={USER_TYPES.ADMIN_USER}>Admin</option>
                     </select>
-                    <button onClick={this.props.onCreateUserClick}>Create User</button>
+                    <button onClick={this.onCreateUserClick}>Create User</button>
                 </div>
             </div>
         );
@@ -112,17 +118,16 @@ const mapDispatchToProps = dispatch => {
         insertTestData: (db) => {
             dispatch(insertTestData(db))
         },
+        createUser: (user, pass, email, type) => {
+            dispatch(adminCreateUser(user, pass, email, type))
+        },
     }
 }
 
 const mapStateToProps = state => {
     return {
-        isDoingRequest: state.adminReducer.isDoingRequest,
-        createdDB: state.adminReducer.createdDB,
-        insertedTestData: state.adminReducer.insertedTestData,
+        requestMessage: state.adminReducer.requestMessage,
         requestError: state.adminReducer.requestError,
-        createDBResponse: state.adminReducer.createDBResponse,
-        insertTestResponse: state.adminReducer.insertTestResponse,
     }
 }
 

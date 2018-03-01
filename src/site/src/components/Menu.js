@@ -19,6 +19,8 @@ class Menu extends Component {
         return (
             <div id="Menu">
                 <h1>Hello, {this.props.user}</h1>
+                <button type="button">Dashboard</button>
+                <button type="button">Admin</button>
                 <button type="button" onClick={this.onLogoutClick}>Logout</button>
             </div>
         );

@@ -44,6 +44,49 @@ export function insertTestDataFail(response) {
     }
 }
 
+export const REQUEST_CREATE_USER = "REQUEST_CREATE_USER";
+export function requestCreateUser() {
+    return {
+        type: REQUEST_CREATE_USER,
+    }
+}
+
+export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
+export function createUserSuccess(response) {
+    return {
+        type: CREATE_USER_SUCCESS,
+        response,
+    }
+}
+
+export const CREATE_USER_FAIL = "CREATE_USER_FAIL";
+export function createUserFail(response) {
+    return {
+        type: CREATE_USER_FAIL,
+        response,
+    }
+}
+
+export function adminCreateUser(user, pass, email, type) {
+    let query = 'user=' + user + '&pass=' + pass +
+        '&email=' + email + '&type=' + type;
+    console.log(query);
+    return dispatch => {
+        dispatch(requestCreateUser());
+        return fetch('users/create?' + query, {
+            method: 'GET',
+            credentials: 'same-origin',
+        }).then(res => res.json())
+            .then(json => {
+                if (!json.error) {
+                    dispatch(createUserSuccess(json));
+                } else {
+                    dispatch(createUserFail(json));
+                }
+            })
+    };
+}
+
 /*
     Dispatches fetch request with a db name
     Params:

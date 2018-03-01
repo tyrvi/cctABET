@@ -1,4 +1,5 @@
 var db = require('../db');
+var auth = require('./authenticate');
 
 /*
     Route function that creates a new user in the database
@@ -10,10 +11,15 @@ var db = require('../db');
 async function create_user(req, res, next) {
     let user = req.query.user;
     let pass = req.query.pass;
+    let email = req.query.email;
+    let type = req.query.type;
 
-    if(user && pass) {
-        await db.query("INSERT INTO users (username, password) VALUES ($1::text, $2::text)", [user, pass]);
-        res.json({message: 'Success'});
+    console.log(req.query);
+
+    if(user && pass && email && type != null && type != undefined) {
+        await db.query("INSERT INTO users (username, password, email, type) VALUES ($1::text, $2::text, $3::text, $4::int)",
+        [user, pass, email, type]);
+        res.json({message: 'User created.'});
     } else {
         res.json({error: 'Could not create user'});
     }

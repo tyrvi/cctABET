@@ -1,5 +1,10 @@
 var db = require('../db');
 
+const USER_TYPES = {
+    ADMIN_USER: 0,
+    STANDARD_USER: 1,
+}
+
 /*
 	Authentication route function
 	Authenticates a user with url params:
@@ -80,6 +85,23 @@ async function require_login(req, res, next) {
 }
 
 /*
+    Middleware function to ensure a user is an admin user and logged in
+	Returns a json error on failure
+	Continues with the request otherwise
+*/
+async function require_admin(req, res, next) {
+    if (await logged_in(req)) {
+        if (req.session.user.type === USER_TYPES.ADMIN_USER) {
+            next();
+        } else {
+            res.json({error: 'You must be an admin user to access this.'})
+        }
+    } else {
+        res.json({error: 'You must be logged in to access this.'});
+    }
+}
+
+/*
 	Helper function that returns if a user is logged in
 
 	Returns:
@@ -108,3 +130,4 @@ module.exports.logout = logout;
 
 // Middleware
 module.exports.require_login = require_login;
+module.exports.require_admin = require_admin;
