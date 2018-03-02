@@ -12,13 +12,20 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get -y install postgresql postgresql-contrib
 RUN apt-get -y install nodejs
 
-# Start up the postgresql service and
-# Set password for postgres user
+# Add init database script
+COPY src/server/dbscripts/init.sql /init.sql
+
+# Start the postgresql service and
+# create database and
+# run init.sql script and
+# set password for postgres user
 RUN service postgresql start && \
+    sudo -u postgres psql -c "CREATE DATABASE CCTABET;" && \
+    sudo -u postgres psql -d cctabet -f /init.sql && \
     sudo -u postgres psql -c "ALTER USER postgres WITH ENCRYPTED PASSWORD 'admin';"
 
 # Add our postgres config file
-COPY pg_hba.conf /etc/postgres/9.5/main/
+COPY docker/pg_hba.conf /etc/postgres/9.5/main/
 
 # Tell docker to run script on startup
 CMD ./app/docker/docker_runtime.sh
