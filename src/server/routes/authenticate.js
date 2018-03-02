@@ -1,5 +1,10 @@
 var db = require('../db');
 
+const USER_TYPES = {
+    ADMIN_USER: 0,
+    STANDARD_USER: 1,
+}
+
 /*
 	Authentication route function
 	Authenticates a user with url params:
@@ -30,7 +35,10 @@ function login(req, res, next) {
                 // Store the user in the session
                 req.session.user = user;
 
-                res.json({valid: true});
+                res.json({
+                    valid: true,
+                    userData: user,
+                });
             } else {
                 res.json({error: 'Incorrect username or password'});
             }
@@ -55,9 +63,10 @@ function logout(req, res, next) {
 		{ logged_in: false } otherwise
 */
 function is_logged_in(req, res, next) {
-	response = {};
+    response = {};
 	logged_in(req).then((logged_in) => {
         response.logged_in = logged_in;
+        response.userData = req.session.user;
         res.json(response);
     });
 }
@@ -73,6 +82,23 @@ async function require_login(req, res, next) {
 	} else {
 		res.json({error: 'You must be logged in to access this.'});
 	}
+}
+
+/*
+    Middleware function to ensure a user is an admin user and logged in
+	Returns a json error on failure
+	Continues with the request otherwise
+*/
+async function require_admin(req, res, next) {
+    if (await logged_in(req)) {
+        if (req.session.user.type === USER_TYPES.ADMIN_USER) {
+            next();
+        } else {
+            res.json({error: 'You must be an admin user to access this.'})
+        }
+    } else {
+        res.json({error: 'You must be logged in to access this.'});
+    }
 }
 
 /*
@@ -104,3 +130,4 @@ module.exports.logout = logout;
 
 // Middleware
 module.exports.require_login = require_login;
+module.exports.require_admin = require_admin;

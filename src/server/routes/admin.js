@@ -15,17 +15,17 @@ function create_db(req, res, next) {
     if (req.query.db && req.query.db.toLowerCase() === db.DBNAME) {
         db.reset_database().then(() => {
             db.run_script(path_to_create_db_script).then(() => {
-                res.json({valid: true});
+                res.json({valid: true, message: 'Reset database'});
             }).catch(err => {
                 console.log(err);
-                res.json({error: '0 DB Error'});
+                res.json({error: 'DB Error'});
             });
         }).catch(err => {
             console.error(err);
-            res.json({error: '1 DB Error'});
+            res.json({error: 'DB Error'});
         });
     } else {
-        res.json({error: 'Incorrect DB name.'});
+        res.json({error: 'Incorrect DB name'});
     }
 }
 
@@ -34,9 +34,9 @@ function insert_test_data(req, res, next) {
 
     if (req.query.db && req.query.db.toLowerCase() === db.DBNAME) {
         db.run_script(path_to_test_data_script).then(() => {
-            res.json({valid: true});
+            res.json({valid: true, message: 'Inserted test data'});
         }).catch(err => {
-            res.json({error: '3 DB Error'});
+            res.json({error: 'DB Error'});
         });
     }
 }

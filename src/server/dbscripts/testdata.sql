@@ -5,28 +5,28 @@ INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
 VALUES('johnson', '123', 'johnson@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('williams', '123', 'williams@lipscomb.edu', 2);
+VALUES('williams', '123', 'williams@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('jones', '123', 'jones@lipscomb.edu', 3);
+VALUES('jones', '123', 'jones@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('brown', '123', 'brown@lipscomb.edu', 4);
+VALUES('brown', '123', 'brown@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('davis', '123', 'davis@lipscomb.edu', 5);
+VALUES('davis', '123', 'davis@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('miller', '123', 'miller@lipscomb.edu', 6);
+VALUES('miller', '123', 'miller@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('wilson', '123', 'wilson@lipscomb.edu', 7);
+VALUES('wilson', '123', 'wilson@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('moore', '123', 'moore@lipscomb.edu', 8);
+VALUES('moore', '123', 'moore@lipscomb.edu', 1);
 
 INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, TYPE)
-VALUES('taylor', '123', 'taylor@lipscomb.edu', 9);
+VALUES('taylor', '123', 'taylor@lipscomb.edu', 1);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, EMAIL, SEMESTER, YEAR)
 VALUES(0, 'Intro to Computer Science', 'smith@lipscomb.edu', 'Fall', 2017);
