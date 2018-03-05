@@ -32,3 +32,7 @@ CREATE TABLE FILES (
   PRIMARY KEY (FILE_ID),
   FOREIGN KEY (FORM_ID) REFERENCES FORMS (FORM_ID) ON DELETE CASCADE
 );
+
+-- Create default admin user
+INSERT INTO USERS (USERNAME, PASSWORD,   EMAIL,           TYPE)
+VALUES            ('admin',  'password', 'admin@ask.com', 0);
