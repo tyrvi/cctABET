@@ -35,7 +35,7 @@ export function usersCourseData(email) {
 
     return dispatch => {
         dispatch(requestCourseData());
-        return fetch('users/course_data?' + query, {
+        return fetch('courses/?' + query, {
             method: 'GET',
             credentials: 'same-origin',
         }).then(res => res.json())
