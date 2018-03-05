@@ -38,6 +38,8 @@ function insert_test_data(req, res, next) {
         }).catch(err => {
             res.json({error: 'DB Error'});
         });
+    } else {
+        res.json({error: 'Missing db name'});
     }
 }
 

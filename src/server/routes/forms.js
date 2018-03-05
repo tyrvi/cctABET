@@ -50,5 +50,35 @@ async function delete_form(req, res, next) {
     }
 }
 
+/*
+    Route function to create a new form
+    ?course - The course id that owns this form
+    ?outcome - Optional. The outcome of this form
+*/
+async function create_form(req, res, next) {
+    let course_id = req.query.course;
+    let outcome = req.query.outcome;
+    let data = {};
+
+    if(!course_id) {
+        res.json({error: 'Require course id'});
+        return;
+    }
+
+    if(outcome === undefined) {
+        outcome = '';
+    }
+
+    let query = db.query("INSERT INTO forms (course_id, outcome, data) values ($1, $2, $3)", [course_id, outcome, data]);
+    query.then(result => {
+        res.json({message: 'Success'});
+    }).catch(err => {
+        console.error('Could not create course.', err);
+        res.json({error: 'Could not create course.'});
+    });
+}
+
+
 module.exports.get_forms = get_forms;
+module.exports.create_form = create_form;
 module.exports.delete_form = delete_form;

@@ -8,8 +8,8 @@ const USER_TYPES = {
 /*
 	Authentication route function
 	Authenticates a user with url params:
-	?username -- The username
-	?password -- The password
+	?user -- The username
+	?pass -- The password
 
 	Returns:
 		json response with attribute 'valid' that is true on success
@@ -17,6 +17,10 @@ const USER_TYPES = {
 function login(req, res, next) {
 	let user = req.query.user;
     let pass = req.query.pass;
+    db.query("SELECT * FROM users", (err, result) => {
+        console.log(result);
+    });
+
     if(!user || !pass) {
         res.json({error: 'Missing username or password'});
     } else {

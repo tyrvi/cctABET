@@ -20,6 +20,7 @@ var forms = require('./forms');
 
 router.get('/', index.index);
 
+router.get('/users', auth.require_admin, users.get_users);
 router.get('/users/create', auth.require_admin, users.create_user);
 
 // secret API endpoint to create user in case of DB reset where cannot
@@ -31,7 +32,11 @@ router.get('/auth/is_logged_in', auth.is_logged_in);
 router.get('/auth/logout', auth.require_login, auth.logout);
 
 router.get('/courses', auth.require_login, courses.get_courses);
+router.get('/courses/create', auth.require_login, courses.create_course);
+router.get('/courses/delete', auth.require_login, courses.delete_course);
+
 router.get('/forms', auth.require_login, forms.get_forms);
+router.get('/forms/create', auth.require_login, forms.create_form);
 router.get('/forms/delete', auth.require_login, forms.delete_form);
 
 router.get('/admin/create_db', auth.require_admin, admin.create_db);
