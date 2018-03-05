@@ -1,5 +1,4 @@
 var db = require('../db');
-var auth = require('./authenticate');
 
 /*
     Route function that creates a new user in the database
