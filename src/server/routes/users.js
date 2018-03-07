@@ -41,7 +41,17 @@ async function get_users(req, res, next) {
     }
 
     query.then(result => {
-        res.json(result.rows);
+        console.log(result.rows.length);
+
+        if(email) {
+            if(result.rows.length === 1) {
+                res.json(result.rows[0]);
+            } else {
+                res.json({error: 'User does not exist'});
+            }
+        } else {
+            res.json(result.rows);
+        }
     }).catch(err => {
         console.error('Error in users: ', err);
         res.json({error: 'Error fetching user data'});
@@ -50,8 +60,10 @@ async function get_users(req, res, next) {
 
 /*
     Route function that creates a new user in the database
-    ?user - the user name
-    ?pass - the password
+    ?user - The username
+    ?pass - The password
+    ?email - The email of the user
+    ?type - The type of the user
 
     Returns json response with error variable on failure
 */

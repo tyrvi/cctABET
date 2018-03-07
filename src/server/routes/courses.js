@@ -3,7 +3,7 @@ var db = require('../db');
 /*
     Route function that gets courses
     ?email - Optional parameter. Filters courses by user
-
+    ?forms - Optional paramater. If this is set, return forms associated with each course
     Returns json response with error variable set on failure
 */
 function get_courses(req, res, next) {
@@ -20,12 +20,46 @@ function get_courses(req, res, next) {
     }
 
     query.then(result => {
-        return res.json(result.rows);
+        Promise.all(result.rows.map(course => {
+            return get_forms(course).then(forms => {
+                // there was an error
+                if (!forms) {
+                    res.json({error: 'Error fetching course data'});
+                    return;
+                } else {
+                    course.forms = forms;
+                    return course;
+                }
+            })
+        })).then(data => {
+            res.json({courseData: data});
+        });
     }).catch(err => {
-        console.error('Error in courses: ', err);
+        console.error('Error in users: ', err);
         res.json({error: 'Error fetching course data'});
     });
 }
+
+/*
+    Helper function that gets the form data for a course
+    Params:
+        course: a course row from the course table
+    Returns:
+        A Promise that will contain the results of the query into the
+        forms table for the given course
+*/
+async function get_forms(course) {
+    try {
+        let result = await db.query("SELECT form_id, outcome FROM forms WHERE course_id=$1::int", [course.course_id]);
+        // console.log(result.rows);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+    }
+
+    return Promise.resolve(false);
+}
+
 
 /*
     Route function that deletes a course

@@ -1,30 +1,30 @@
 var db = require('../db');
 
 /*
-    Route function that gets forms
-    ?course - Optional parameter. Filters forms by course_id
+    Route function that gets a form
+    ?form - The form to get
 
     Returns json response with error variable set on failure
 */
 async function get_forms(req, res, next) {
-    let course = req.query.course;
+    let form = req.query.form;
 
-    let query;
-
-    if (course) {
-        // Get forms associated with a course
-        query = db.query("SELECT form_id, outcome, data FROM forms WHERE course_id=$1::integer", [course]);
+    if(!form) {
+        res.json({error: 'Require form parameter'});
     } else {
-        // We don't have a course id, get all courses
-        query = db.query("SELECT form_id, outcome, data FROM forms");
-    }
+        let query = db.query("SELECT form_id, outcome, data FROM forms WHERE form_id=$1::integer", [form]);
 
-    query.then(result => {
-        res.json(result.rows);
-    }).catch(err => {
-        console.error('Error in courses: ', err);
-        res.json({error: 'Error fetching course data'});
-    });
+        query.then(result => {
+            if(result.rows.length === 1) {
+                res.json(result.rows[0]);
+            } else {
+                res.json({error: 'Form does not exist'});
+            }
+        }).catch(err => {
+            console.error('Error in courses: ', err);
+            res.json({error: 'Error fetching course data'});
+        });
+    }
 }
 
 /*
