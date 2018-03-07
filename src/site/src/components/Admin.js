@@ -7,6 +7,7 @@ import {
     adminCreateUser
 } from '../actions/adminActions.js';
 import { USER_TYPES } from '../actions/loginActions.js';
+import UserList from './UserList.js';
 
 
 class Admin extends Component {
@@ -59,7 +60,7 @@ class Admin extends Component {
     render() {
         return (
             <div id="Admin">
-                <h3>UNLIMITED POWAH!!!</h3>
+                <h1>UNLIMITED POWAH!!!</h1>
                 <div>
                     <div className={this.props.requestError ? "visible failText" : "hidden"}>
                         Error: {this.props.requestError}
@@ -105,6 +106,7 @@ class Admin extends Component {
                     </select>
                     <button onClick={this.onCreateUserClick}>Create User</button>
                 </div>
+                <UserList />
             </div>
         );
     }
