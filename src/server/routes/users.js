@@ -1,5 +1,26 @@
 var db = require('../db');
 
+
+/*
+    Route function that deletes a user
+    ?email - The user to delete
+*/
+async function delete_user(req, res, next) {
+    let email = req.query.email;
+
+    if (email) {
+        let query = db.query("DELETE FROM users WHERE email=$1", [email]);
+        query.then(result => {
+            res.json({message: email + ' successfully deleted.'});
+        }).catch(err => {
+            console.error('Could not delete user.', err);
+            res.json({error: 'Could not delete user.'});
+        });
+    } else {
+        res.json({error: 'Require email param.'});
+    }
+}
+
 /*
     Route function that gets users
     ?email - Optional. Filters users by email
@@ -51,4 +72,5 @@ async function create_user(req, res, next) {
 
 module.exports.get_users = get_users;
 module.exports.create_user = create_user;
+module.exports.delete_user = delete_user;
 

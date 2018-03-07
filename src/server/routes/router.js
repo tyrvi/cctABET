@@ -22,6 +22,7 @@ router.get('/', index.index);
 
 router.get('/users', auth.require_admin, users.get_users);
 router.get('/users/create', auth.require_admin, users.create_user);
+router.get('/users/delete', auth.require_admin, users.delete_user);
 
 // secret API endpoint to create user in case of DB reset where cannot
 // insert test data
