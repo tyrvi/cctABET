@@ -29,19 +29,19 @@ class Accordion extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        courseData: state.dashboardReducer.courseData,
+        email: state.loginReducer.userData.email,
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         usersCourseData: (email) => {
             dispatch(usersCourseData(email))
         }
     };
-}
-
-const mapStateToProps = state => {
-    return {
-        courseData: state.dashboardReducer.courseData,
-        email: state.loginReducer.userData.email,
-    }
 }
 
 export default connect(

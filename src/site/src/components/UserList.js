@@ -33,7 +33,9 @@ class UserList extends Component {
 
         const users = this.state.userList.map((user, idx) => {
             return (
-                <User key={idx} username={user.username} email={user.email}
+                <User key={idx}
+                    username={user.username}
+                    email={user.email}
                     type={user.type} />
             );
         })
