@@ -67,6 +67,53 @@ export function createUserFail(response) {
     }
 }
 
+export const REQUEST_UPDATE_USER = 'REQUEST_UPDATE_USER';
+export function requestUpdateUser() {
+    return {
+        type: REQUEST_UPDATE_USER,
+    }
+}
+
+
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export function updateUserSuccess(response) {
+    return {
+        type: UPDATE_USER_SUCCESS,
+        response,
+    }
+}
+
+export const UPDATE_USER_FAIL = 'UPDATE_USER_FAIL';
+export function updateUserFail(response) {
+    return {
+        type: UPDATE_USER_FAIL,
+        response,
+    }
+}
+
+
+export const REQUEST_DELETE_USER = 'REQUEST_DELETE_USER';
+export function requestDeleteUser() {
+    return {
+        type: REQUEST_DELETE_USER,
+    }
+}
+
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export function deleteUserSuccess(response) {
+    return {
+        type: DELETE_USER_SUCCESS,
+        response,
+    }
+}
+
+export const DELETE_USER_FAIL = 'DELETE_USER_FAIL';
+export function deleteUserFail(response) {
+    return {
+        type: DELETE_USER_FAIL,
+        response,
+    }
+}
 
 /*
     Dispatches fetch request with a user, pass, email and type
@@ -79,10 +126,11 @@ export function createUserFail(response) {
         A function (thunk) that dispatchs requestCreateUser() then
         inserts the new user into the database.
 */
+// TODO: change to a POST request
 export function adminCreateUser(user, pass, email, type) {
     let query = 'user=' + user + '&pass=' + pass +
         '&email=' + email + '&type=' + type;
-    console.log(query);
+
     return dispatch => {
         dispatch(requestCreateUser());
         return fetch('users/create?' + query, {
@@ -153,5 +201,50 @@ export function insertTestData(db) {
                     dispatch(insertTestDataFail(json));
                 }
             })
+    }
+}
+
+
+export function adminUpdateUser(username, email, type) {
+    let body = {
+        username,
+        email,
+        type,
+    } // 'username=' + username +'&email=' + email + '&type' + type;
+
+    return dispatch => {
+        dispatch(requestUpdateUser());
+        return fetch('users/update', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: body,
+        }).then(res => res.json())
+            .then(json => {
+                if (!json.error) {
+                    dispatch(updateUserSuccess(json));
+                } else {
+                    dispatch(updateUserFail(json));
+                }
+            });
+    }
+}
+
+
+export function adminDeleteUser(email) {
+    let query = 'email=' + email;
+
+    return dispatch => {
+        dispatch(requestDeleteUser());
+        return fetch('users/delete?' + query, {
+            method: 'GET',
+            credentials: 'same-origin'
+        }).then(res => res.json())
+            .then(json => {
+                if (!json.error) {
+                    dispatch(deleteUserSuccess(json));
+                } else {
+                    dispatch(deleteUserFail(json));
+                }
+            });
     }
 }

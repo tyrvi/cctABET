@@ -8,9 +8,16 @@ import {
     REQUEST_CREATE_USER,
     CREATE_USER_SUCCESS,
     CREATE_USER_FAIL,
+    REQUEST_UPDATE_USER,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_FAIL,
+    REQUEST_DELETE_USER,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL
 } from '../actions/adminActions.js';
 
 
+// TODO: add handling of udpate user actions
 function adminReducer(state = {
     isDoingRequest: false,
     requestMessage: null,
@@ -72,6 +79,18 @@ function adminReducer(state = {
                 requestMessage: null,
                 requestError: action.response.error,
             });
+        case REQUEST_UPDATE_USER:
+            return state;
+        case UPDATE_USER_SUCCESS:
+            return state;
+        case UPDATE_USER_FAIL:
+            return state;
+        case REQUEST_DELETE_USER:
+            return state;
+        case DELETE_USER_SUCCESS:
+            return state;
+        case DELETE_USER_FAIL:
+            return state;
         default:
             return state;
     }
