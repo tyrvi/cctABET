@@ -9,14 +9,14 @@ class FormList extends Component {
             students: [
                 {studentName: '', pointsEarned: null},
                 {studentName: 'Thais', pointsEarned: 10},
-                {studentName: 'Conner', pointsEarned: 20},
-                {studentName: 'Andrew', pointsEarned: 9},
+                {studentName: 'Conner', pointsEarned: -20},
+                {studentName: 'Andrew', pointsEarned: 69},
             ],
         };
     }
 
-    onNumStudentsChange(event) {
-
+    addNumStudents(event) {
+        this.setState({students: this.state.students.concat({studentName: '', pointsEarned: null})});
     }
 
     render() {
@@ -29,10 +29,8 @@ class FormList extends Component {
 
         return (
             <div>
-                <input type='text' defaultValue={this.state.numStudents}
-                onChange={this.onNumStudentsChange} />
-
                 {studentList}
+                <button type="button" onClick={this.addNumStudents}>+</button>
             </div>
         )
     }
