@@ -2,21 +2,21 @@ var db = require('../db');
 
 /*
     Route function that gets courses
-    ?email - Optional parameter. Filters courses by user
+    ?user_id - Optional parameter. Filters courses by user
     ?forms - Optional paramater. If this is set, return forms associated with each course
     Returns json response with error variable set on failure
 */
 function get_courses(req, res, next) {
-    let email = req.query.email;
+    let user_id = req.query.user_id;
 
     let query;
 
-    if (email) {
+    if (user_id) {
         // Get courses associated with a user
-        query = db.query("SELECT course_id, course_name, semester, year FROM courses WHERE email=$1::text", [email]);
+        query = db.query("SELECT * FROM courses WHERE user_id=$1", [user_id]);
     } else {
-        // We don't have an email, get all courses
-        query = db.query("SELECT course_id, course_name, semester, year FROM courses");
+        // We don't have a user, get all courses
+        query = db.query("SELECT * FROM courses");
     }
 
     query.then(result => {
@@ -50,8 +50,7 @@ function get_courses(req, res, next) {
 */
 async function get_forms(course) {
     try {
-        let result = await db.query("SELECT form_id, outcome FROM forms WHERE course_id=$1::int", [course.course_id]);
-        // console.log(result.rows);
+        let result = await db.query("SELECT form_id, outcome FROM forms WHERE course_id=$1", [course.course_id]);
         return result.rows;
     } catch (err) {
         console.log(err);

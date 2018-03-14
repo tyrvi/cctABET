@@ -8,23 +8,20 @@ const USER_TYPES = {
 /*
 	Authentication route function
 	Authenticates a user with url params:
-	?user -- The username
+	?email -- The email for the user
 	?pass -- The password
 
 	Returns:
 		json response with attribute 'valid' that is true on success
 */
 function login(req, res, next) {
-	let user = req.query.user;
+	let email = req.query.email;
     let pass = req.query.pass;
-    db.query("SELECT * FROM users", (err, result) => {
-        console.log(result);
-    });
 
-    if(!user || !pass) {
-        res.json({error: 'Missing username or password'});
+    if(!email || !pass) {
+        res.json({error: 'Missing email or password'});
     } else {
-        db.query("SELECT * FROM users WHERE username=$1::text AND password=$2::text", [user, pass], (err, result) => {
+        db.query("SELECT * FROM users WHERE email=$1 AND password=$2", [email, pass], (err, result) => {
             if(err) {
                 console.log('Error in authenticate: ' + err);
                 res.json({error: 'Authentication error'});
@@ -33,7 +30,7 @@ function login(req, res, next) {
                 // Get the user from the result
                 let user = result['rows'][0];
 
-                // We don't need that
+                // We don't need the password
                 delete user.password;
 
                 // Store the user in the session
@@ -44,7 +41,7 @@ function login(req, res, next) {
                     userData: user,
                 });
             } else {
-                res.json({error: 'Incorrect username or password'});
+                res.json({error: 'Incorrect email or password'});
             }
         });
     }
@@ -118,7 +115,7 @@ async function logged_in(req) {
 
 		// Check if the user exists
 		try {
-			let result = await db.query("SELECT * FROM users WHERE username=$1::text", [user.username]);
+			let result = await db.query("SELECT * FROM users WHERE user_id=$1::integer", [user.user_id]);
             return result.rows.length == 1;
 		} catch(err) {
 			console.log(err);

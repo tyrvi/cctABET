@@ -2,17 +2,17 @@ var db = require('../db');
 
 /*
     Route function that gets a form
-    ?form - The form to get
+    ?form_id - The form to get
 
     Returns json response with error variable set on failure
 */
 async function get_forms(req, res, next) {
-    let form = req.query.form;
+    let form_id = req.query.form_id;
 
-    if(!form) {
+    if(!form_id) {
         res.json({error: 'Require form parameter'});
     } else {
-        let query = db.query("SELECT form_id, outcome, data FROM forms WHERE form_id=$1::integer", [form]);
+        let query = db.query("SELECT * FROM forms WHERE form_id=$1", [form_id]);
 
         query.then(result => {
             if(result.rows.length === 1) {
@@ -29,15 +29,15 @@ async function get_forms(req, res, next) {
 
 /*
     Route function that deletes a form
-    ?form - The form id to delete
+    ?form_id - The form id to delete
 
     Returns json response with error variable set on failure
 */
 async function delete_form(req, res, next) {
-    let form = req.query.form;
+    let form_id = req.query.form_id;
 
-    if (form) {
-        db.query("DELETE FROM forms WHERE form_id=$1::integer", [form], (err, result) => {
+    if (form_id) {
+        db.query("DELETE FROM forms WHERE form_id=$1", [form_id], (err, result) => {
             if(err) {
                 console.error('Could not delete form:', err);
                 res.json({error: 'Could not delete form.'});
@@ -52,11 +52,11 @@ async function delete_form(req, res, next) {
 
 /*
     Route function to create a new form
-    ?course - The course id that owns this form
+    ?course_id - The course id that owns this form
     ?outcome - Optional. The outcome of this form
 */
 async function create_form(req, res, next) {
-    let course_id = req.query.course;
+    let course_id = req.query.course_id;
     let outcome = req.query.outcome;
     let data = {};
 

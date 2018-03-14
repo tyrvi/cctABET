@@ -3,47 +3,47 @@ var db = require('../db');
 
 /*
     Route function that deletes a user
-    ?email - The user to delete
+    ?user_id - The user to delete
 */
 async function delete_user(req, res, next) {
-    let email = req.query.email;
+    let user_id = req.query.user_id;
 
-    if (email) {
-        let query = db.query("DELETE FROM users WHERE email=$1", [email]);
+    if (user_id) {
+        let query = db.query("DELETE FROM users WHERE user_id=$1", [user_id]);
         query.then(result => {
-            res.json({message: email + ' successfully deleted.'});
+            res.json({message: 'User successfully deleted.'});
         }).catch(err => {
             console.error('Could not delete user.', err);
             res.json({error: 'Could not delete user.'});
         });
     } else {
-        res.json({error: 'Require email param.'});
+        res.json({error: 'Require user_id param.'});
     }
 }
 
 /*
     Route function that gets users
-    ?email - Optional. Filters users by email
+    ?user_id - Optional. Filters users by email
 
     Returns json response with error variable on failure
 */
 async function get_users(req, res, next) {
-    let email = req.query.email;
+    let user_id = req.query.user_id;
 
     let query;
 
-    if (email) {
-        // Get forms associated with a course
-        query = db.query("SELECT username, email, type FROM users WHERE email=$1", [email]);
+    if (user_id) {
+        // Get user associated with user_id
+        query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users WHERE user_id=$1", [user_id]);
     } else {
-        // We don't have a course id, get all courses
-        query = db.query("SELECT username, email, type FROM users");
+        // We don't have a user id, get all users
+        query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users");
     }
 
     query.then(result => {
         console.log(result.rows.length);
 
-        if(email) {
+        if(user_id) {
             if(result.rows.length === 1) {
                 res.json(result.rows[0]);
             } else {
