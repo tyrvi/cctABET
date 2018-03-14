@@ -3,7 +3,7 @@ var db = require('../db');
 /*
     Route function that gets courses
     ?user_id - Optional parameter. Filters courses by user
-    ?forms - Optional paramater. If this is set, return forms associated with each course
+
     Returns json response with error variable set on failure
 */
 function get_courses(req, res, next) {
@@ -20,9 +20,11 @@ function get_courses(req, res, next) {
     }
 
     query.then(result => {
+        console.log(result);
+
         Promise.all(result.rows.map(course => {
             return get_forms(course).then(forms => {
-                // there was an error
+                // There was an error
                 if (!forms) {
                     res.json({error: 'Error fetching course data'});
                     return;
@@ -62,15 +64,15 @@ async function get_forms(course) {
 
 /*
     Route function that deletes a course
-    ?course - The course id to delete
+    ?course_id - The course id to delete
 
     Returns json response with error variable set on failure
 */
 async function delete_course(req, res, next) {
-    let course = req.query.course;
+    let course_id = req.query.course_id;
 
-    if (course) {
-        let query = db.query("DELETE FROM courses WHERE course_id=$1::integer", [parseInt(course)]);
+    if (course_id) {
+        let query = db.query("DELETE FROM courses WHERE course_id=$1", [course_id]);
         query.then(result => {
             res.json({message: 'Success'});
         }).catch(err => {
@@ -84,35 +86,27 @@ async function delete_course(req, res, next) {
 
 /*
     Route function to create a new course
-    ?name - The name of the new course
-    ?email - Optional. The email of the professor
-    ?semester - The semester this course is
-    ?year - The year the course is
+
+    {
+        course_name: string,
+        user_id: optional int,
+        semester: string,
+        year: int
+    }
 */
 async function create_course(req, res, next) {
-    let course_name = req.query.name;
-    let email = req.query.email;
-    let semester = req.query.semester;
-    let year = req.query.year;
+    console.log(req.body);
+    let course_name = req.body.course_name;
+    let user_id = req.body.user_id;
+    let semester = req.body.semester;
+    let year = req.body.year;
 
-    if(!course_name) {
-        res.json({error: 'Require name'});
+    if(!course_name || !semester || !year) {
+        res.json({error: 'Bad body'});
         return;
     }
 
-    if(email === undefined) {
-        email = null;
-    }
-
-    if(semester === undefined) {
-        semester = '';
-    }
-
-    if(year === undefined) {
-        year = 2000;
-    }
-
-    let query = db.query("INSERT INTO courses (course_name, email, semester, year) values ($1, $2, $3, $4)", [course_name, email, semester, year]);
+    let query = db.query("INSERT INTO courses (course_name, user_id, semester, year) values ($1, $2, $3, $4)", [course_name, user_id, semester, year]);
     query.then(result => {
         res.json({message: 'Success'});
     }).catch(err => {
