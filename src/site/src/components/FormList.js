@@ -39,13 +39,6 @@ class FormList extends Component {
         tmp[tmp.indexOf(student)].pointsEarned = event.target.value;
         this.setState({tmp:tmp});
     }
-    /*
-    createStudentList(event) {
-        for(var i=0;i<parseInt(event.target.value, 10);i++)
-        {
-            this.addNumStudent();
-        }
-    }*/
 
     render() {
         const studentList = this.state.students.map((student, idx) => {
@@ -76,6 +69,14 @@ export default FormList;
 */
   /*
   onChange={this.createStudentList.bind(this)
+    createStudentList(event) {
+        for(var i=0;i<parseInt(event.target.value, 10);i++)
+        {
+            this.addNumStudent();
+        }
+    }*/
+
+    /*
     createStudentList(event) {
         for(var i=0;i<parseInt(event.target.value, 10);i++)
         {

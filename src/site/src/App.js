@@ -3,7 +3,7 @@ import Login from './components/Login.js';
 import Dashboard from './components/Dashboard.js';
 import './App.css';
 import { connect } from 'react-redux';
-import { authCheckLoggedIn } from './actions/actions.js';
+import { authCheckLoggedIn } from './actions/loginActions.js';
 import Form from './components/Form.js';
 const feature = "Forms";
 

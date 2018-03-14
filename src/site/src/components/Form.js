@@ -6,16 +6,21 @@ class Form extends Component {
         super();
         this.state = {
             assessmentCoor: 'Arisoa',
+            email: 'Arisoa@bing.com',
             semester: 'Spring 2018',
             course: 'CS 4453 Artificial Intelligence',
         }
         this.updateCoordinator = this.updateCoordinator.bind(this);
         this.updateSemester = this.updateSemester.bind(this);
         this.updateCourse = this.updateCourse.bind(this);
+        this.updateEmail = this.updateEmail.bind(this);
     }
 
     updateCoordinator(event) {
         this.setState({assessmentCoor: event.target.value});
+    }
+    updateEmail(event) {
+        this.setState({email: event.target.value});
     }
     updateSemester(event) {
         this.setState({semester: event.target.value});
@@ -24,8 +29,6 @@ class Form extends Component {
         this.setState({course: event.target.value});
     }
 
-
-
     render() {
         console.log(this.state);
         return ( 
@@ -33,6 +36,10 @@ class Form extends Component {
                 <div>
                     <input type='text' value={this.state.assessmentCoor} onChange={this.updateCoordinator} />
                     Assessment Coodinator: 
+                </div>
+                <div>
+                    <input type='text' value={this.state.email} onChange={this.updateEmail}/>
+                    Email:
                 </div>
                 <div>
                     <input type='text' value={this.state.semester} onChange={this.updateSemester}/>
