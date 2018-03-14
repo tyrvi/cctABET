@@ -11,17 +11,16 @@ function get_courses(req, res, next) {
 
     let query;
 
-    if (user_id) {
+    if (user_id !== undefined) {
         // Get courses associated with a user
-        query = db.query("SELECT * FROM courses WHERE user_id=$1", [user_id]);
+        console.log(user_id);
+        query = db.query("SELECT c.course_id, c.course_name, c.user_id, c.semester, c.year, u.email FROM courses AS c INNER JOIN users AS u ON c.user_id=$1 AND u.user_id=$1 AND c.user_id=u.user_id", [user_id]);
     } else {
         // We don't have a user, get all courses
-        query = db.query("SELECT * FROM courses");
+        query = db.query("SELECT c.course_id, c.course_name, c.user_id, c.semester, c.year, u.email FROM courses AS c LEFT JOIN users AS u ON c.user_id=u.user_id");
     }
 
     query.then(result => {
-        console.log(result);
-
         Promise.all(result.rows.map(course => {
             return get_forms(course).then(forms => {
                 // There was an error
@@ -61,7 +60,6 @@ async function get_forms(course) {
     return Promise.resolve(false);
 }
 
-
 /*
     Route function that deletes a course
     ?course_id - The course id to delete
@@ -71,7 +69,7 @@ async function get_forms(course) {
 async function delete_course(req, res, next) {
     let course_id = req.query.course_id;
 
-    if (course_id) {
+    if (course_id !== undefined) {
         let query = db.query("DELETE FROM courses WHERE course_id=$1", [course_id]);
         query.then(result => {
             res.json({message: 'Success'});
@@ -95,13 +93,12 @@ async function delete_course(req, res, next) {
     }
 */
 async function create_course(req, res, next) {
-    console.log(req.body);
     let course_name = req.body.course_name;
     let user_id = req.body.user_id;
     let semester = req.body.semester;
     let year = req.body.year;
 
-    if(!course_name || !semester || !year) {
+    if(course_name === undefined || semester === undefined || year === undefined) {
         res.json({error: 'Bad body'});
         return;
     }
@@ -115,6 +112,39 @@ async function create_course(req, res, next) {
     });
 }
 
+/*
+    Route function to update a course
+
+    {
+        course_id: int
+        course_name: string,
+        user_id: optional int,
+        semester: string,
+        year: int
+    }
+*/
+async function update_course(req, res, next) {
+    let course_id = req.body.course_id;
+    let course_name = req.body.course_name;
+    let user_id = req.body.user_id;
+    let semester = req.body.semester;
+    let year = req.body.year;
+
+    if(course_id === undefined || course_name === undefined || semester === undefined || year === undefined) {
+        res.json({error: 'Bad body'});
+        return;
+    }
+
+    let query = db.query("UPDATE courses SET course_name=$1, user_id=$2, semester=$3, year=$4 WHERE course_id=$5", [course_name, user_id, semester, year, course_id]);
+    query.then(result => {
+        res.json({message: 'Success'});
+    }).catch(err => {
+        console.error('Could not update course.', err);
+        res.json({error: 'Could not update course.'});
+    });
+}
+
 module.exports.get_courses = get_courses;
 module.exports.create_course = create_course;
 module.exports.delete_course = delete_course;
+module.exports.update_course = update_course;

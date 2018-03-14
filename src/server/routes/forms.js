@@ -10,14 +10,14 @@ async function get_forms(req, res, next) {
     let form_id = req.query.form_id;
 
     let query;
-    if(!form_id) {
+    if(form_id === undefined) {
         query = db.query("SELECT * FROM forms");
     } else {
         query = db.query("SELECT * FROM forms WHERE form_id=$1", [form_id]);
     }
 
     query.then(result => {
-        if(form_id) {
+        if(form_id !== undefined) {
             if(result.rows.length === 1) {
                 res.json(result.rows[0]);
             } else {
@@ -41,7 +41,7 @@ async function get_forms(req, res, next) {
 async function delete_form(req, res, next) {
     let form_id = req.query.form_id;
 
-    if (form_id) {
+    if (form_id !== undefined) {
         db.query("DELETE FROM forms WHERE form_id=$1", [form_id], (err, result) => {
             if(err) {
                 console.error('Could not delete form:', err);
@@ -70,16 +70,16 @@ async function create_form(req, res, next) {
     let outcome = req.body.outcome;
     let data = req.body.data;
 
-    if(!course_id) {
+    if(course_id === undefined) {
         res.json({error: 'Bad body'});
         return;
     }
 
-    if(!data) {
+    if(data === undefined) {
         data = {};
     }
 
-    if(!outcome) {
+    if(outcome === undefined) {
         outcome = '';
     }
 
@@ -109,7 +109,7 @@ async function update_form(req, res, next) {
     let outcome = req.body.outcome;
     let data = req.body.data;
 
-    if(!form_id || !course_id || !outcome || !data) {
+    if(form_id === undefined || course_id === undefined || outcome === undefined || data === undefined) {
         res.json({error: 'Bad body'});
         return;
     }
