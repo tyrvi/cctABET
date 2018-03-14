@@ -31,8 +31,8 @@ class Accordion extends Component {
 
 const mapStateToProps = state => {
     return {
-        courseData: state.dashboardReducer.courseData,
-        email: state.loginReducer.userData.email,
+        courseData: state.dashboard.courseData,
+        email: state.login.userData.email,
     }
 }
 

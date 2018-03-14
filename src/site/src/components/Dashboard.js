@@ -31,7 +31,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        userType: state.loginReducer.userData.type,
+        userType: state.login.userData.type,
     }
 }
 

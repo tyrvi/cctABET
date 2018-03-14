@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        user: state.loginReducer.userData.username,
+        user: state.login.userData.username,
     }
 }
 
