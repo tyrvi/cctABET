@@ -29,88 +29,88 @@ INSERT INTO USERS (USER_ID, EMAIL, PASSWORD, F_NAME, L_NAME, PREFIX, TYPE)
 VALUES(10, 'smith@lipscomb.edu', '123', 'John', 'Smith', 'Dr.', 0);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(0, 'Intro to Computer Science', '0', 'Fall', 2017);
+VALUES(0, 'Intro to Computer Science', 0, 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(1, 'Intro to Computer Programming', '0', 'Fall', 2017);
+VALUES(1, 'Intro to Computer Programming', 0, 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(2, 'Object Oriented Systems and Design', '0', 'Fall', 2017);
+VALUES(2, 'Object Oriented Systems and Design', 0, 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(3, 'Computer Applications', '1', 'Fall', 2017);
+VALUES(3, 'Computer Applications', 1, 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(4, 'Data Structures & Algorithms', '1', 'Fall', 2017);
+VALUES(4, 'Data Structures & Algorithms', 1, 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(5, 'Computer Organization', '1', 'Fall', 2017);
+VALUES(5, 'Computer Organization', 1, 'Fall', 2017);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(6, 'Operating Systems', '2', 'Spring', 2018);
+VALUES(6, 'Operating Systems', 2, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(7, 'Design and Analysis of Algorithms', '2', 'Spring', 2018);
+VALUES(7, 'Design and Analysis of Algorithms', 2, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(8, 'Artificial Intelligence', '3', 'Spring', 2018);
+VALUES(8, 'Artificial Intelligence', 3, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(9, 'Compiler Construction', '3', 'Spring', 2018);
+VALUES(9, 'Compiler Construction', 3, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(10, 'Comparative Programming', '4', 'Spring', 2018);
+VALUES(10, 'Comparative Programming', 4, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(11, 'Senior Seminar', '4', 'Spring', 2018);
+VALUES(11, 'Senior Seminar', 4, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(12, 'Senior Project', '9', 'Spring', 2018);
+VALUES(12, 'Senior Project', 9, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(13, 'Intro to Software Engineering', '9', 'Spring', 2018);
+VALUES(13, 'Intro to Software Engineering', 9, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(14, 'Web Application Development I', '5', 'Spring', 2018);
+VALUES(14, 'Web Application Development I', 5, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(15, 'Into to Information Security', '5', 'Spring', 2018);
+VALUES(15, 'Into to Information Security', 5, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(16, 'Programming Challenges', '5', 'Spring', 2018);
+VALUES(16, 'Programming Challenges', 5, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(17, 'Network Principles', '6', 'Spring', 2018);
+VALUES(17, 'Network Principles', 6, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(18, 'Cryptography', '6', 'Spring', 2018);
+VALUES(18, 'Cryptography', 6, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(19, 'Database Management', '7', 'Spring', 2018);
+VALUES(19, 'Database Management', 7, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(20, 'Competition Programming', '7', 'Spring', 2018);
+VALUES(20, 'Competition Programming', 7, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(21, 'Computability and Complexity Theory', '7', 'Spring', 2018);
+VALUES(21, 'Computability and Complexity Theory', 7, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(22, 'Computer Graphics', '8', 'Spring', 2018);
+VALUES(22, 'Computer Graphics', 8, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(23, 'Fundamentals of Automata', '8', 'Spring', 2018);
+VALUES(23, 'Fundamentals of Automata', 8, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(24, 'Numerical Methods', '8', 'Spring', 2018);
+VALUES(24, 'Numerical Methods', 8, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(25, 'Internship', '9', 'Spring', 2018);
+VALUES(25, 'Internship', 9, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(26, 'Math Structures', '9', 'Spring', 2018);
+VALUES(26, 'Math Structures', 9, 'Spring', 2018);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
-VALUES(27, 'Algorithmic Graph Theory', '9', 'Spring', 2018);
+VALUES(27, 'Algorithmic Graph Theory', 9, 'Spring', 2018);
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
 VALUES(0, 1, 'Knowledge Application', '{}');
