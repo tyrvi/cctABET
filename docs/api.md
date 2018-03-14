@@ -1,9 +1,12 @@
 ## Course Endpoints
 
 ### GET `/courses`
-`?email` - Optional parameter. Filters courses by user
+Parameters:
 
-Returns 
+`?user_id` - Optional parameter. Filters courses by user
+
+Returns:
+
 ```
 [
   {
@@ -31,12 +34,18 @@ On error:
 ```
 
 ### POST `/courses/update`
-???
+
+Parameters:
+```
+{
+    
+}
+```
 
 
 ### GET `/courses/delete`
 
-`?course` - The course id to delete
+`?course_id` - The course id to delete
 
 On success:
 
