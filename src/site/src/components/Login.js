@@ -45,7 +45,7 @@ class Login extends Component {
                 </div>
                 <div>
                     <p className={this.state.retry ? "visible" : "hidden"} >
-                        Incorrect username/password
+                        Incorrect email/password
                     </p>
                 </div>
                 <div>

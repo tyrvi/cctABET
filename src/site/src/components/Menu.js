@@ -18,7 +18,7 @@ class Menu extends Component {
     render() {
         return (
             <div id="Menu">
-                <h1>Hello, {this.props.user}</h1>
+                <h1>Hello, {this.props.fName} {this.props.lName}</h1>
                 <button type="button">Dashboard</button>
                 <button type="button">Admin</button>
                 <button type="button" onClick={this.onLogoutClick}>Logout</button>
@@ -37,7 +37,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        user: state.login.userData.username,
+        fName: state.login.userData.f_name,
+        lName: state.login.userData.l_name,
     }
 }
 

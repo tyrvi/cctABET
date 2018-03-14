@@ -113,7 +113,7 @@ INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
 VALUES(27, 'Algorithmic Graph Theory', 9, 'Spring', 2018);
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
-VALUES(0, 1, 'Knowledge Application', '{}');
+VALUES(0, 0, 'Knowledge Application', '{}');
 
 INSERT INTO FORMS (FORM_ID, COURSE_ID, OUTCOME, DATA)
 VALUES(1, 1, 'Problem Analysis', '{}');
