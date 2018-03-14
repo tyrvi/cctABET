@@ -2,29 +2,34 @@ var db = require('../db');
 
 /*
     Route function that gets a form
-    ?form_id - The form to get
+    ?form_id - Optional. The form to get
 
     Returns json response with error variable set on failure
 */
 async function get_forms(req, res, next) {
     let form_id = req.query.form_id;
 
+    let query;
     if(!form_id) {
-        res.json({error: 'Require form parameter'});
+        query = db.query("SELECT * FROM forms");
     } else {
-        let query = db.query("SELECT * FROM forms WHERE form_id=$1", [form_id]);
+        query = db.query("SELECT * FROM forms WHERE form_id=$1", [form_id]);
+    }
 
-        query.then(result => {
+    query.then(result => {
+        if(form_id) {
             if(result.rows.length === 1) {
                 res.json(result.rows[0]);
             } else {
                 res.json({error: 'Form does not exist'});
             }
-        }).catch(err => {
-            console.error('Error in courses: ', err);
-            res.json({error: 'Error fetching course data'});
-        });
-    }
+        } else {
+            res.json(result.rows);
+        }
+    }).catch(err => {
+        console.error('Error in forms: ', err);
+        res.json({error: 'Error fetching form data'});
+    });
 }
 
 /*
@@ -46,26 +51,35 @@ async function delete_form(req, res, next) {
             }
         });
     } else {
-        res.json({error: 'Require form param.'});
+        res.json({error: 'Require form_id param.'});
     }
 }
 
 /*
     Route function to create a new form
-    ?course_id - The course id that owns this form
-    ?outcome - Optional. The outcome of this form
+
+    Parameters:
+    {
+        course_id: integer,
+        outcome: optional string,
+        data: optional object
+    }
 */
 async function create_form(req, res, next) {
-    let course_id = req.query.course_id;
-    let outcome = req.query.outcome;
-    let data = {};
+    let course_id = req.body.course_id;
+    let outcome = req.body.outcome;
+    let data = req.body.data;
 
     if(!course_id) {
-        res.json({error: 'Require course id'});
+        res.json({error: 'Bad body'});
         return;
     }
 
-    if(outcome === undefined) {
+    if(!data) {
+        data = {};
+    }
+
+    if(!outcome) {
         outcome = '';
     }
 
@@ -78,7 +92,39 @@ async function create_form(req, res, next) {
     });
 }
 
+/*
+    Route function to update a form
+
+    Parameters:
+    {
+        form_id: integer
+        course_id: integer,
+        outcome: string,
+        data: object
+    }
+*/
+async function update_form(req, res, next) {
+    let form_id = req.body.form_id;
+    let course_id = req.body.course_id;
+    let outcome = req.body.outcome;
+    let data = req.body.data;
+
+    if(!form_id || !course_id || !outcome || !data) {
+        res.json({error: 'Bad body'});
+        return;
+    }
+
+    let query = db.query("UPDATE forms SET course_id=$1, outcome=$2, data=$3 WHERE form_id=$4", [course_id, outcome, data, form_id]);
+    query.then(result => {
+        res.json({message: 'Success'});
+    }).catch(err => {
+        console.error('Could not update course.', err);
+        res.json({error: 'Could not update course.'});
+    });
+}
+
 
 module.exports.get_forms = get_forms;
 module.exports.create_form = create_form;
 module.exports.delete_form = delete_form;
+module.exports.update_form = update_form;
