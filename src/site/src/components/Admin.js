@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './Admin.css';
+import './styles/Admin.css';
 import {
     adminCreateDB,
     insertTestData,

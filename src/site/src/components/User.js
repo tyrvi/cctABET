@@ -26,6 +26,9 @@ class User extends Component {
         console.log("user being deleted");
 
         // this.props.deleteUser(this.state.email);
+
+        // TODO: add refetching of User List
+
     }
 
     onUserUpdate() {
@@ -39,6 +42,8 @@ class User extends Component {
         // );
 
         this.setState({editing: !this.state.editing});
+
+        // TODO: add refetching of User List
     }
 
     onEdit() {

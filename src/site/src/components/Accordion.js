@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { usersCourseData } from '../actions/dashboardActions.js';
-import './Accordion.css';
+import './styles/Accordion.css';
 import AccordionItem from './AccordionItem';
 
 

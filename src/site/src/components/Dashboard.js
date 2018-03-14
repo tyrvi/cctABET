@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './Dashboard.css';
+import './styles/Dashboard.css';
 import Accordion from './Accordion.js';
 import Menu from './Menu.js';
 import Admin from './Admin.js';
