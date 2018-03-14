@@ -29,6 +29,11 @@ class UserList extends Component {
         }
     }
 
+    componentDidMount() {
+        // TODO: fetch user list
+
+    }
+
     render() {
 
         const users = this.state.userList.map((user, idx) => {
@@ -43,7 +48,9 @@ class UserList extends Component {
         return (
             <div>
                 <h3>User List</h3>
-                {users}
+                <div>
+                    {users}
+                </div>
             </div>
         );
     }

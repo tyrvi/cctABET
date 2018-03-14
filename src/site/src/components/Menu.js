@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './Menu.css';
+import './styles/Menu.css';
 import { authLogout } from '../actions/loginActions.js';
 
 
