@@ -1,7 +1,4 @@
 INSERT INTO USERS (USER_ID, EMAIL, PASSWORD, F_NAME, L_NAME, PREFIX, TYPE)
-VALUES(0, 'smith@lipscomb.edu', '123', 'John', 'Smith', 'Dr.', 0);
-
-INSERT INTO USERS (USER_ID, EMAIL, PASSWORD, F_NAME, L_NAME, PREFIX, TYPE)
 VALUES(1, 'johnson@lipscomb.edu', '123', 'Dwayne', 'Johnson', 'Dr.', 1);
 
 INSERT INTO USERS (USER_ID, EMAIL, PASSWORD, F_NAME, L_NAME, PREFIX, TYPE)
@@ -27,6 +24,9 @@ VALUES(8, 'moore@lipscomb.edu', '123', 'Matt', 'Moore', 'Mr.', 1);
 
 INSERT INTO USERS (USER_ID, EMAIL, PASSWORD, F_NAME, L_NAME, PREFIX, TYPE)
 VALUES(9, 'taylor@lipscomb.edu', '123', 'Zachary', 'Taylor', 'Dr.', 1);
+
+INSERT INTO USERS (USER_ID, EMAIL, PASSWORD, F_NAME, L_NAME, PREFIX, TYPE)
+VALUES(10, 'smith@lipscomb.edu', '123', 'John', 'Smith', 'Dr.', 0);
 
 INSERT INTO COURSES (COURSE_ID, COURSE_NAME, USER_ID, SEMESTER, YEAR)
 VALUES(0, 'Intro to Computer Science', '0', 'Fall', 2017);
