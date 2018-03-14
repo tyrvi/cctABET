@@ -41,7 +41,8 @@ class UserList extends Component {
                 <User key={idx}
                     username={user.username}
                     email={user.email}
-                    type={user.type} />
+                    type={user.type}
+                />
             );
         })
 

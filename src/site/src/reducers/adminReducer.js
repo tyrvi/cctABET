@@ -4,16 +4,7 @@ import {
     CREATE_DB_FAIL,
     REQUEST_INSERT_TEST_DATA,
     INSERT_TEST_DATA_SUCCESS,
-    INSERT_TEST_DATA_FAIL,
-    REQUEST_CREATE_USER,
-    CREATE_USER_SUCCESS,
-    CREATE_USER_FAIL,
-    REQUEST_UPDATE_USER,
-    UPDATE_USER_SUCCESS,
-    UPDATE_USER_FAIL,
-    REQUEST_DELETE_USER,
-    DELETE_USER_SUCCESS,
-    DELETE_USER_FAIL
+    INSERT_TEST_DATA_FAIL
 } from '../actions/adminActions.js';
 
 
@@ -60,37 +51,6 @@ function adminReducer(state = {
                 requestMessage: null,
                 requestError: action.response.error,
             });
-        case REQUEST_CREATE_USER:
-            return Object.assign({}, state, {
-                isDoingRequest: true,
-                requestMessage: null,
-                requestError: null,
-            });
-        case CREATE_USER_SUCCESS:
-            console.log(action);
-            return Object.assign({}, state, {
-                isDoingRequest: true,
-                requestMessage: action.response.message,
-                requestError: null,
-            });
-        case CREATE_USER_FAIL:
-            return Object.assign({}, state, {
-                isDoingRequest: true,
-                requestMessage: null,
-                requestError: action.response.error,
-            });
-        case REQUEST_UPDATE_USER:
-            return state;
-        case UPDATE_USER_SUCCESS:
-            return state;
-        case UPDATE_USER_FAIL:
-            return state;
-        case REQUEST_DELETE_USER:
-            return state;
-        case DELETE_USER_SUCCESS:
-            return state;
-        case DELETE_USER_FAIL:
-            return state;
         default:
             return state;
     }

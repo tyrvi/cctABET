@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import './styles/Admin.css';
 import {
     adminCreateDB,
-    insertTestData,
-    adminCreateUser
+    insertTestData
 } from '../actions/adminActions.js';
+import { createUser } from '../actions/userListActions.js';
 import { USER_TYPES } from '../actions/loginActions.js';
 import UserList from './UserList.js';
 
@@ -121,15 +121,15 @@ const mapDispatchToProps = dispatch => {
             dispatch(insertTestData(db))
         },
         createUser: (user, pass, email, type) => {
-            dispatch(adminCreateUser(user, pass, email, type))
+            dispatch(createUser(user, pass, email, type))
         },
     }
 }
 
 const mapStateToProps = state => {
     return {
-        requestMessage: state.adminReducer.requestMessage,
-        requestError: state.adminReducer.requestError,
+        requestMessage: state.admin.requestMessage,
+        requestError: state.admin.requestError,
     }
 }
 

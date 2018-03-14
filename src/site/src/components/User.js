@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_TYPES } from '../actions/loginActions.js';
-import { adminUpdateUser, adminDeleteUser } from '../actions/adminActions.js';
+import { updateUser, deleteUser } from '../actions/userListActions.js';
 
 
 class User extends Component {
@@ -15,13 +15,13 @@ class User extends Component {
             editing: false,
         }
 
-        this.onUserDelete = this.onUserDelete.bind(this);
-        this.onUserUpdate = this.onUserUpdate.bind(this);
-        this.onEditCancel = this.onEditCancel.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
         this.onEdit = this.onEdit.bind(this);
+        this.onEditCancel = this.onEditCancel.bind(this);
     }
 
-    onUserDelete() {
+    onDelete() {
         // TODO: add confirmation of user delete
         console.log("user being deleted");
 
@@ -31,7 +31,7 @@ class User extends Component {
 
     }
 
-    onUserUpdate() {
+    onUpdate() {
         // TODO: add confirmation of user update`
         console.log("user being updated");
 
@@ -41,13 +41,13 @@ class User extends Component {
         //     this.state.type
         // );
 
-        this.setState({editing: !this.state.editing});
+        this.setState({editing: false});
 
         // TODO: add refetching of User List
     }
 
     onEdit() {
-        this.setState({editing: !this.state.editing});
+        this.setState({editing: true});
     }
 
     onEditCancel() {
@@ -67,7 +67,7 @@ class User extends Component {
                     <div>Email: {this.state.email}</div>
                     <div>User Type: {this.state.type ? "Standard" : "Admin"}</div>
                     <button onClick={this.onEdit}>Edit</button>
-                    <button onClick={this.onUserDelete}>Delete</button>
+                    <button onClick={this.onDelete}>Delete</button>
                 </div>
             );
         } else {
@@ -82,7 +82,7 @@ class User extends Component {
                         <option value={USER_TYPES.STANDARD_USER}>Standard</option>
                         <option value={USER_TYPES.ADMIN_USER}>Admin</option>
                     </select>
-                    <button onClick={this.onUserUpdate}>Update</button>
+                    <button onClick={this.onUpdate}>Update</button>
                     <button onClick={this.onEditCancel}>Cancel</button>
                 </div>
             );
@@ -95,10 +95,10 @@ class User extends Component {
 const mapDispatchToProps = dispatch => {
     return {
         updateUser: (username, email, type) => {
-            dispatch(adminUpdateUser(username, email, type));
+            dispatch(updateUser(username, email, type));
         },
         deleteUser: (email) => {
-            dispatch(adminDeleteUser(email));
+            dispatch(deleteUser(email));
         }
     }
 }
