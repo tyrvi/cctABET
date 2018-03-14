@@ -75,6 +75,3 @@ module.exports.query = (...args) => {
     // Forward arguments to db.query();
     return db.query.apply(db, args);
 };
-
-
-
