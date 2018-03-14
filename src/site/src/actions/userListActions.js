@@ -69,6 +69,46 @@ export function deleteUserFail(response) {
     }
 }
 
+export const REQUEST_USER_LIST = 'REQUEST_USER_LIST';
+export function requestUserList() {
+    return {
+        type: REQUEST_USER_LIST,
+    }
+}
+
+export const USER_LIST_SUCCESS = 'USER_LIST_SUCCESS';
+export function userListSuccess(response) {
+    return {
+        type: USER_LIST_SUCCESS,
+        response
+    }
+}
+
+export const USER_LIST_FAIL = 'USER_LIST_FAIL';
+export function userListFail(response) {
+    return {
+        type: USER_LIST_FAIL,
+        response
+    }
+}
+
+export function getUserList() {
+    return dispatch => {
+        dispatch(requestUserList());
+        return fetch('users/', {
+            method: 'GET',
+            credentials: 'same-origin'
+        }).then(res => res.json())
+            .then(json => {
+                if (!json.error) {
+                    dispatch(userListSuccess(json));
+                } else {
+                    dispatch(userListFail(json));
+                }
+            })
+    };
+}
+
 /*
     Dispatches fetch request with a user, pass, email and type
     Params:
@@ -113,7 +153,10 @@ export function updateUser(username, email, type) {
         return fetch('users/update', {
             method: 'POST',
             credentials: 'same-origin',
-            body: body,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(body),
         }).then(res => res.json())
             .then(json => {
                 if (!json.error) {
@@ -126,8 +169,8 @@ export function updateUser(username, email, type) {
 }
 
 
-export function deleteUser(email) {
-    let query = 'email=' + email;
+export function deleteUser(user_id) {
+    let query = 'user_id=' + user_id;
 
     return dispatch => {
         dispatch(requestDeleteUser());

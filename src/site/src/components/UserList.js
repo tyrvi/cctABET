@@ -1,50 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { USER_TYPES } from '../actions/loginActions.js';
 import User from './User.js';
+import { getUserList } from '../actions/userListActions.js';
 
 
 class UserList extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            userList: [
-                {
-                    username: 'bob',
-                    email: 'bob@lipscomb.edu',
-                    type: USER_TYPES.STANDARD_USER,
-                },
-                {
-                    username: 'THE SENATE',
-                    email: 'senate@lipscomb.edu',
-                    type: USER_TYPES.ADMIN_USER,
-                },
-                {
-                    username: 'hello there',
-                    email: 'generalkenobi@lipscomb.edu',
-                    type: USER_TYPES.STANDARD_USER,
-                }
-            ]
-        }
-    }
-
     componentDidMount() {
-        // TODO: fetch user list
-
+        this.props.getUserList();
     }
 
     render() {
-
-        const users = this.state.userList.map((user, idx) => {
-            return (
-                <User key={idx}
-                    username={user.username}
-                    email={user.email}
-                    type={user.type}
-                />
-            );
-        })
+        let users = null;
+        if (this.props.userList) {
+            users = this.props.userList.map((user, idx) => {
+                return (
+                    <User key={idx}
+                        user_id={user.user_id}
+                        email={user.email}
+                        prefix={user.prefix}
+                        f_name={user.f_name}
+                        l_name={user.l_name}
+                        type={user.type}
+                    />
+                );
+            })
+        }
 
         return (
             <div>
@@ -57,7 +37,21 @@ class UserList extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        userList: state.users.userList,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getUserList: () => {
+            dispatch(getUserList());
+        }
+    }
+}
+
 export default connect(
-    null,
-    null
+    mapStateToProps,
+    mapDispatchToProps,
 )(UserList);
