@@ -9,12 +9,12 @@ class User extends Component {
         super(props);
 
         this.state = {
-            user_id: this.props.user_id,
-            email: this.props.email,
-            prefix: this.props.prefix,
-            f_name: this.props.f_name,
-            l_name: this.props.l_name,
-            type: this.props.type,
+            user_id: this.props.user.user_id,
+            email: this.props.user.email,
+            prefix: this.props.user.prefix,
+            f_name: this.props.user.f_name,
+            l_name: this.props.user.l_name,
+            type: this.props.user.type,
             editing: false,
         }
 
@@ -54,13 +54,14 @@ class User extends Component {
     }
 
     onEditCancel() {
+        console.log(this.props.user);
         this.setState({
-            user_id: this.props.user_id,
-            email: this.props.email,
-            prefix: this.props.prefix,
-            f_name: this.props.f_name,
-            l_name: this.props.l_name,
-            type: this.props.type,
+            user_id: this.props.user.user_id,
+            email: this.props.user.email,
+            prefix: this.props.user.prefix,
+            f_name: this.props.user.f_name,
+            l_name: this.props.user.l_name,
+            type: this.props.user.type,
             editing: false,
         })
     }

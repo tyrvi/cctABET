@@ -1,7 +1,8 @@
 export const REQUEST_CREATE_USER = "REQUEST_CREATE_USER";
-export function requestCreateUser() {
+export function requestCreateUser(query) {
     return {
         type: REQUEST_CREATE_USER,
+        query
     }
 }
 
@@ -22,9 +23,10 @@ export function createUserFail(response) {
 }
 
 export const REQUEST_UPDATE_USER = 'REQUEST_UPDATE_USER';
-export function requestUpdateUser() {
+export function requestUpdateUser(query) {
     return {
         type: REQUEST_UPDATE_USER,
+        query
     }
 }
 
@@ -47,9 +49,10 @@ export function updateUserFail(response) {
 
 
 export const REQUEST_DELETE_USER = 'REQUEST_DELETE_USER';
-export function requestDeleteUser() {
+export function requestDeleteUser(query) {
     return {
         type: REQUEST_DELETE_USER,
+        query
     }
 }
 
@@ -70,9 +73,10 @@ export function deleteUserFail(response) {
 }
 
 export const REQUEST_USER_LIST = 'REQUEST_USER_LIST';
-export function requestUserList() {
+export function requestUserList(query) {
     return {
         type: REQUEST_USER_LIST,
+        query
     }
 }
 
@@ -92,10 +96,10 @@ export function userListFail(response) {
     }
 }
 
-export function getUserList() {
+export function getUserList(query = '') {
     return dispatch => {
-        dispatch(requestUserList());
-        return fetch('users/', {
+        dispatch(requestUserList(query));
+        return fetch('users?' + query, {
             method: 'GET',
             credentials: 'same-origin'
         }).then(res => res.json())
@@ -126,7 +130,7 @@ export function createUser(user, pass, email, type) {
         '&email=' + email + '&type=' + type;
 
     return dispatch => {
-        dispatch(requestCreateUser());
+        dispatch(requestCreateUser(query));
         return fetch('users/create?' + query, {
             method: 'GET',
             credentials: 'same-origin',
@@ -146,10 +150,10 @@ export function updateUser(username, email, type) {
         username,
         email,
         type,
-    } // 'username=' + username +'&email=' + email + '&type' + type;
+    }
 
     return dispatch => {
-        dispatch(requestUpdateUser());
+        dispatch(requestUpdateUser(body));
         return fetch('users/update', {
             method: 'POST',
             credentials: 'same-origin',
@@ -173,7 +177,7 @@ export function deleteUser(user_id) {
     let query = 'user_id=' + user_id;
 
     return dispatch => {
-        dispatch(requestDeleteUser());
+        dispatch(requestDeleteUser(query));
         return fetch('users/delete?' + query, {
             method: 'GET',
             credentials: 'same-origin'

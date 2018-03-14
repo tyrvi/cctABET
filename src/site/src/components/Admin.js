@@ -8,6 +8,7 @@ import {
 import { createUser } from '../actions/userListActions.js';
 import { USER_TYPES } from '../actions/loginActions.js';
 import UserList from './UserList.js';
+import CourseList from './CourseList.js';
 
 
 class Admin extends Component {
@@ -107,6 +108,7 @@ class Admin extends Component {
                     <button onClick={this.onCreateUserClick}>Create User</button>
                 </div>
                 <UserList />
+                <CourseList />
             </div>
         );
     }

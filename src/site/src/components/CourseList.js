@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Course from './Course.js';
+import './styles/CourseList.css';
+import { getCourseList } from '../actions/courseListActions.js';
 
 
 class CourseList extends Component {
@@ -8,9 +10,10 @@ class CourseList extends Component {
         super(props);
 
         this.state = {
+            isOpen: false,
             courseFilter: {
-                semester: 'Fall',
-                year: 2018
+                semester: '',
+                year: ''
             },
             courseList: [
                 {
@@ -33,45 +36,86 @@ class CourseList extends Component {
                 },
             ]
         }
+
+        this.onCourseListClick = this.onCourseListClick.bind(this);
+        this.onFilterClick = this.onFilterClick.bind(this);
+    }
+
+    componentDidMount() {
+        // TODO: fetch course list data
+        this.props.getCourseList(this.state.courseFilter.semester, this.state.courseFilter.year);
+    }
+
+    onCourseListClick() {
+        this.setState({isOpen: !this.state.isOpen});
+    }
+
+    onFilterClick() {
+        // TODO: fetch filtered courselist
+        this.props.getCourseList(this.state.courseFilter.semester, this.state.courseFilter.year);
     }
 
     render() {
-        const courses = this.state.courseList.map((course, idx) => {
-            return (
-                <Course key={idx}
-                    course={course}
-                />
-            );
-        });
+        let courses = null;
+        if (this.props.courseList) {
+            courses = this.state.courseList.map((course, idx) => {
+                return (
+                    <Course key={idx}
+                        course={course}
+                    />
+                );
+            });
+        }
 
         return (
             <div>
-                <h3>Course List</h3>
+                <h3>Courses</h3>
                 <div>
                     <h5>Course Filters</h5>
-                    <select value={this.state.courseFilter.semester}
-                        onChange={event => this.setState({courseFilter: Object.assign({}, this.state.courseFilter, {
-                        semester: event.target.value
-                    })})}>
-                        <option value='Fall'>Fall</option>
-                        <option value='Spring'>Spring</option>
-                        <option value='Summer'>Summer</option>
-                    </select>
-                    <input type="number" value={this.state.courseFilter.year}
-                        onChange={event => this.setState({courseFilter: Object.assign({}, this.state.courseFilter, {
-                            year: event.target.value
-                        })})}/>
+                    <div>
+                        Semester:<select value={this.state.courseFilter.semester}
+                            onChange={event => this.setState({courseFilter: Object.assign({}, this.state.courseFilter, {
+                            semester: event.target.value
+                        })})}>
+                            <option value=''></option>
+                            <option value='Fall'>Fall</option>
+                            <option value='Spring'>Spring</option>
+                            <option value='Summer'>Summer</option>
+                        </select>
+                        Year:<input type="number" value={this.state.courseFilter.year}
+                            onChange={event => this.setState({courseFilter: Object.assign({}, this.state.courseFilter, {
+                                year: event.target.value
+                            })})}/>
+                        <button onClick={this.onFilterClick}>Filter</button>
+                    </div>
                 </div>
                 <div>
-                    <h5>Courses</h5>
-                    {courses}
+                    <h5 onClick={this.onCourseListClick}>Course List</h5>
+                    <button onClick={this.onCourseListClick}>{this.state.isOpen ? "hide" : "show"}</button>
+                    <div className={this.state.isOpen ? "" : "hidden"}>
+                        {courses}
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        courseList: state.courses.courseList,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getCourseList: (semester = null, year = null) => {
+            dispatch(getCourseList(semester, year));
+        }
+    }
+}
+
 export default connect(
-    null,
-    null
+    mapStateToProps,
+    mapDispatchToProps
 )(CourseList);
