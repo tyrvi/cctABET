@@ -23,18 +23,23 @@ async function delete_user(req, res, next) {
 
 /*
     Route function that gets users
-    ?user_id - Optional. Filters users by email
+    ?user_id - Optional. Filters users by user_id
+    ?email - Optional. Filters users by email
 
     Returns json response with error variable on failure
 */
 async function get_users(req, res, next) {
     let user_id = req.query.user_id;
+    let email = req.query.email;
 
     let query;
 
     if (user_id !== undefined) {
         // Get user associated with user_id
         query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users WHERE user_id=$1", [user_id]);
+    } else if(email !== undefined) {
+        // Get user associated with email
+        query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users WHERE email=$1", [email]);
     } else {
         // We don't have a user id, get all users
         query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users");
@@ -43,7 +48,7 @@ async function get_users(req, res, next) {
     query.then(result => {
         console.log(result.rows.length);
 
-        if(user_id !== undefined) {
+        if(user_id !== undefined || email !== undefined) {
             if(result.rows.length === 1) {
                 res.json(result.rows[0]);
             } else {

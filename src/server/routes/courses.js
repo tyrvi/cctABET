@@ -1,25 +1,46 @@
 var db = require('../db');
+var knex = require('knex')({client: 'pg'});
 
 /*
     Route function that gets courses
     ?user_id - Optional parameter. Filters courses by user
+    ?year - Optional parameter. Filters courses by year
+    ?semester - Optional parameter. Filters courses by semester
+    ?email - Optional parameter. Filters courses by email
 
     Returns json response with error variable set on failure
 */
 function get_courses(req, res, next) {
     let user_id = req.query.user_id;
+    let year = req.query.year;
+    let semester = req.query.semester;
+    let email = req.query.email;
 
-    let query;
+    let knex_query = knex.select('courses.course_id', 'courses.course_name', 'courses.user_id', 'courses.semester', 'courses.year', 'users.email')
+    .from('courses');
 
-    if (user_id !== undefined) {
-        // Get courses associated with a user
-        console.log(user_id);
-        query = db.query("SELECT c.course_id, c.course_name, c.user_id, c.semester, c.year, u.email FROM courses AS c INNER JOIN users AS u ON c.user_id=$1 AND u.user_id=$1 AND c.user_id=u.user_id", [user_id]);
+    if(user_id === undefined) {
+        knex_query.leftJoin('users', 'users.user_id', '=', 'courses.user_id');
     } else {
-        // We don't have a user, get all courses
-        query = db.query("SELECT c.course_id, c.course_name, c.user_id, c.semester, c.year, u.email FROM courses AS c LEFT JOIN users AS u ON c.user_id=u.user_id");
+        knex_query.innerJoin('users', 'users.user_id', '=', 'courses.user_id')
+        .andWhere('courses.user_id', '=', user_id);
     }
 
+    if(year !== undefined) {
+        knex_query.andWhere('courses.year', '=', year);
+    }
+
+    if(semester !== undefined) {
+        knex_query.andWhere('courses.semester', '=', semester);
+    }
+
+    if(email !== undefined) {
+        knex_query.andWhere('users.email', '=', email);
+    }
+
+    knex_query = knex_query.toSQL().toNative();
+
+    let query = db.query(knex_query.sql, knex_query.bindings);
     query.then(result => {
         Promise.all(result.rows.map(course => {
             return get_forms(course).then(forms => {

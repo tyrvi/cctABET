@@ -62,12 +62,14 @@ async function delete_form(req, res, next) {
     {
         course_id: integer,
         outcome: optional string,
+        completed: optional int,
         data: optional object
     }
 */
 async function create_form(req, res, next) {
     let course_id = req.body.course_id;
     let outcome = req.body.outcome;
+    let completed = req.body.completed;
     let data = req.body.data;
 
     if(course_id === undefined) {
@@ -75,15 +77,19 @@ async function create_form(req, res, next) {
         return;
     }
 
-    if(data === undefined) {
-        data = {};
-    }
-
     if(outcome === undefined) {
         outcome = '';
     }
 
-    let query = db.query("INSERT INTO forms (course_id, outcome, data) values ($1, $2, $3)", [course_id, outcome, data]);
+    if(completed === undefined) {
+        completed = 0;
+    }
+
+    if(data === undefined) {
+        data = {};
+    }
+
+    let query = db.query("INSERT INTO forms (course_id, outcome, completed, data) values ($1, $2, $3, $4)", [course_id, outcome, completed, data]);
     query.then(result => {
         res.json({message: 'Success'});
     }).catch(err => {
@@ -100,6 +106,7 @@ async function create_form(req, res, next) {
         form_id: integer
         course_id: integer,
         outcome: string,
+        completed: int,
         data: object
     }
 */
@@ -107,14 +114,15 @@ async function update_form(req, res, next) {
     let form_id = req.body.form_id;
     let course_id = req.body.course_id;
     let outcome = req.body.outcome;
+    let completed = req.body.completed;
     let data = req.body.data;
 
-    if(form_id === undefined || course_id === undefined || outcome === undefined || data === undefined) {
+    if(form_id === undefined || course_id === undefined || outcome === undefined || completed === undefined || data === undefined) {
         res.json({error: 'Bad body'});
         return;
     }
 
-    let query = db.query("UPDATE forms SET course_id=$1, outcome=$2, data=$3 WHERE form_id=$4", [course_id, outcome, data, form_id]);
+    let query = db.query("UPDATE forms SET course_id=$1, outcome=$2, completed=$3, data=$4 WHERE form_id=$5", [course_id, outcome, completed, data, form_id]);
     query.then(result => {
         res.json({message: 'Success'});
     }).catch(err => {
