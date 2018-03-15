@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import FormList from './FormList.js';
+import { connect } from 'react-redux';
+import { getFormData } from '../actions/formActions.js'
+
 
 class Form extends Component {
     constructor() {
@@ -9,11 +12,17 @@ class Form extends Component {
             email: 'Arisoa@bing.com',
             semester: 'Spring 2018',
             course: 'CS 4453 Artificial Intelligence',
+            performanceIndicator: 'Submits works effectively',
+            outcomeLevel: 'Emphasized', 
+            assignments: 'Another question again????',
         }
         this.updateCoordinator = this.updateCoordinator.bind(this);
         this.updateSemester = this.updateSemester.bind(this);
         this.updateCourse = this.updateCourse.bind(this);
         this.updateEmail = this.updateEmail.bind(this);
+        this.updatePerformanceIndicator = this.updatePerformanceIndicator.bind(this);
+        this.updateOutcomeLevel = this.updateOutcomeLevel.bind(this);
+        this.updateAssignments = this.updateAssignments.bind(this);
     }
 
     updateCoordinator(event) {
@@ -28,6 +37,25 @@ class Form extends Component {
     updateCourse(event) {
         this.setState({course: event.target.value});
     }
+    updatePointsPossible(event) {
+        this.setState({pointsPossible: event.target.value});
+    }
+    updatePerformanceIndicator(event) {
+        this.setState({performanceIndicator: event.target.value});
+    }
+    updateOutcomeLevel(event) {
+        this.setState({outcomeLevel: event.target.value});
+    }
+    updateAssignments(event) {
+        this.setState({assignments: event.target.value});
+    }
+
+    componentDidMount() {
+        // this.props.formID
+        // TODO: Testing
+        this.props.getFormData(2);
+    }
+
 
     render() {
         console.log(this.state);
@@ -49,72 +77,46 @@ class Form extends Component {
                     <input type='text' value={this.state.course} onChange={this.updateCourse}/>
                     Course:
                 </div>
-                <FormList />
+                <div>
+                    <input type='text' value={this.state.performanceIndicator} onChange={this.updatePerformanceIndicator}/>
+                    Performance Indicator:
+                </div>
+                <div>
+                    <input type='text' value={this.state.outcomeLevel} onChange={this.updateOutcomeLevel}/>
+                    Expected Level of Outcome Mastery:
+                </div>
+                <div>
+                    <input type='text' value={this.state.assignments} onChange={this.updateAssignments}/>
+                    Assignments / Questions / Tasks
+                </div>
+                <FormList list={this.props}/>
+
+
+                <button>SAVE</button>
+                <input type='checkbox'/>completed
+
             </div>
         )
     }
 }
-export default Form;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    render() {
-        return (
-            <form>
-                <h4>Students</h4>
-                    <div className="amount">
-                        <input type='text'>
-                    </div>
-
-                    <div className="students">
-                        <input type="text" value={this.state.name}
-                            onChange={event => this.setState({name: event.target.value})}
-                            placeholder={`Student name`}/>
-
-                        <input type="text" value={this.state.points}
-                            placeholder={`Points`} />
-                        <button type="button"  className="small">-</button>
-                    </div>
-                <button>Submit</button>
-            </form>
-        );
+const mapDispatchToProps = dispatch => {
+    return {
+        getFormData: (formID) => {
+            dispatch(getFormData(formID));
+        }
     }
-}*/
+}
 
 
-
-
-
-
-
-/*
-
-
-
-
-    handleAddingStudent(students) {
-        this.setState({
-            Students: this.state.Students.concat([{ name: '', points: ''}])
-        });
+const mapStateToProps = state => {
+//console.log(state);
+    return {
+        asscrack: state.form.formData,
     }
+}
 
-*/
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Form);
