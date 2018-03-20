@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './Admin.css';
+import './styles/Admin.css';
 import {
     adminCreateDB,
-    insertTestData,
-    adminCreateUser
+    insertTestData
 } from '../actions/adminActions.js';
+import { createUser } from '../actions/userListActions.js';
 import { USER_TYPES } from '../actions/loginActions.js';
+import UserList from './UserList.js';
 
 
 class Admin extends Component {
@@ -59,7 +60,7 @@ class Admin extends Component {
     render() {
         return (
             <div id="Admin">
-                <h3>UNLIMITED POWAH!!!</h3>
+                <h1>UNLIMITED POWAH!!!</h1>
                 <div>
                     <div className={this.props.requestError ? "visible failText" : "hidden"}>
                         Error: {this.props.requestError}
@@ -105,6 +106,7 @@ class Admin extends Component {
                     </select>
                     <button onClick={this.onCreateUserClick}>Create User</button>
                 </div>
+                <UserList />
             </div>
         );
     }
@@ -119,15 +121,15 @@ const mapDispatchToProps = dispatch => {
             dispatch(insertTestData(db))
         },
         createUser: (user, pass, email, type) => {
-            dispatch(adminCreateUser(user, pass, email, type))
+            dispatch(createUser(user, pass, email, type))
         },
     }
 }
 
 const mapStateToProps = state => {
     return {
-        requestMessage: state.adminReducer.requestMessage,
-        requestError: state.adminReducer.requestError,
+        requestMessage: state.admin.requestMessage,
+        requestError: state.admin.requestError,
     }
 }
 

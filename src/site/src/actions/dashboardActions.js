@@ -30,12 +30,13 @@ export function courseDataFail(response) {
         A function (thunk) that dispatchs requestCourseData() then returns the
         course data information for that user.
 */
+// TODO: change route to /courses?
 export function usersCourseData(email) {
     let query = 'email=' + email;
 
     return dispatch => {
         dispatch(requestCourseData());
-        return fetch('users/course_data?' + query, {
+        return fetch('courses/?' + query, {
             method: 'GET',
             credentials: 'same-origin',
         }).then(res => res.json())

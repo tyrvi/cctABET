@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { usersCourseData } from '../actions/dashboardActions.js';
-import './Accordion.css';
+import './styles/Accordion.css';
 import AccordionItem from './AccordionItem';
 
 
@@ -29,19 +29,19 @@ class Accordion extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        courseData: state.dashboard.courseData,
+        email: state.login.userData.email,
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         usersCourseData: (email) => {
             dispatch(usersCourseData(email))
         }
     };
-}
-
-const mapStateToProps = state => {
-    return {
-        courseData: state.dashboardReducer.courseData,
-        email: state.loginReducer.userData.email,
-    }
 }
 
 export default connect(

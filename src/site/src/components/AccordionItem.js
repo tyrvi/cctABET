@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './AccordionItem.css';
+import './styles/AccordionItem.css';
 
 class AccordionItem extends Component {
     constructor(props) {

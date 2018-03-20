@@ -1,84 +1,154 @@
 var db = require('../db');
-var auth = require('./authenticate');
+
+
+/*
+    Route function that deletes a user
+    ?user_id - The user to delete
+*/
+async function delete_user(req, res, next) {
+    let user_id = req.query.user_id;
+
+    if (user_id !== undefined) {
+        let query = db.query("DELETE FROM users WHERE user_id=$1", [user_id]);
+        query.then(result => {
+            res.json({message: 'User successfully deleted.'});
+        }).catch(err => {
+            console.error('Could not delete user.', err);
+            res.json({error: 'Could not delete user.'});
+        });
+    } else {
+        res.json({error: 'Require user_id param.'});
+    }
+}
+
+/*
+    Route function that gets users
+    ?user_id - Optional. Filters users by user_id
+    ?email - Optional. Filters users by email
+
+    Returns json response with error variable on failure
+*/
+async function get_users(req, res, next) {
+    let user_id = req.query.user_id;
+    let email = req.query.email;
+
+    let query;
+
+    if (user_id !== undefined) {
+        // Get user associated with user_id
+        query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users WHERE user_id=$1", [user_id]);
+    } else if(email !== undefined) {
+        // Get user associated with email
+        query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users WHERE email=$1", [email]);
+    } else {
+        // We don't have a user id, get all users
+        query = db.query("SELECT user_id, email, f_name, l_name, prefix, type FROM users");
+    }
+
+    query.then(result => {
+        console.log(result.rows.length);
+
+        if(user_id !== undefined || email !== undefined) {
+            if(result.rows.length === 1) {
+                res.json(result.rows[0]);
+            } else {
+                res.json({error: 'User does not exist'});
+            }
+        } else {
+            res.json(result.rows);
+        }
+    }).catch(err => {
+        console.error('Error in users: ', err);
+        res.json({error: 'Error fetching user data'});
+    });
+}
 
 /*
     Route function that creates a new user in the database
-    ?user - the user name
-    ?pass - the password
+
+    Parameters:
+    {
+        email: string,
+        password: string,
+        f_name: optional string,
+        l_name: optional string,
+        prefix: optional string,
+        type: int
+    }
 
     Returns json response with error variable on failure
 */
 async function create_user(req, res, next) {
-    let user = req.query.user;
-    let pass = req.query.pass;
-    let email = req.query.email;
-    let type = req.query.type;
+    let email = req.body.email;
+    let password = req.body.password;
+    let f_name = req.body.f_name;
+    let l_name = req.body.l_name;
+    let prefix = req.body.prefix;
+    let type = req.body.type;
 
-    if(user && pass && email && type != null && type != undefined) {
-        await db.query("INSERT INTO users (username, password, email, type) VALUES ($1::text, $2::text, $3::text, $4::int)",
-        [user, pass, email, type]);
-        res.json({message: 'User created.'});
-    } else {
-        res.json({error: 'Could not create user'});
+    if(f_name === undefined) {
+        f_name = '';
     }
+
+    if(l_name === undefined) {
+        l_name = '';
+    }
+
+    if(email === undefined || password === undefined || type === undefined) {
+        res.json({error: 'Bad body'});
+        return;
+    }
+
+    let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, password, f_name, l_name, prefix, type]);
+    query.then(result => {
+        res.json({message: 'User created.'});
+    }).catch(err => {
+        console.log(err);
+        res.json({error: 'Could not create user.'});
+    });
 }
 
 /*
-    Route function that creates a new user in the database
-    ?email - the email (primary key) of the user
+    Route function that updates a user
+
+    Parameters:
+    {
+        user_id: int,
+        email: string,
+        password: string,
+        f_name: string,
+        l_name: string,
+        prefix: string,
+        type: int
+    }
 
     Returns json response with error variable on failure
 */
-function course_data(req, res, next) {
-    let email = req.query.email;
+async function update_user(req, res, next) {
+    let user_id = req.body.user_id;
+    let email = req.body.email;
+    let password = req.body.password;
+    let f_name = req.body.f_name;
+    let l_name = req.body.l_name;
+    let prefix = req.body.prefix;
+    let type = req.body.type;
 
-    if (!email) {
-        res.json({error: 'Missing email'});
-    } else {
-        db.query("SELECT course_id, course_name FROM courses WHERE email=$1::text", [email], (err, result) => {
-            if (err) {
-                console.error('Error in users: ', err);
-                res.json({error: 'Error fetching course data'});
-            } else {
-                Promise.all(result.rows.map(course => {
-                    return get_forms(course).then(forms => {
-                        // there was an error
-                        if (!forms) {
-                            res.json({error: 'Error fetching course data'});
-                            return;
-                        } else {
-                            course.forms = forms;
-                            return course;
-                        }
-                    })
-                })).then(data => {
-                    res.json({courseData: data});
-                });
-            }
-        })
+    if(user_id === undefined || email === undefined || password === undefined || f_name === undefined || l_name === undefined || prefix === undefined || type === undefined) {
+        res.json({error: 'Bad body'});
+        return;
     }
-}
 
-/*
-    Helper function that gets the form data for a course
-    Params:
-        course: a course row from the course table
-    Returns:
-        A Promise that will contain the results of the query into the
-        forms table for the given course
-
-*/
-async function get_forms(course) {
-    try {
-        let result = await db.query("SELECT form_id, outcome FROM forms WHERE course_id=$1::int", [course.course_id]);
-        // console.log(result.rows);
-        return result.rows;
-    } catch (err) {
+    let query = db.query("UPDATE users SET email=$1, password=$2, f_name=$3, l_name=$4, prefix=$5, type=$6 WHERE user_id=$7", [email, password, f_name, l_name, prefix, type, user_id]);
+    query.then(result => {
+        res.json({message: 'User updated.'});
+    }).catch(err => {
         console.log(err);
-    }
-
-    return Promise.resolve(false);
+        res.json({error: 'Could not update user.'});
+    });
 }
 
+module.exports.get_users = get_users;
 module.exports.create_user = create_user;
-module.exports.course_data = course_data;
+module.exports.delete_user = delete_user;
+module.exports.update_user = update_user;
+

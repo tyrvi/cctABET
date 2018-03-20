@@ -4,13 +4,11 @@ import {
     CREATE_DB_FAIL,
     REQUEST_INSERT_TEST_DATA,
     INSERT_TEST_DATA_SUCCESS,
-    INSERT_TEST_DATA_FAIL,
-    REQUEST_CREATE_USER,
-    CREATE_USER_SUCCESS,
-    CREATE_USER_FAIL,
+    INSERT_TEST_DATA_FAIL
 } from '../actions/adminActions.js';
 
 
+// TODO: add handling of udpate user actions
 function adminReducer(state = {
     isDoingRequest: false,
     requestMessage: null,
@@ -50,25 +48,6 @@ function adminReducer(state = {
         case INSERT_TEST_DATA_FAIL:
             return Object.assign({}, state, {
                 isDoingRequest: false,
-                requestMessage: null,
-                requestError: action.response.error,
-            });
-        case REQUEST_CREATE_USER:
-            return Object.assign({}, state, {
-                isDoingRequest: true,
-                requestMessage: null,
-                requestError: null,
-            });
-        case CREATE_USER_SUCCESS:
-            console.log(action);
-            return Object.assign({}, state, {
-                isDoingRequest: true,
-                requestMessage: action.response.message,
-                requestError: null,
-            });
-        case CREATE_USER_FAIL:
-            return Object.assign({}, state, {
-                isDoingRequest: true,
                 requestMessage: null,
                 requestError: action.response.error,
             });
