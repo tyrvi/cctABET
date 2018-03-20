@@ -1,15 +1,6 @@
-/* #login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
+.container{
 
-#login {
-  background-color: rgb(255, 255, 255);
-  font: 400 1em/1.38, Helvetica;
-  color: rgb(0, 0, 0);
 }
-
 .background {
   position: relative;
   float: left;
@@ -29,22 +20,60 @@
   float: left;
   text-align: center;
   z-index: 1;
-  width: 500px;
-  height: 350px;
-  margin: -600px 0 0 25%;
-  border-radius: 20px;
   background-color: rgb(250, 245, 244);
-  opacity: 0.5;
+  width: 500px;
+  height: 400px;
+  margin: -600px 0 0 20%;
+  border-radius: 20px;
+}
+
+.email{
+  background:#fff;
+  border: #ccc 1px solid;
+  padding: 8px;
+  width:250px;
+  color:#643b7c;
+  margin-bottom:10px;
+  font-size:0.8em;
+  border-radius:4px;
+}
+
+.password{
+  border-radius:4px;
+  background:#fff;
+  border: #ccc 1px solid;
+  padding: 8px;
+  width:250px;
+  color: #643b7c;
+  font-size:0.8em;
+}
+
+button {
+  background-color: #fcc332;
+  color: #643b7c;
+  padding: 12px;
+  border-radius:4px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  font-size:0.8em;
+  width: 25%;
+}
+
+button:hover {
+  opacity: 0.8;
+  color: white;
 }
 
 h1 {
-  display: block;
-  font-size: 3.5em;
+  font-size: 4em;
+  font-family: sans-serif;
+  color: #643b7c;
 }
 
 .visible {
     color: red;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: sans-serif;
     font-size: 12pt;
 }
 

@@ -21,9 +21,16 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <div>
+            <div class="mainContainer">
+              <nav class="mainNav">
+                <a href="#home">Home</a>
+                <a href="#help">Help</a>
+              </nav>
                 <h1>Logged in to Admin Page</h1>
                 <button type="button" onClick={this.onLogoutClick}>Logout</button>
+
+                <footer>
+                </footer>
             </div>
         );
     }

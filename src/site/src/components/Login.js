@@ -31,28 +31,24 @@ class Login extends Component {
 
     render() {
         return (
-            <div id="Login">
+            <div class="container">
             <div class="background"></div>
             <div class="userEntry">
                 <h1>CCT ABET</h1>
-                <div>
+
                     <input type="text" value={this.state.user}
                         onChange={event => this.setState({ user: event.target.value })}
-                        placeholder="Username" />
-                </div>
-                <div>
+                        placeholder="Username" class="email" />
+
                     <input type="password" value={this.state.pass}
                         onChange={event => this.setState({ pass: event.target.value })}
-                        placeholder="Password" />
-                </div>
-                <div>
+                        placeholder="Password" class="password"/>
+
                     <p className={this.state.retry ? "visible" : "hidden"} >
                         Incorrect username/password
                     </p>
-                </div>
-                <div>
+
                     <button onClick={this.onLoginClick}>Login</button>
-                </div>
                 </div>
             </div>
         );
