@@ -108,20 +108,33 @@ async function delete_course(req, res, next) {
 
     {
         course_name: string,
-        user_id: optional int,
+        email: optional string,
         semester: string,
         year: int
     }
 */
 async function create_course(req, res, next) {
     let course_name = req.body.course_name;
-    let user_id = req.body.user_id;
+    let email = req.body.email;
     let semester = req.body.semester;
     let year = req.body.year;
 
     if(course_name === undefined || semester === undefined || year === undefined) {
         res.json({error: 'Bad body'});
         return;
+    }
+
+    let user_id = null;
+    if(email !== undefined) {
+        let query = db.query("SELECT user_id FROM users WHERE email=$1", [email]);
+        try {
+            let result = await query;
+            user_id = result.rows[0].user_id;
+        }
+        catch(err) {
+            res.json({error: 'Could not assign user to course.'});
+            console.error(err);
+        }
     }
 
     let query = db.query("INSERT INTO courses (course_name, user_id, semester, year) values ($1, $2, $3, $4)", [course_name, user_id, semester, year]);
@@ -139,7 +152,7 @@ async function create_course(req, res, next) {
     {
         course_id: int
         course_name: string,
-        user_id: optional int,
+        email: optional string,
         semester: string,
         year: int
     }
@@ -147,13 +160,27 @@ async function create_course(req, res, next) {
 async function update_course(req, res, next) {
     let course_id = req.body.course_id;
     let course_name = req.body.course_name;
-    let user_id = req.body.user_id;
+    let email = req.body.email;
     let semester = req.body.semester;
     let year = req.body.year;
 
     if(course_id === undefined || course_name === undefined || semester === undefined || year === undefined) {
         res.json({error: 'Bad body'});
         return;
+    }
+
+    let user_id = null;
+
+    if(email !== undefined) {
+        let query = db.query("SELECT user_id FROM users WHERE email=$1", [email]);
+        try {
+            let result = await query;
+            user_id = result.rows[0].user_id;
+        }
+        catch(err) {
+            res.json({error: 'Could not assign user to course.'});
+            console.error(err);
+        }
     }
 
     let query = db.query("UPDATE courses SET course_name=$1, user_id=$2, semester=$3, year=$4 WHERE course_id=$5", [course_name, user_id, semester, year, course_id]);
