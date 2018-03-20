@@ -96,6 +96,21 @@ export function userListFail(response) {
     }
 }
 
+export const USER_LIST_FILTER_CHANGE = 'USER_LIST_FILTER_CHANGE';
+export function userListFilterChange(email) {
+    return {
+        type: USER_LIST_FILTER_CHANGE,
+        email,
+    }
+}
+
+export const USER_LIST_SHOW_HIDE = 'USER_LIST_SHOW_HIDE';
+export function userListShowHide() {
+    return {
+        type: USER_LIST_SHOW_HIDE,
+    }
+}
+
 export function getUserList(query = '') {
     return dispatch => {
         dispatch(requestUserList(query));

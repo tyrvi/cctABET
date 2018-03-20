@@ -46,7 +46,6 @@ class Course extends Component {
     }
 
     render() {
-        console.log(this.props.course);
         if (!this.state.editing) {
             return (
                 <div>

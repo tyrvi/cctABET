@@ -54,7 +54,6 @@ class User extends Component {
     }
 
     onEditCancel() {
-        console.log(this.props.user);
         this.setState({
             user_id: this.props.user.user_id,
             email: this.props.user.email,

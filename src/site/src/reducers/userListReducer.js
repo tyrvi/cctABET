@@ -10,7 +10,9 @@ import {
     DELETE_USER_FAIL,
     REQUEST_USER_LIST,
     USER_LIST_SUCCESS,
-    USER_LIST_FAIL
+    USER_LIST_FAIL,
+    USER_LIST_FILTER_CHANGE,
+    USER_LIST_SHOW_HIDE
 } from '../actions/userListActions.js';
 
 function userListReducer(state ={
@@ -18,6 +20,10 @@ function userListReducer(state ={
     requestMessage: null,
     requestError: null,
     userList: null,
+    showHide: false,
+    filter: {
+        email: '',
+    }
 }, action) {
     switch(action.type) {
         case REQUEST_CREATE_USER:
@@ -66,6 +72,16 @@ function userListReducer(state ={
             return Object.assign({}, state, {
                 isDoingRequest: false,
                 requestError: action.response.error
+            });
+        case USER_LIST_FILTER_CHANGE:
+            return Object.assign({}, state, {
+                filter: {
+                    email: action.email,
+                }
+            });
+        case USER_LIST_SHOW_HIDE:
+            return Object.assign({}, state, {
+                showHide: !state.showHide,
             });
         default:
             return state;
