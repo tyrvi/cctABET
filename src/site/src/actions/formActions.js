@@ -17,6 +17,7 @@ export const FORM_DATA_FAIL = 'FORM_DATA_FAIL';
 export function formDataFail(response) {
     return {
         type: FORM_DATA_FAIL,
+        response,
     }
 }
 
@@ -24,6 +25,7 @@ export const SAVE_FORM_DATA = 'SAVE_FORM_DATA';
 export function saveFormData(response) {
     return {
         type: SAVE_FORM_DATA,
+        response,
     }
 }
 
