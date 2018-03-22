@@ -52,19 +52,14 @@ async function reset_database() {
 }
 
 async function run_script(path) {
-    fs.readFile(path, 'utf8', (err, query) => {
-        if (err) {
-            console.error('Could not read file ', path + '\n' + err);
-            throw 'IO error';
-        } else {
-            db.query(query, (err, data) => {
-                if (err) {
-                    console.error('error: ', err);
-                    throw '2 DB Error';
-                }
-            });
-        }
-    });
+    try {
+        let query = fs.readFileSync(path, 'utf8');
+        await db.query(query);
+    }
+    catch(err) {
+        console.error(err);
+        throw err;
+    }
 }
 
 module.exports.DBNAME = DBNAME;
@@ -75,6 +70,3 @@ module.exports.query = (...args) => {
     // Forward arguments to db.query();
     return db.query.apply(db, args);
 };
-
-
-

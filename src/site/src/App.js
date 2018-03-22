@@ -5,7 +5,6 @@ import './App.css';
 import { connect } from 'react-redux';
 import { authCheckLoggedIn } from './actions/loginActions.js';
 
-
 class App extends Component {
     componentDidMount() {
         this.props.authCheckLoggedIn();

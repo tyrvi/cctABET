@@ -4,6 +4,7 @@ import dashboardReducer from './dashboardReducer.js';
 import adminReducer from './adminReducer.js';
 import userListReducer from './userListReducer.js';
 import courseListReducer from './courseListReducer.js';
+import formReducer from './formReducer.js';
 
 export default combineReducers({
     login: loginReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     admin: adminReducer,
     users: userListReducer,
     courses: courseListReducer,
+    form: formReducer,
 })
