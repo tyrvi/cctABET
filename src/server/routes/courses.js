@@ -1,27 +1,47 @@
 var db = require('../db');
+var knex = require('knex')({client: 'pg'});
 
 /*
     Route function that gets courses
     ?user_id - Optional parameter. Filters courses by user
+    ?year - Optional parameter. Filters courses by year
+    ?semester - Optional parameter. Filters courses by semester
+    ?email - Optional parameter. Filters courses by email
 
     Returns json response with error variable set on failure
 */
 function get_courses(req, res, next) {
     let user_id = req.query.user_id;
+    let year = req.query.year;
+    let semester = req.query.semester;
+    let email = req.query.email;
 
-    let query;
+    let knex_query = knex.select('courses.course_id', 'courses.course_name', 'courses.user_id', 'courses.semester', 'courses.year', 'users.email')
+    .from('courses');
 
-    if (user_id) {
-        // Get courses associated with a user
-        query = db.query("SELECT * FROM courses WHERE user_id=$1", [user_id]);
+    if(user_id === undefined) {
+        knex_query.leftJoin('users', 'users.user_id', '=', 'courses.user_id');
     } else {
-        // We don't have a user, get all courses
-        query = db.query("SELECT * FROM courses");
+        knex_query.innerJoin('users', 'users.user_id', '=', 'courses.user_id')
+        .andWhere('courses.user_id', '=', user_id);
     }
 
-    query.then(result => {
-        console.log(result);
+    if(year !== undefined) {
+        knex_query.andWhere('courses.year', '=', year);
+    }
 
+    if(semester !== undefined) {
+        knex_query.andWhere('courses.semester', '=', semester);
+    }
+
+    if(email !== undefined) {
+        knex_query.andWhere('users.email', '=', email);
+    }
+
+    knex_query = knex_query.toSQL().toNative();
+
+    let query = db.query(knex_query.sql, knex_query.bindings);
+    query.then(result => {
         Promise.all(result.rows.map(course => {
             return get_forms(course).then(forms => {
                 // There was an error
@@ -61,7 +81,6 @@ async function get_forms(course) {
     return Promise.resolve(false);
 }
 
-
 /*
     Route function that deletes a course
     ?course_id - The course id to delete
@@ -71,7 +90,7 @@ async function get_forms(course) {
 async function delete_course(req, res, next) {
     let course_id = req.query.course_id;
 
-    if (course_id) {
+    if (course_id !== undefined) {
         let query = db.query("DELETE FROM courses WHERE course_id=$1", [course_id]);
         query.then(result => {
             res.json({message: 'Success'});
@@ -89,21 +108,33 @@ async function delete_course(req, res, next) {
 
     {
         course_name: string,
-        user_id: optional int,
+        email: optional string,
         semester: string,
         year: int
     }
 */
 async function create_course(req, res, next) {
-    console.log(req.body);
     let course_name = req.body.course_name;
-    let user_id = req.body.user_id;
+    let email = req.body.email;
     let semester = req.body.semester;
     let year = req.body.year;
 
-    if(!course_name || !semester || !year) {
+    if(course_name === undefined || semester === undefined || year === undefined) {
         res.json({error: 'Bad body'});
         return;
+    }
+
+    let user_id = null;
+    if(email !== undefined) {
+        let query = db.query("SELECT user_id FROM users WHERE email=$1", [email]);
+        try {
+            let result = await query;
+            user_id = result.rows[0].user_id;
+        }
+        catch(err) {
+            res.json({error: 'Could not assign user to course.'});
+            console.error(err);
+        }
     }
 
     let query = db.query("INSERT INTO courses (course_name, user_id, semester, year) values ($1, $2, $3, $4)", [course_name, user_id, semester, year]);
@@ -115,6 +146,53 @@ async function create_course(req, res, next) {
     });
 }
 
+/*
+    Route function to update a course
+
+    {
+        course_id: int
+        course_name: string,
+        email: optional string,
+        semester: string,
+        year: int
+    }
+*/
+async function update_course(req, res, next) {
+    let course_id = req.body.course_id;
+    let course_name = req.body.course_name;
+    let email = req.body.email;
+    let semester = req.body.semester;
+    let year = req.body.year;
+
+    if(course_id === undefined || course_name === undefined || semester === undefined || year === undefined) {
+        res.json({error: 'Bad body'});
+        return;
+    }
+
+    let user_id = null;
+
+    if(email !== undefined) {
+        let query = db.query("SELECT user_id FROM users WHERE email=$1", [email]);
+        try {
+            let result = await query;
+            user_id = result.rows[0].user_id;
+        }
+        catch(err) {
+            res.json({error: 'Could not assign user to course.'});
+            console.error(err);
+        }
+    }
+
+    let query = db.query("UPDATE courses SET course_name=$1, user_id=$2, semester=$3, year=$4 WHERE course_id=$5", [course_name, user_id, semester, year, course_id]);
+    query.then(result => {
+        res.json({message: 'Success'});
+    }).catch(err => {
+        console.error('Could not update course.', err);
+        res.json({error: 'Could not update course.'});
+    });
+}
+
 module.exports.get_courses = get_courses;
 module.exports.create_course = create_course;
 module.exports.delete_course = delete_course;
+module.exports.update_course = update_course;

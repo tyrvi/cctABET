@@ -23,6 +23,7 @@ router.get('/', index.index);
 router.get('/users', auth.require_admin, users.get_users);
 router.get('/users/delete', auth.require_admin, users.delete_user);
 router.post('/users/create', auth.require_admin, users.create_user);
+router.post('/users/update', auth.require_admin, users.update_user);
 
 // secret API endpoint to create user in case of DB reset where cannot
 // insert test data
@@ -35,6 +36,7 @@ router.get('/auth/logout', auth.require_login, auth.logout);
 router.get('/courses', auth.require_login, courses.get_courses);
 router.get('/courses/delete', auth.require_login, courses.delete_course);
 router.post('/courses/create', auth.require_login, courses.create_course);
+router.post('/courses/update', auth.require_login, courses.update_course);
 
 router.get('/forms', auth.require_login, forms.get_forms);
 router.get('/forms/delete', auth.require_login, forms.delete_form);
