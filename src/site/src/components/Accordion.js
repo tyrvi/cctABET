@@ -8,7 +8,7 @@ import AccordionItem from './AccordionItem';
 class Accordion extends Component {
 
     componentDidMount() {
-        this.props.usersCourseData(this.props.email);
+        this.props.usersCourseData(this.props.userId);
     }
 
     render() {
@@ -23,6 +23,7 @@ class Accordion extends Component {
 
         return (
             <div id="Accordion">
+            <h1>Dashboard</h1>
                 {items}
             </div>
         );
@@ -32,14 +33,14 @@ class Accordion extends Component {
 const mapStateToProps = state => {
     return {
         courseData: state.dashboard.courseData,
-        email: state.login.userData.email,
+        userId: state.login.userData.user_id,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        usersCourseData: (email) => {
-            dispatch(usersCourseData(email))
+        usersCourseData: (user_id) => {
+            dispatch(usersCourseData(user_id))
         }
     };
 }

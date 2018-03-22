@@ -4,9 +4,10 @@ export const USER_TYPES = {
 }
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
-export function requestLogin() {
+export function requestLogin(query) {
     return {
         type: REQUEST_LOGIN,
+        query
     }
 }
 
@@ -101,7 +102,7 @@ export function authLogin(email, pass) {
     let query = 'email=' + email + '&pass=' + pass;
 
     return dispatch => {
-        dispatch(requestLogin());
+        dispatch(requestLogin(query));
         return fetch('auth/login?' + query, {
             method: 'GET',
             credentials: 'same-origin',

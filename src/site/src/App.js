@@ -4,27 +4,16 @@ import Dashboard from './components/Dashboard.js';
 import './App.css';
 import { connect } from 'react-redux';
 import { authCheckLoggedIn } from './actions/loginActions.js';
-import Form from './components/Form.js';
-const feature = "Forms";
 
 class App extends Component {
     componentDidMount() {
-
-        if (feature !==  "Forms") {
-            this.props.authCheckLoggedIn();
-        }
-
+        this.props.authCheckLoggedIn();
     }
 
     render() {
-        let Home;
-        if (feature === "Forms") {
-            Home = <div><Form /></div>
-        } else {
-            Home = this.props.loggedIn ?
-                <div><Dashboard {...this.props} /></div> :
-                <div><Login {...this.props} /></div>;
-        }
+        const Home = this.props.loggedIn ?
+            <div><Dashboard /></div> :
+            <div><Login /></div>;
 
         return (
             <div id="App">

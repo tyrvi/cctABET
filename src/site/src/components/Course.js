@@ -71,6 +71,8 @@ class Course extends Component {
                     <input type="number" value={this.state.year}
                         onChange={event => this.setState({year: event.target.value})}
                     />
+                    <button onClick={this.onUpdate}>Update</button>
+                    <button onClick={this.onEditCancel}>Cancel</button>
                 </div>
             );
         }

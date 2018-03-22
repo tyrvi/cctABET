@@ -1,7 +1,8 @@
 export const REQUEST_COURSE_DATA = "REQUEST_COURSE_DATA";
-export function requestCourseData() {
+export function requestCourseData(query) {
     return {
         type: REQUEST_COURSE_DATA,
+        query
     }
 }
 
@@ -24,19 +25,18 @@ export function courseDataFail(response) {
 /*
     Dispatches fetch request with an email
     Params:
-        email: the email of the user which is the foreign key for the courses
+        user_id: the user_id of the user which is the foreign key for the courses
                table.
     Returns:
         A function (thunk) that dispatchs requestCourseData() then returns the
         course data information for that user.
 */
-// TODO: change route to /courses?
-export function usersCourseData(email) {
-    let query = 'email=' + email;
+export function usersCourseData(user_id) {
+    let query = 'user_id=' + user_id;
 
     return dispatch => {
-        dispatch(requestCourseData());
-        return fetch('courses/?' + query, {
+        dispatch(requestCourseData(query));
+        return fetch('courses?' + query, {
             method: 'GET',
             credentials: 'same-origin',
         }).then(res => res.json())

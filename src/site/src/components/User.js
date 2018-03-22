@@ -9,9 +9,12 @@ class User extends Component {
         super(props);
 
         this.state = {
-            username: this.props.username,
-            email: this.props.email,
-            type: this.props.type,
+            user_id: this.props.user.user_id,
+            email: this.props.user.email,
+            prefix: this.props.user.prefix,
+            f_name: this.props.user.f_name,
+            l_name: this.props.user.l_name,
+            type: this.props.user.type,
             editing: false,
         }
 
@@ -52,9 +55,12 @@ class User extends Component {
 
     onEditCancel() {
         this.setState({
-            username: this.props.username,
-            email: this.props.email,
-            type: this.props.type,
+            user_id: this.props.user.user_id,
+            email: this.props.user.email,
+            prefix: this.props.user.prefix,
+            f_name: this.props.user.f_name,
+            l_name: this.props.user.l_name,
+            type: this.props.user.type,
             editing: false,
         })
     }
@@ -63,8 +69,10 @@ class User extends Component {
         if (!this.state.editing) {
             return (
                 <div>
-                    <div>Username: {this.state.username}</div>
                     <div>Email: {this.state.email}</div>
+                    <div>Prefix: {this.state.prefix}</div>
+                    <div>First Name: {this.state.f_name}</div>
+                    <div>Last Name: {this.state.l_name}</div>
                     <div>User Type: {this.state.type ? "Standard" : "Admin"}</div>
                     <button onClick={this.onEdit}>Edit</button>
                     <button onClick={this.onDelete}>Delete</button>
@@ -73,10 +81,14 @@ class User extends Component {
         } else {
             return (
                 <div>
-                    <input type="text" value={this.state.username}
-                        onChange={event => this.setState({username: event.target.value})} />
                     <input type="text" value={this.state.email}
                         onChange={event => this.setState({email: event.target.value})} />
+                    <input type="text" value={this.state.prefix}
+                        onChange={event => this.setState({prefix: event.target.value})} />
+                    <input type="text" value={this.state.f_name}
+                        onChange={event => this.setState({f_name: event.target.value})} />
+                    <input type="text" value={this.state.l_name}
+                        onChange={event => this.setState({l_name: event.target.value})} />
                     <select value={this.state.type}
                         onChange={event => this.setState({type: event.target.value})} >
                         <option value={USER_TYPES.STANDARD_USER}>Standard</option>

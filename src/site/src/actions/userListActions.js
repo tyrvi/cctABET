@@ -1,7 +1,8 @@
 export const REQUEST_CREATE_USER = "REQUEST_CREATE_USER";
-export function requestCreateUser() {
+export function requestCreateUser(query) {
     return {
         type: REQUEST_CREATE_USER,
+        query
     }
 }
 
@@ -22,9 +23,10 @@ export function createUserFail(response) {
 }
 
 export const REQUEST_UPDATE_USER = 'REQUEST_UPDATE_USER';
-export function requestUpdateUser() {
+export function requestUpdateUser(query) {
     return {
         type: REQUEST_UPDATE_USER,
+        query
     }
 }
 
@@ -47,9 +49,10 @@ export function updateUserFail(response) {
 
 
 export const REQUEST_DELETE_USER = 'REQUEST_DELETE_USER';
-export function requestDeleteUser() {
+export function requestDeleteUser(query) {
     return {
         type: REQUEST_DELETE_USER,
+        query
     }
 }
 
@@ -69,6 +72,62 @@ export function deleteUserFail(response) {
     }
 }
 
+export const REQUEST_USER_LIST = 'REQUEST_USER_LIST';
+export function requestUserList(query) {
+    return {
+        type: REQUEST_USER_LIST,
+        query
+    }
+}
+
+export const USER_LIST_SUCCESS = 'USER_LIST_SUCCESS';
+export function userListSuccess(response) {
+    return {
+        type: USER_LIST_SUCCESS,
+        response
+    }
+}
+
+export const USER_LIST_FAIL = 'USER_LIST_FAIL';
+export function userListFail(response) {
+    return {
+        type: USER_LIST_FAIL,
+        response
+    }
+}
+
+export const USER_LIST_FILTER_CHANGE = 'USER_LIST_FILTER_CHANGE';
+export function userListFilterChange(email) {
+    return {
+        type: USER_LIST_FILTER_CHANGE,
+        email,
+    }
+}
+
+export const USER_LIST_SHOW_HIDE = 'USER_LIST_SHOW_HIDE';
+export function userListShowHide() {
+    return {
+        type: USER_LIST_SHOW_HIDE,
+    }
+}
+
+export function getUserList(query = '') {
+    return dispatch => {
+        dispatch(requestUserList(query));
+        return fetch('users?' + query, {
+            method: 'GET',
+            credentials: 'same-origin'
+        }).then(res => res.json())
+            .then(json => {
+                if (!json.error) {
+                    dispatch(userListSuccess(json));
+                } else {
+                    dispatch(userListFail(json));
+                }
+            })
+    };
+}
+
 /*
     Dispatches fetch request with a user, pass, email and type
     Params:
@@ -86,7 +145,7 @@ export function createUser(user, pass, email, type) {
         '&email=' + email + '&type=' + type;
 
     return dispatch => {
-        dispatch(requestCreateUser());
+        dispatch(requestCreateUser(query));
         return fetch('users/create?' + query, {
             method: 'GET',
             credentials: 'same-origin',
@@ -106,14 +165,17 @@ export function updateUser(username, email, type) {
         username,
         email,
         type,
-    } // 'username=' + username +'&email=' + email + '&type' + type;
+    }
 
     return dispatch => {
-        dispatch(requestUpdateUser());
+        dispatch(requestUpdateUser(body));
         return fetch('users/update', {
             method: 'POST',
             credentials: 'same-origin',
-            body: body,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(body),
         }).then(res => res.json())
             .then(json => {
                 if (!json.error) {
@@ -126,11 +188,11 @@ export function updateUser(username, email, type) {
 }
 
 
-export function deleteUser(email) {
-    let query = 'email=' + email;
+export function deleteUser(user_id) {
+    let query = 'user_id=' + user_id;
 
     return dispatch => {
-        dispatch(requestDeleteUser());
+        dispatch(requestDeleteUser(query));
         return fetch('users/delete?' + query, {
             method: 'GET',
             credentials: 'same-origin'
