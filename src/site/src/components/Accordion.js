@@ -4,7 +4,6 @@ import { usersCourseData } from '../actions/dashboardActions.js';
 import './styles/Accordion.css';
 import AccordionItem from './AccordionItem';
 
-
 class Accordion extends Component {
 
     componentDidMount() {

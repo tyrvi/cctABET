@@ -111,7 +111,12 @@ export function userListShowHide() {
     }
 }
 
-export function getUserList(query = '') {
+export function getUserList(email = null) {
+    let query = '';
+    if (email) {
+        query = 'email=' + email;
+    }
+
     return dispatch => {
         dispatch(requestUserList(query));
         return fetch('users?' + query, {

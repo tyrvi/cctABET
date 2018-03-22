@@ -5,10 +5,8 @@ import {
     adminCreateDB,
     insertTestData
 } from '../actions/adminActions.js';
-import { createUser } from '../actions/userListActions.js';
-import { USER_TYPES } from '../actions/loginActions.js';
-import UserList from './UserList.js';
-import CourseList from './CourseList.js';
+import UserAdmin from './UserAdmin.js';
+import CourseAdmin from './CourseAdmin.js';
 
 
 class Admin extends Component {
@@ -17,18 +15,11 @@ class Admin extends Component {
 
         this.state = {
             resetDB: '',
-            testDataDB: '',
-            createUser: {
-                user: '',
-                pass: '',
-                email: '',
-                type: USER_TYPES.STANDARD_USER,
-            },
+            testDataDB: ''
         }
 
         this.onResetDBClick = this.onResetDBClick.bind(this);
         this.onInsertDataClick = this.onInsertDataClick.bind(this);
-        this.onCreateUserClick = this.onCreateUserClick.bind(this);
     }
 
     onResetDBClick() {
@@ -39,23 +30,6 @@ class Admin extends Component {
     onInsertDataClick() {
         this.props.insertTestData(this.state.testDataDB);
         this.setState({testDataDB: ''});
-    }
-
-    onCreateUserClick() {
-        // TODO: create actions for calling create user API
-        this.props.createUser(
-            this.state.createUser.user,
-            this.state.createUser.pass,
-            this.state.createUser.email,
-            this.state.createUser.type,
-        );
-
-        this.setState({createUser: Object.assign({}, this.state.createUser, {
-            user: '',
-            pass: '',
-            email: '',
-            type: USER_TYPES.STANDARD_USER,
-        })});
     }
 
     render() {
@@ -82,33 +56,8 @@ class Admin extends Component {
                         placeholder="Database Name" />
                     <button onClick={this.onInsertDataClick}>Insert Test Data</button>
                 </div>
-                <div>
-                    <input type="text" value={this.state.createUser.user}
-                        onChange={event => this.setState({createUser: Object.assign({}, this.state.createUser, {
-                            user: event.target.value
-                        })})}
-                        placeholder="Username" />
-                    <input type="text" value={this.state.createUser.email}
-                        onChange={event => this.setState({createUser: Object.assign({}, this.state.createUser, {
-                            email: event.target.value
-                        })})}
-                        placeholder="Email" />
-                    <input type="text" value={this.state.createUser.pass}
-                        onChange={event => this.setState({createUser: Object.assign({}, this.state.createUser, {
-                            pass: event.target.value
-                        })})}
-                        placeholder="Password" />
-                    <select value={this.state.createUser.type}
-                    onChange={event => this.setState({createUser: Object.assign({}, this.state.createUser, {
-                        type: event.target.value
-                    })})}>
-                        <option value={USER_TYPES.STANDARD_USER}>Standard</option>
-                        <option value={USER_TYPES.ADMIN_USER}>Admin</option>
-                    </select>
-                    <button onClick={this.onCreateUserClick}>Create User</button>
-                </div>
-                <UserList />
-                <CourseList />
+                <UserAdmin />
+                <CourseAdmin />
             </div>
         );
     }
@@ -121,9 +70,6 @@ const mapDispatchToProps = dispatch => {
         },
         insertTestData: (db) => {
             dispatch(insertTestData(db))
-        },
-        createUser: (user, pass, email, type) => {
-            dispatch(createUser(user, pass, email, type))
         },
     }
 }

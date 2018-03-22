@@ -3,7 +3,6 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     CHECKING_LOGGED_IN,
-    IS_LOGGED_IN,
     REQUEST_LOGOUT,
     LOGOUT_FAIL,
     LOGOUT_SUCCESS
@@ -43,11 +42,6 @@ function loginReducer(state = {
         case CHECKING_LOGGED_IN:
             return Object.assign({}, state, {
                 checkingLoggedIn: true,
-            });
-        case IS_LOGGED_IN:
-            return Object.assign({}, state, {
-                loggedIn: action.response.logged_in,
-                userData: action.response.userData,
             });
         case REQUEST_LOGOUT:
             return Object.assign({}, state, {

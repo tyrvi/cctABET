@@ -5,9 +5,9 @@ import {
     COURSE_LIST_FILTER_SEMESTER_CHANGE,
     COURSE_LIST_FILTER_YEAR_CHANGE,
     COURSE_LIST_SHOW_HIDE
-} from '../actions/courseListActions.js';
+} from '../actions/courseAdminActions.js';
 
-function courseListReducer(state = {
+function courseAdminReducer(state = {
     isDoingRequest: false,
     requestError: null,
     courseList: null,
@@ -56,4 +56,4 @@ function courseListReducer(state = {
     }
 }
 
-export default courseListReducer;
+export default courseAdminReducer;

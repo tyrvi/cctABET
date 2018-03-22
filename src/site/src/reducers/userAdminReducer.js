@@ -13,7 +13,7 @@ import {
     USER_LIST_FAIL,
     USER_LIST_FILTER_CHANGE,
     USER_LIST_SHOW_HIDE
-} from '../actions/userListActions.js';
+} from '../actions/userAdminActions.js';
 
 function userListReducer(state ={
     isDoingRequest: false,

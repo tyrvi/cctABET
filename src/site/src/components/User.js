@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_TYPES } from '../actions/loginActions.js';
-import { updateUser, deleteUser } from '../actions/userListActions.js';
+import { updateUser, deleteUser } from '../actions/userAdminActions.js';
 
 
 class User extends Component {

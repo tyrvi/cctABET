@@ -7,8 +7,6 @@ import {
     INSERT_TEST_DATA_FAIL
 } from '../actions/adminActions.js';
 
-
-// TODO: add handling of udpate user actions
 function adminReducer(state = {
     isDoingRequest: false,
     requestMessage: null,
