@@ -10,22 +10,28 @@ import { USER_TYPES } from '../actions/loginActions.js';
 class Dashboard extends Component {
 
     render() {
-        if (this.props.userType === USER_TYPES.ADMIN_USER) {
-            return (
-                <div id="Dashboard">
-                    <Menu />
-                    <Accordion />
-                    <Admin />
-                </div>
-            );
-        } else {
-            return (
-                <div id="Dashboard">
-                    <Menu />
-                    <Accordion />
-                </div>
-            );
-        }
+        // if (this.props.userType === USER_TYPES.ADMIN_USER) {
+        //     return (
+        //         <div id="Dashboard">
+        //             <Menu />
+        //             <Accordion />
+        //             <Admin />
+        //         </div>
+        //     );
+        // } else {
+        //     return (
+        //         <div id="Dashboard">
+        //             <Menu />
+        //             <Accordion />
+        //         </div>
+        //     );
+        // }
+
+        return (
+            <div id="Dashboard">
+                <Accordion />
+            </div>
+        )
     }
 }
 

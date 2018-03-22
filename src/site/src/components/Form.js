@@ -28,7 +28,7 @@ class Form extends Component {
     componentDidMount() {
         // this.props.formID
         // TODO: Testing
-        this.props.getFormData(2);
+        //this.props.getFormData(2);
     }
 
     updateCoordinator(event) {

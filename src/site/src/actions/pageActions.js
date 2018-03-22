@@ -1,4 +1,4 @@
-const PAGES = {
+export const PAGES = {
     LOGIN: "LOGIN",
     DASHBOARD: "DASHBOARD",
     ADMIN: "ADMIN",

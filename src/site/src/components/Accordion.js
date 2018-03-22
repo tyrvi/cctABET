@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { usersCourseData } from '../actions/dashboardActions.js';
 import './styles/Accordion.css';
 import AccordionItem from './AccordionItem';
+import { PAGES } from '../actions/pageActions.js';
 
 
 class Accordion extends Component {

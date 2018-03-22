@@ -32,3 +32,5 @@ function pageReducer(state = {
             return state;
     }
 }
+
+export default pageReducer;
