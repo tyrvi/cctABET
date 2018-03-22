@@ -13,8 +13,8 @@ class App extends Component {
 
     render() {
         const Home = this.props.loggedIn ?
-            <div><Dashboard {...this.props} /></div> :
-            <div><Login {...this.props} /></div>;
+            <div><Dashboard /></div> :
+            <div><Login /></div>;
 
         return (
             <div id="App">

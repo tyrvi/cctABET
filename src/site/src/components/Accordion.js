@@ -23,6 +23,7 @@ class Accordion extends Component {
 
         return (
             <div id="Accordion">
+            <h1>Dashboard</h1>
                 {items}
             </div>
         );

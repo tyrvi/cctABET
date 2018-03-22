@@ -61,7 +61,7 @@ class Admin extends Component {
     render() {
         return (
             <div id="Admin">
-                <h1>UNLIMITED POWAH!!!</h1>
+                <h1>Admin</h1>
                 <div>
                     <div className={this.props.requestError ? "visible failText" : "hidden"}>
                         Error: {this.props.requestError}
