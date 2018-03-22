@@ -97,8 +97,8 @@ export function authLogout() {
         A function (thunk) that dispatchs requestAuth to the store
         and fetches credentials.
 */
-export function authLogin(user, pass) {
-    let query = 'user=' + user + '&pass=' + pass;
+export function authLogin(email, pass) {
+    let query = 'email=' + email + '&pass=' + pass;
 
     return dispatch => {
         dispatch(requestLogin());
