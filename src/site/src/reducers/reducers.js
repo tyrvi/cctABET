@@ -3,7 +3,7 @@ import pageReducer from './pageReducer.js';
 import loginReducer from './loginReducer.js';
 import dashboardReducer from './dashboardReducer.js';
 import adminReducer from './adminReducer.js';
-import userListReducer from './userListReducer.js';
+import userListReducer from './userAdminReducer.js';
 import courseListReducer from './courseListReducer.js';
 import formReducer from './formReducer.js';
 

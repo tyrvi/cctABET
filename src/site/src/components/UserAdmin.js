@@ -5,12 +5,12 @@ import {
     getUserList,
     userListFilterChange,
     userListShowHide
-} from '../actions/userListActions.js';
-import './styles/UserList.css'
+} from '../actions/userAdminActions.js';
+import './styles/UserAdmin.css'
 import { USER_TYPES } from '../actions/loginActions.js';
 
 
-class UserList extends Component {
+class UserAdmin extends Component {
     constructor(props) {
         super(props);
 
@@ -144,4 +144,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(UserList);
+)(UserAdmin);

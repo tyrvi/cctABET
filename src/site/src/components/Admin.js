@@ -5,8 +5,7 @@ import {
     adminCreateDB,
     insertTestData
 } from '../actions/adminActions.js';
-import { createUser } from '../actions/userListActions.js';
-import UserList from './UserList.js';
+import UserAdmin from './UserAdmin.js';
 import CourseList from './CourseList.js';
 
 
@@ -57,7 +56,7 @@ class Admin extends Component {
                         placeholder="Database Name" />
                     <button onClick={this.onInsertDataClick}>Insert Test Data</button>
                 </div>
-                <UserList />
+                <UserAdmin />
                 <CourseList />
             </div>
         );
@@ -71,9 +70,6 @@ const mapDispatchToProps = dispatch => {
         },
         insertTestData: (db) => {
             dispatch(insertTestData(db))
-        },
-        createUser: (user, pass, email, type) => {
-            dispatch(createUser(user, pass, email, type))
         },
     }
 }
