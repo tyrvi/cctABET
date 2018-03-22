@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import './Login.css';
-import { authLogin } from '../actions/actions';
+import './styles/Login.css';
+import { authLogin } from '../actions/loginActions.js';
 import { connect } from 'react-redux';
+
 
 class Login extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            userInfo: {
-                user: '',
-                pass: '',
-            },
+            email: '',
+            pass: '',
             retry: false,
         };
 
@@ -21,12 +21,12 @@ class Login extends Component {
         console.log("Login attempt");
 
         // don't authenticate if user or pass is not provided
-        if (!this.state.user || !this.state.pass) {
+        if (!this.state.email || !this.state.pass) {
             this.setState({ retry: true });
             return;
         }
 
-        this.props.authLogin(this.state.user, this.state.pass);
+        this.props.authLogin(this.state.email, this.state.pass);
     }
 
     render() {
@@ -34,9 +34,9 @@ class Login extends Component {
             <div id="Login">
                 <h1>CCT ABET</h1>
                 <div>
-                    <input type="text" value={this.state.user}
-                        onChange={event => this.setState({ user: event.target.value })}
-                        placeholder="Username" />
+                    <input type="text" value={this.state.email}
+                        onChange={event => this.setState({ email: event.target.value })}
+                        placeholder="Email" />
                 </div>
                 <div>
                     <input type="password" value={this.state.pass}
@@ -45,7 +45,7 @@ class Login extends Component {
                 </div>
                 <div>
                     <p className={this.state.retry ? "visible" : "hidden"} >
-                        Incorrect username/password
+                        Incorrect email/password
                     </p>
                 </div>
                 <div>
@@ -58,8 +58,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        authLogin: (user, pass) => {
-            dispatch(authLogin(user, pass))
+        authLogin: (email, pass) => {
+            dispatch(authLogin(email, pass))
         }
     };
 }

@@ -1,0 +1,50 @@
+.hidden {
+    height: 0;
+}
+
+.courseButtonContainer {
+    margin-bottom: 10px;
+}
+
+.courseButton {
+    padding: 10px;
+
+    overflow: hidden;
+
+    border-width: 0;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+    background-color: #fcc332;
+    color: #001514;
+
+    transition: background-color .3s;
+}
+
+.courseButton:hover {
+    background-color: #f5ad06;
+}
+
+.formButton {
+    display: block;
+    margin: 5px;
+
+    padding: 10px;
+
+    overflow: hidden;
+
+    border-width: 0;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+    background-color: #7b61a0;
+    color: #ecf0f1;
+
+    transition: background-color .3s;
+}
+
+.formButton:hover {
+    background-color: #643b7c;
+}

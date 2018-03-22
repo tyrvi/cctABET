@@ -1,7 +1,18 @@
+import {
+    gotoLogin,
+    gotoDashboard
+} from './pageActions.js';
+
+export const USER_TYPES = {
+    ADMIN_USER: 0,
+    STANDARD_USER: 1,
+}
+
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
-export function requestLogin() {
+export function requestLogin(query) {
     return {
         type: REQUEST_LOGIN,
+        query
     }
 }
 
@@ -9,6 +20,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export function loginSuccess(response) {
     return {
         type: LOGIN_SUCCESS,
+        response,
     }
 }
 
@@ -16,6 +28,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export function loginFail(response) {
     return {
         type: LOGIN_FAIL,
+        response
     };
 }
 
@@ -23,15 +36,6 @@ export const CHECKING_LOGGED_IN = 'CHECKING_LOGGED_IN';
 export function checkingLoggedIn() {
     return {
         type: CHECKING_LOGGED_IN,
-    }
-}
-
-export const IS_LOGGED_IN = 'IS_LOGGED_IN';
-export function isLoggedIn(response) {
-    let loggedIn = response.logged_in;
-    return {
-        type: IS_LOGGED_IN,
-        loggedIn,
     }
 }
 
@@ -75,6 +79,7 @@ export function authLogout() {
             .then(json => {
                 if (json.logout) {
                     dispatch(logoutSuccess());
+                    dispatch(gotoLogin());
                 } else {
                     dispatch(logoutFail());
                 }
@@ -91,20 +96,22 @@ export function authLogout() {
         A function (thunk) that dispatchs requestAuth to the store
         and fetches credentials.
 */
-export function authLogin(user, pass) {
-    let query = 'user=' + user + '&pass=' + pass;
+export function authLogin(email, pass) {
+    let query = 'email=' + email + '&pass=' + pass;
 
     return dispatch => {
-        dispatch(requestLogin());
+        dispatch(requestLogin(query));
         return fetch('auth/login?' + query, {
             method: 'GET',
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
-                if (json.valid) {
+                if (!json.error) {
                     dispatch(loginSuccess(json));
+                    dispatch(gotoDashboard());
                 } else {
                     dispatch(loginFail(json));
+                    dispatch(gotoLogin());
                 }
             })
     };
@@ -126,8 +133,13 @@ export function authCheckLoggedIn() {
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
-                //console.log(json);
-                dispatch(isLoggedIn(json));
+                if (json.logged_in) {
+                    dispatch(loginSuccess(json));
+                    dispatch(gotoDashboard());
+                } else {
+                    dispatch(loginFail(json));
+                    dispatch(gotoLogin());
+                }
             })
     };
 }
