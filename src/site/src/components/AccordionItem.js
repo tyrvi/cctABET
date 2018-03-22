@@ -21,8 +21,6 @@ class AccordionItem extends Component {
 
     onFormClick(formID, outcome) {
         console.log("formID = " + formID + " outcome = " + outcome);
-        // TODO: Load corresponding form component passing the formID and outcome
-        // so it can fetch the data
         this.props.gotoForm(formID)
     }
 
