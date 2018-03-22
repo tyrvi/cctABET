@@ -5,8 +5,7 @@ import { USER_TYPES } from '../actions/loginActions.js';
 import { authLogout } from '../actions/loginActions.js';
 import {
     gotoDashboard,
-    gotoAdmin,
-    PAGES
+    gotoAdmin
 } from '../actions/pageActions.js';
 
 
@@ -55,7 +54,7 @@ class Menu extends Component {
 const mapDispatchToProps = dispatch => {
     return {
         authLogout: () => {
-            dispatch(authLogout())
+            dispatch(authLogout());
         },
         gotoDashboard: () => {
             dispatch(gotoDashboard());

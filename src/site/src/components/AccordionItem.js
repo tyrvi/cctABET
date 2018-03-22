@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/AccordionItem.css';
+import { gotoForm } from '../actions/pageActions.js';
 
 class AccordionItem extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class AccordionItem extends Component {
         console.log("formID = " + formID + " outcome = " + outcome);
         // TODO: Load corresponding form component passing the formID and outcome
         // so it can fetch the data
-
+        this.props.gotoForm(formID)
     }
 
     render() {
@@ -46,8 +47,16 @@ class AccordionItem extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        gotoForm: (formID) => {
+            dispatch(gotoForm(formID));
+        }
+    }
+}
+
 
 export default connect(
     null,
-    null
+    mapDispatchToProps
 )(AccordionItem);

@@ -9,19 +9,11 @@ import { authCheckLoggedIn } from '../actions/loginActions.js';
 import { PAGES } from '../actions/pageActions.js';
 
 class Navigator extends Component {
-
-
     componentDidMount() {
         this.props.authCheckLoggedIn();
     }
 
     render() {
-        // const Home = this.props.loggedIn ?
-        //     <div><Dashboard /></div> :
-        //     <div><Login /></div>;
-
-        let page = null;
-        console.log(this.props.currentPage);
         switch(this.props.currentPage) {
             case PAGES.LOGIN:
                 return (
@@ -53,14 +45,6 @@ class Navigator extends Component {
             default:
                 return null;
         }
-
-        return null
-
-        // return (
-        //     <div id="Navigator">
-        //         {Home}
-        //     </div>
-        // );
     }
 }
 

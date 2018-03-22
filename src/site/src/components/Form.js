@@ -26,9 +26,8 @@ class Form extends Component {
     }
 
     componentDidMount() {
-        // this.props.formID
         // TODO: Testing
-        //this.props.getFormData(2);
+        this.props.getFormData(this.props.formID);
     }
 
     updateCoordinator(event) {
@@ -117,6 +116,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return {
         formData: state.form.formData,
+        formID: state.page.formID,
     }
 }
 

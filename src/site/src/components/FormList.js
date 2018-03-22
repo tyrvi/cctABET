@@ -11,7 +11,7 @@ class FormList extends Component {
                 {studentName: 'Thais', pointsEarned: 10},
                 {studentName: 'Conner', pointsEarned: 20},
                 {studentName: 'Andrew', pointsEarned: 9},
-            ], 
+            ],
         };
         this.addNumStudent = this.addNumStudent.bind(this);
         this.updateStudentName = this.updateStudentName.bind(this);
@@ -24,27 +24,33 @@ class FormList extends Component {
             this.setState({numStudents: this.state.students.length});
         }
     }
+
     addNumStudent(event) {
         this.setState({students: this.state.students.concat([{studentName: '', pointsEarned: ''}])});
     }
+
     removeStudent(student) {
         let tmp = this.state.students;
         tmp.splice(tmp.indexOf(student), 1);
         this.setState({tmp:tmp});
     }
+
     updateStudentName(student, event) {
         let tmp = this.state.students;
         tmp[tmp.indexOf(student)].studentName = event.target.value;
         this.setState({tmp:tmp});
     }
+
     updateStudentPoints(student, event) {
         let tmp = this.state.students;
         tmp[tmp.indexOf(student)].pointsEarned = event.target.value;
         this.setState({tmp:tmp});
     }
+
     updatePointsPossible(event) {
         this.setState({pointsPossible: event.target.value});
     }
+
     render() {
         const studentList = this.state.students.map((student, idx) => {
             this.updateStudentAmount();
@@ -54,7 +60,7 @@ class FormList extends Component {
                         <button type="button" onClick={this.removeStudent.bind(this, student)}>-</button>
                     </div>)
         });
-        console.log(this.state);
+
         return (
             <div>
                 <div>
@@ -66,7 +72,6 @@ class FormList extends Component {
                 <div>Name: Points:</div>
                 {studentList}
             </div>
-            
         )
     }
 }
