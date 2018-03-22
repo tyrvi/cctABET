@@ -54,7 +54,11 @@ class UserAdmin extends Component {
     }
 
     onFilterClick() {
-        this.props.getUserList(this.state.filter.email);
+        if (this.props.filter.email) {
+            this.props.getUserList(this.props.filter.email);
+        } else {
+            this.props.getUserList();
+        }
     }
 
     render() {
@@ -129,8 +133,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getUserList: () => {
-            dispatch(getUserList());
+        getUserList: (email) => {
+            dispatch(getUserList(email));
         },
         updateFilter: (email) => {
             dispatch(userListFilterChange(email));

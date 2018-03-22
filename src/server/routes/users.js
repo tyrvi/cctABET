@@ -50,7 +50,7 @@ async function get_users(req, res, next) {
 
         if(user_id !== undefined || email !== undefined) {
             if(result.rows.length === 1) {
-                res.json(result.rows[0]);
+                res.json(result.rows);
             } else {
                 res.json({error: 'User does not exist'});
             }
