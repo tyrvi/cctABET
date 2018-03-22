@@ -28,16 +28,16 @@ class AccordionItem extends Component {
     render() {
         const forms = this.props.forms.map(form => {
             return (
-                <div key={form.form_id}
+                <button className="formButton" key={form.form_id}
                     onClick={() => this.onFormClick(form.form_id, form.outcome)} >
                     {form.outcome}
-                </div>
+                </button>
             );
         });
 
         return (
-            <div key={this.props.key}>
-                <button onClick={this.onCourseClick}>{this.props.courseName}</button>
+            <div className="courseButtonContainer" key={this.props.key}>
+                <button className="courseButton" onClick={this.onCourseClick}>{this.props.courseName}</button>
                 <div className={this.state.isOpen ? "" : "hidden"}>
                     {forms}
                 </div>

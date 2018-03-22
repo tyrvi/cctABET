@@ -13,7 +13,7 @@ class Form extends Component {
             semester: 'Spring 2018',
             course: 'CS 4453 Artificial Intelligence',
             performanceIndicator: 'Submits works effectively',
-            outcomeLevel: 'Emphasized', 
+            outcomeLevel: 'Emphasized',
             assignments: 'Another question again????',
         }
         this.updateCoordinator = this.updateCoordinator.bind(this);
@@ -25,45 +25,50 @@ class Form extends Component {
         this.updateAssignments = this.updateAssignments.bind(this);
     }
 
-    updateCoordinator(event) {
-        this.setState({assessmentCoor: event.target.value});
-    }
-    updateEmail(event) {
-        this.setState({email: event.target.value});
-    }
-    updateSemester(event) {
-        this.setState({semester: event.target.value});
-    }
-    updateCourse(event) {
-        this.setState({course: event.target.value});
-    }
-    updatePointsPossible(event) {
-        this.setState({pointsPossible: event.target.value});
-    }
-    updatePerformanceIndicator(event) {
-        this.setState({performanceIndicator: event.target.value});
-    }
-    updateOutcomeLevel(event) {
-        this.setState({outcomeLevel: event.target.value});
-    }
-    updateAssignments(event) {
-        this.setState({assignments: event.target.value});
-    }
-
     componentDidMount() {
         // this.props.formID
         // TODO: Testing
         this.props.getFormData(2);
     }
 
+    updateCoordinator(event) {
+        this.setState({assessmentCoor: event.target.value});
+    }
+
+    updateEmail(event) {
+        this.setState({email: event.target.value});
+    }
+
+    updateSemester(event) {
+        this.setState({semester: event.target.value});
+    }
+
+    updateCourse(event) {
+        this.setState({course: event.target.value});
+    }
+
+    updatePointsPossible(event) {
+        this.setState({pointsPossible: event.target.value});
+    }
+
+    updatePerformanceIndicator(event) {
+        this.setState({performanceIndicator: event.target.value});
+    }
+
+    updateOutcomeLevel(event) {
+        this.setState({outcomeLevel: event.target.value});
+    }
+
+    updateAssignments(event) {
+        this.setState({assignments: event.target.value});
+    }
 
     render() {
-        console.log(this.state);
-        return ( 
+        return (
             <div>
                 <div>
                     <input type='text' value={this.state.assessmentCoor} onChange={this.updateCoordinator} />
-                    Assessment Coodinator: 
+                    Assessment Coodinator:
                 </div>
                 <div>
                     <input type='text' value={this.state.email} onChange={this.updateEmail}/>
@@ -110,9 +115,8 @@ const mapDispatchToProps = dispatch => {
 
 
 const mapStateToProps = state => {
-//console.log(state);
     return {
-        asscrack: state.form.formData,
+        formData: state.form.formData,
     }
 }
 
