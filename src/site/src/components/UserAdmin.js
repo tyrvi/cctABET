@@ -66,7 +66,7 @@ class UserAdmin extends Component {
         if (this.props.userList) {
             users = this.props.userList.map((user, idx) => {
                 return (
-                    <User key={idx}
+                    <User key={user.user_id}
                         user={user}
                     />
                 );
