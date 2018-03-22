@@ -1,43 +1,41 @@
 import React, { Component } from 'react';
-import './Dashboard.css';
-import { authLogout } from '../actions/actions';
 import { connect } from 'react-redux';
+import './styles/Dashboard.css';
+import Accordion from './Accordion.js';
+import Menu from './Menu.js';
+import Admin from './Admin.js';
+import { USER_TYPES } from '../actions/loginActions.js';
+
 
 class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-
-        this.onLogoutClick = this.onLogoutClick.bind(this);
-    }
-
-    componentDidMount() {
-        // TODO: fetch user data here
-    }
-
-    onLogoutClick() {
-        // TODO: dispatch logout action
-        this.props.authLogout();
-    }
 
     render() {
-        return (
-            <div>
-                <h1>Logged in to Admin Page</h1>
-                <button type="button" onClick={this.onLogoutClick}>Logout</button>
-            </div>
-        );
+        if (this.props.userType === USER_TYPES.ADMIN_USER) {
+            return (
+                <div id="Dashboard">
+                    <Menu />
+                    <Accordion />
+                    <Admin />
+                </div>
+            );
+        } else {
+            return (
+                <div id="Dashboard">
+                    <Menu />
+                    <Accordion />
+                </div>
+            );
+        }
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-        authLogout: () => {
-            dispatch(authLogout())
-        }
-    };
+        userType: state.login.userData.type,
+    }
 }
 
 export default connect(
-    null,
-    mapDispatchToProps
+    mapStateToProps,
+    null
 )(Dashboard);

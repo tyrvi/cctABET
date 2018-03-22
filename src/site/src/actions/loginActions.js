@@ -1,3 +1,8 @@
+export const USER_TYPES = {
+    ADMIN_USER: 0,
+    STANDARD_USER: 1,
+}
+
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
 export function requestLogin() {
     return {
@@ -9,6 +14,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export function loginSuccess(response) {
     return {
         type: LOGIN_SUCCESS,
+        response,
     }
 }
 
@@ -16,6 +22,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export function loginFail(response) {
     return {
         type: LOGIN_FAIL,
+        response
     };
 }
 
@@ -28,10 +35,9 @@ export function checkingLoggedIn() {
 
 export const IS_LOGGED_IN = 'IS_LOGGED_IN';
 export function isLoggedIn(response) {
-    let loggedIn = response.logged_in;
     return {
         type: IS_LOGGED_IN,
-        loggedIn,
+        response,
     }
 }
 
@@ -91,8 +97,8 @@ export function authLogout() {
         A function (thunk) that dispatchs requestAuth to the store
         and fetches credentials.
 */
-export function authLogin(user, pass) {
-    let query = 'user=' + user + '&pass=' + pass;
+export function authLogin(email, pass) {
+    let query = 'email=' + email + '&pass=' + pass;
 
     return dispatch => {
         dispatch(requestLogin());
@@ -101,7 +107,7 @@ export function authLogin(user, pass) {
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
-                if (json.valid) {
+                if (!json.error) {
                     dispatch(loginSuccess(json));
                 } else {
                     dispatch(loginFail(json));
@@ -126,7 +132,6 @@ export function authCheckLoggedIn() {
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
-                //console.log(json);
                 dispatch(isLoggedIn(json));
             })
     };

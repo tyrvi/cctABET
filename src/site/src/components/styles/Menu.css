@@ -1,0 +1,7 @@
+#Menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgb(214, 214, 214);
+}

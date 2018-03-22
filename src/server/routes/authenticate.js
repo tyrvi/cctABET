@@ -1,38 +1,47 @@
 var db = require('../db');
 
+const USER_TYPES = {
+    ADMIN_USER: 0,
+    STANDARD_USER: 1,
+}
+
 /*
 	Authentication route function
 	Authenticates a user with url params:
-	?username -- The username
-	?password -- The password
+	?email -- The email for the user
+	?pass -- The password
 
 	Returns:
 		json response with attribute 'valid' that is true on success
 */
 function login(req, res, next) {
-	let user = req.query.user;
+	let email = req.query.email;
     let pass = req.query.pass;
-    if(!user || !pass) {
-        res.json({'valid': false});
+
+    if(!email || !pass) {
+        res.json({error: 'Missing email or password'});
     } else {
-        db.query("SELECT * FROM users WHERE username=$1::text AND password=$2::text", [user, pass], (err, result) => {
+        db.query("SELECT * FROM users WHERE email=$1 AND password=$2", [email, pass], (err, result) => {
             if(err) {
                 console.log('Error in authenticate: ' + err);
-                return;
+                res.json({error: 'Authentication error'});
             }
-            if(result['rows'].length > 0) {
+            else if(result['rows'].length > 0) {
                 // Get the user from the result
                 let user = result['rows'][0];
 
-                // We don't need that
+                // We don't need the password
                 delete user.password;
 
                 // Store the user in the session
                 req.session.user = user;
 
-                res.json({'valid': true});
+                res.json({
+                    valid: true,
+                    userData: user,
+                });
             } else {
-                res.json({'valid': false});
+                res.json({error: 'Incorrect email or password'});
             }
         });
     }
@@ -41,9 +50,9 @@ function login(req, res, next) {
 function logout(req, res, next) {
     if (req.session) {
         delete req.session.user;
-        res.json({'logout': true});
+        res.json({logout: true});
     } else {
-        res.json({'logout': false});
+        res.json({logout: false});
     }
 }
 
@@ -55,9 +64,10 @@ function logout(req, res, next) {
 		{ logged_in: false } otherwise
 */
 function is_logged_in(req, res, next) {
-	response = {};
+    response = {};
 	logged_in(req).then((logged_in) => {
         response.logged_in = logged_in;
+        response.userData = req.session.user;
         res.json(response);
     });
 }
@@ -76,6 +86,23 @@ async function require_login(req, res, next) {
 }
 
 /*
+    Middleware function to ensure a user is an admin user and logged in
+	Returns a json error on failure
+	Continues with the request otherwise
+*/
+async function require_admin(req, res, next) {
+    if (await logged_in(req)) {
+        if (req.session.user.type === USER_TYPES.ADMIN_USER) {
+            next();
+        } else {
+            res.json({error: 'You must be an admin user to access this.'})
+        }
+    } else {
+        res.json({error: 'You must be logged in to access this.'});
+    }
+}
+
+/*
 	Helper function that returns if a user is logged in
 
 	Returns:
@@ -88,7 +115,7 @@ async function logged_in(req) {
 
 		// Check if the user exists
 		try {
-			let result = await db.query("SELECT * FROM users WHERE username=$1::text", [user.username]);
+			let result = await db.query("SELECT * FROM users WHERE user_id=$1::integer", [user.user_id]);
             return result.rows.length == 1;
 		} catch(err) {
 			console.log(err);
@@ -104,3 +131,4 @@ module.exports.logout = logout;
 
 // Middleware
 module.exports.require_login = require_login;
+module.exports.require_admin = require_admin;

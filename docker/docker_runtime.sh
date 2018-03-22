@@ -5,7 +5,6 @@ export NODE_ENV=development
 # Start postgresql
 echo "Starting postgresql"
 service postgresql start
-echo "Starting site"
 
 # Start site
 echo "Starting site"
