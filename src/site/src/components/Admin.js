@@ -6,7 +6,7 @@ import {
     insertTestData
 } from '../actions/adminActions.js';
 import UserAdmin from './UserAdmin.js';
-import CourseList from './CourseList.js';
+import CourseAdmin from './CourseAdmin.js';
 
 
 class Admin extends Component {
@@ -57,7 +57,7 @@ class Admin extends Component {
                     <button onClick={this.onInsertDataClick}>Insert Test Data</button>
                 </div>
                 <UserAdmin />
-                <CourseList />
+                <CourseAdmin />
             </div>
         );
     }

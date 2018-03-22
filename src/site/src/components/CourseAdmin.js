@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Course from './Course.js';
-import './styles/CourseList.css';
+import './styles/CourseAdmin.css';
 import {
     getCourseList,
     courseListFilterSemesterChange,
     courseListFilterYearChange,
     courseListShowHide
-} from '../actions/courseListActions.js';
+} from '../actions/courseAdminActions.js';
 
 
-class CourseList extends Component {
+class CourseAdmin extends Component {
     constructor(props) {
         super(props);
 
@@ -100,4 +100,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CourseList);
+)(CourseAdmin);
