@@ -1,3 +1,8 @@
+import {
+    gotoLogin,
+    gotoDashboard
+} from './pageActions.js';
+
 export const USER_TYPES = {
     ADMIN_USER: 0,
     STANDARD_USER: 1,
@@ -31,14 +36,6 @@ export const CHECKING_LOGGED_IN = 'CHECKING_LOGGED_IN';
 export function checkingLoggedIn() {
     return {
         type: CHECKING_LOGGED_IN,
-    }
-}
-
-export const IS_LOGGED_IN = 'IS_LOGGED_IN';
-export function isLoggedIn(response) {
-    return {
-        type: IS_LOGGED_IN,
-        response,
     }
 }
 
@@ -82,6 +79,7 @@ export function authLogout() {
             .then(json => {
                 if (json.logout) {
                     dispatch(logoutSuccess());
+                    dispatch(gotoLogin());
                 } else {
                     dispatch(logoutFail());
                 }
@@ -110,8 +108,10 @@ export function authLogin(email, pass) {
             .then(json => {
                 if (!json.error) {
                     dispatch(loginSuccess(json));
+                    dispatch(gotoDashboard());
                 } else {
                     dispatch(loginFail(json));
+                    dispatch(gotoLogin());
                 }
             })
     };
@@ -133,7 +133,13 @@ export function authCheckLoggedIn() {
             credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
-                dispatch(isLoggedIn(json));
+                if (json.logged_in) {
+                    dispatch(loginSuccess(json));
+                    dispatch(gotoDashboard());
+                } else {
+                    dispatch(loginFail(json));
+                    dispatch(gotoLogin());
+                }
             })
     };
 }
