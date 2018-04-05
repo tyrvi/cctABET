@@ -1,4 +1,5 @@
 var db = require('../db');
+var crypto = require('crypto');
 
 
 /*
@@ -99,6 +100,8 @@ async function create_user(req, res, next) {
         return;
     }
 
+    //var hash = crypto.createHash('sha256');
+    //hash.update(pass);
     let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, password, f_name, l_name, prefix, type]);
     query.then(result => {
         res.json({message: 'User created.'});
@@ -150,5 +153,8 @@ async function update_user(req, res, next) {
 module.exports.get_users = get_users;
 module.exports.create_user = create_user;
 module.exports.delete_user = delete_user;
+<<<<<<< HEAD
 module.exports.update_user = update_user;
 
+=======
+>>>>>>> b793a88... Updated login to compare hashed password rather than plain text. Updated new user to insert hashed password rather than plain text.
