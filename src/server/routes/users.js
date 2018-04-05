@@ -1,4 +1,5 @@
 var db = require('../db');
+var crypto = require('crypto');
 
 
 /*
@@ -73,9 +74,13 @@ async function create_user(req, res, next) {
     let email = req.query.email;
     let type = req.query.type;
 
+    // Properly hashes the password before comparing user hash to database hash
+    var hash = crypto.createHash('sha256');
+    hash.update(pass);
+
     if(user && pass && email && type) {
         await db.query("INSERT INTO users (username, password, email, type) VALUES ($1::text, $2::text, $3::text, $4::int)",
-        [user, pass, email, type]);
+        [user, hash, email, type]);
         res.json({message: 'User created.'});
     } else {
         res.json({error: 'Could not create user'});
@@ -85,4 +90,3 @@ async function create_user(req, res, next) {
 module.exports.get_users = get_users;
 module.exports.create_user = create_user;
 module.exports.delete_user = delete_user;
-
