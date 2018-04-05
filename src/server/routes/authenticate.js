@@ -16,30 +16,17 @@ const USER_TYPES = {
 		json response with attribute 'valid' that is true on success
 */
 function login(req, res, next) {
-<<<<<<< HEAD
-	let email = req.query.email;
+    let email = req.query.email;
     let pass = req.query.pass;
-=======
-  let user = req.query.user;
-  let pass = req.query.pass;
 
-  // Properly hashes the password before comparing user hash to database hash
-  var hash = crypto.createHash('sha256');
-  hash.update(pass);
-
-    db.query("SELECT * FROM users", (err, result) => {
-        console.log(result);
-    });
->>>>>>> b793a88... Updated login to compare hashed password rather than plain text. Updated new user to insert hashed password rather than plain text.
+    // hashes plaintext password before database comparison
+    var hash = crypto.createHash('sha256');
+    hash.update(pass);
 
     if(!email || !pass) {
         res.json({error: 'Missing email or password'});
     } else {
-<<<<<<< HEAD
-        db.query("SELECT * FROM users WHERE email=$1 AND password=$2", [email, pass], (err, result) => {
-=======
-        db.query("SELECT * FROM users WHERE username=$1::text AND password=$2::text", [user, hash], (err, result) => {
->>>>>>> b793a88... Updated login to compare hashed password rather than plain text. Updated new user to insert hashed password rather than plain text.
+        db.query("SELECT * FROM users WHERE email=$1 AND password=$2", [email, hash], (err, result) => {
             if(err) {
                 console.log('Error in authenticate: ' + err);
                 res.json({error: 'Authentication error'});

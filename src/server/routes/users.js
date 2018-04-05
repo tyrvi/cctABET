@@ -99,10 +99,11 @@ async function create_user(req, res, next) {
         res.json({error: 'Bad body'});
         return;
     }
+    // properly hashes plain text password before insertion
+    var hash = crypto.createHash('sha256');
+    hash.update(pass);
 
-    //var hash = crypto.createHash('sha256');
-    //hash.update(pass);
-    let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, password, f_name, l_name, prefix, type]);
+    let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, hash, f_name, l_name, prefix, type]);
     query.then(result => {
         res.json({message: 'User created.'});
     }).catch(err => {

@@ -29,15 +29,6 @@ function create_db(req, res, next) {
     }
 }
 
-/*
-    Inserts test data in the database. Be careful, its hot
-
-    !!WARNING THIS INSERTS FAKE DATA INTO DATABASE!!
-
-    ?db -- The name of the database to insert.
-           This must be cctabet or the function will fail.
-           This is to ensure that the person doing the operation knows what they are doing.
-*/
 function insert_test_data(req, res, next) {
     const path_to_test_data_script = __dirname + '/../dbscripts/testdata.sql';
 
