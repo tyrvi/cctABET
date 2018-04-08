@@ -16,48 +16,40 @@ const USER_TYPES = {
 		json response with attribute 'valid' that is true on success
 */
 function login(req, res, next) {
-  let user = req.query.user;
+  let email = req.query.email;
   let pass = req.query.pass;
 
-  // Properly hashes the password before comparing user hash to database hash
-  var hash = crypto.createHash('sha256');
-  hash.update(pass);
-
-    db.query("SELECT * FROM users", (err, result) => {
-        console.log(result);
-    });
-
+  if(!email || !pass) {
+      res.json({error: 'Missing email or password'});
+      return;
+  }
     // hashes plaintext password before database comparison
-    var hash = crypto.createHash('sha256');
+    let hash = crypto.createHash('sha256');
     hash.update(pass);
+    let hashString = hash.digest('hex').toUpperCase();
 
-    if(!email || !pass) {
-        res.json({error: 'Missing email or password'});
-    } else {
-        db.query("SELECT * FROM users WHERE username=$1::text AND password=$2::text", [user, hash], (err, result) => {
-            if(err) {
-                console.log('Error in authenticate: ' + err);
-                res.json({error: 'Authentication error'});
-            }
-            else if(result['rows'].length > 0) {
-                // Get the user from the result
-                let user = result['rows'][0];
+    db.query("SELECT * FROM users WHERE email=$1::text AND password=$2::text", [email, hashString], (err, result) => {
+        if(err) {
+            res.json({error: 'Authentication error'});
+        }
+        else if(result['rows'].length > 0) {
+            // Get the user from the result
+            let user = result['rows'][0];
 
-                // We don't need the password
-                delete user.password;
+            // We don't need the password
+            delete user.password;
 
-                // Store the user in the session
-                req.session.user = user;
+            // Store the user in the session
+            req.session.user = user;
 
-                res.json({
-                    valid: true,
-                    userData: user,
-                });
-            } else {
-                res.json({error: 'Incorrect email or password'});
-            }
-        });
-    }
+            res.json({
+                valid: true,
+                userData: user,
+            });
+        } else {
+            res.json({error: 'Incorrect email or password'});
+        }
+    });
 }
 
 function logout(req, res, next) {

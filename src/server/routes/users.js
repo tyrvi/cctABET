@@ -100,10 +100,11 @@ async function create_user(req, res, next) {
         return;
     }
     // properly hashes plain text password before insertion
-    var hash = crypto.createHash('sha256');
+    let hash = crypto.createHash('sha256');
     hash.update(pass);
+    let hashString = hash.digest('hex').toUpperCase();
 
-    let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, hash, f_name, l_name, prefix, type]);
+    let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, hashString, f_name, l_name, prefix, type]);
     query.then(result => {
         res.json({message: 'User created.'});
     }).catch(err => {
@@ -154,11 +155,4 @@ async function update_user(req, res, next) {
 module.exports.get_users = get_users;
 module.exports.create_user = create_user;
 module.exports.delete_user = delete_user;
-<<<<<<< HEAD
-<<<<<<< HEAD
 module.exports.update_user = update_user;
-
-=======
->>>>>>> b793a88... Updated login to compare hashed password rather than plain text. Updated new user to insert hashed password rather than plain text.
-=======
->>>>>>> deffa3f30345d624fa7a4592398e813b5110c1c9
