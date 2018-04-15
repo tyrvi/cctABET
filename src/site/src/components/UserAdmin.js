@@ -113,7 +113,7 @@ class UserAdmin extends Component {
                     </div>
                     <div>
                         <button onClick={this.onUserListClick}>{this.props.isOpen ? "hide list" : "show list"}</button>
-                        <div className={this.props.isOpen ? "" : "hidden"}>
+                        <div className={this.props.isOpen ? "listBox" : "hidden"}>
                             {users}
                         </div>
                     </div>
