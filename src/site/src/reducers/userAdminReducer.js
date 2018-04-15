@@ -37,7 +37,7 @@ function userListReducer(state ={
         f_name: '',
         l_name: '',
         prefix: '',
-        type: '',
+        type: 1,
     }
 }, action) {
     switch(action.type) {
