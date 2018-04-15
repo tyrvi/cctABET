@@ -1,14 +1,14 @@
-.userBox {
+.courseBox {
     display: flex;
     flex-direction: row;
     padding: 5px;
 }
 
-.userItemBox {
+.courseItemBox {
     margin: 5px;
 }
 
-.userButton {
+.courseButton {
     margin-left: 5px;
     margin-right: 5px;
     padding: 5px;
