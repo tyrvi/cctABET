@@ -1,8 +1,8 @@
 export const REQUEST_CREATE_USER = "REQUEST_CREATE_USER";
-export function requestCreateUser(query) {
+export function requestCreateUser(body) {
     return {
         type: REQUEST_CREATE_USER,
-        query
+        body
     }
 }
 
@@ -19,6 +19,61 @@ export function createUserFail(response) {
     return {
         type: CREATE_USER_FAIL,
         response,
+    }
+}
+
+export const CREATE_USER_EMAIL_CHANGE = 'CREATE_USER_EMAIL_CHANGE';
+export function createUserEmailChange(email) {
+    return {
+        type: CREATE_USER_EMAIL_CHANGE,
+        email,
+    }
+}
+
+export const CREATE_USER_PASS_CHANGE = 'CREATE_USER_PASS_CHANGE';
+export function createUserPassChange(pass) {
+    return {
+        type: CREATE_USER_PASS_CHANGE,
+        pass,
+    }
+}
+
+export const CREATE_USER_FNAME_CHANGE = 'CREATE_USER_FNAME_CHANGE';
+export function createUserFNameChange(f_name) {
+    return {
+        type: CREATE_USER_FNAME_CHANGE,
+        f_name,
+    }
+}
+
+export const CREATE_USER_LNAME_CHANGE = 'CREATE_USER_LNAME_CHANGE';
+export function createUserLNameChange(l_name) {
+    return {
+        type: CREATE_USER_LNAME_CHANGE,
+        l_name,
+    }
+}
+
+export const CREATE_USER_PREFIX_CHANGE = 'CREATE_USER_PREFIX_CHANGE';
+export function createUserPrefixChange(prefix) {
+    return {
+        type: CREATE_USER_PREFIX_CHANGE,
+        prefix,
+    }
+}
+
+export const CREATE_USER_TYPE_CHANGE = 'CREATE_USER_TYPE_CHANGE';
+export function createUserTypeChange(type) {
+    return {
+        type: CREATE_USER_TYPE_CHANGE,
+        user_type: type,
+    }
+}
+
+export const CREATE_USER_CLEAR = 'CREATE_USER_CLEAR';
+export function createUserClear() {
+    return {
+        type: CREATE_USER_CLEAR,
     }
 }
 
@@ -145,15 +200,25 @@ export function getUserList(email = null) {
         inserts the new user into the database.
 */
 // TODO: change to a POST request
-export function createUser(user, pass, email, type) {
-    let query = 'user=' + user + '&pass=' + pass +
-        '&email=' + email + '&type=' + type;
+export function createUser(email, password, f_name, l_name, prefix, type) {
+    let body = {
+        email,
+        password,
+        f_name,
+        l_name,
+        prefix,
+        type,
+    }
 
     return dispatch => {
-        dispatch(requestCreateUser(query));
-        return fetch('users/create?' + query, {
-            method: 'GET',
+        dispatch(requestCreateUser(body))
+        return fetch('/users/create', {
+            method: 'POST',
             credentials: 'same-origin',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(body),
         }).then(res => res.json())
             .then(json => {
                 if (!json.error) {
@@ -161,8 +226,8 @@ export function createUser(user, pass, email, type) {
                 } else {
                     dispatch(createUserFail(json));
                 }
-            })
-    };
+            });
+    }
 }
 
 export function updateUser(username, email, type) {
