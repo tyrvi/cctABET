@@ -94,6 +94,10 @@ async function create_user(req, res, next) {
         l_name = '';
     }
 
+    if (prefix === undefined) {
+        prefix = '';
+    }
+
     if(email === undefined || password === undefined || type === undefined) {
         res.json({error: 'Bad body'});
         return;
