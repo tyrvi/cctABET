@@ -12,6 +12,7 @@ import {
     createUserPrefixChange,
     createUserTypeChange,
     createUserClear,
+    createUser,
 } from '../actions/userAdminActions.js';
 import './styles/UserAdmin.css'
 import { USER_TYPES } from '../actions/loginActions.js';
@@ -20,15 +21,6 @@ import { USER_TYPES } from '../actions/loginActions.js';
 class UserAdmin extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            createUser: {
-                user: '',
-                pass: '',
-                email: '',
-                type: USER_TYPES.STANDARD_USER,
-            }
-        }
 
         this.onUserListClick = this.onUserListClick.bind(this);
         this.onFilterClick = this.onFilterClick.bind(this);
@@ -40,20 +32,7 @@ class UserAdmin extends Component {
     }
 
     onCreateUserClick() {
-        // TODO: create actions for calling create user API
-        this.props.createUser(
-            this.state.createUser.user,
-            this.state.createUser.pass,
-            this.state.createUser.email,
-            this.state.createUser.type,
-        );
-
-        this.setState({createUser: Object.assign({}, this.state.createUser, {
-            user: '',
-            pass: '',
-            email: '',
-            type: USER_TYPES.STANDARD_USER,
-        })});
+        this.props.createUser(this.props.userCreate);
     }
 
     onUserListClick() {
@@ -148,6 +127,9 @@ const mapDispatchToProps = dispatch => {
         },
         showHide: () => {
             dispatch(userListShowHide())
+        },
+        createUser: (userCreate) => {
+            dispatch(createUser(userCreate))
         },
         userCreateClear: () => {
             dispatch(createUserClear())

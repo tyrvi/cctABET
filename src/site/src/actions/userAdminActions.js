@@ -199,15 +199,14 @@ export function getUserList(email = null) {
         A function (thunk) that dispatchs requestCreateUser() then
         inserts the new user into the database.
 */
-// TODO: change to a POST request
-export function createUser(email, password, f_name, l_name, prefix, type) {
+export function createUser(userCreate) {
     let body = {
-        email,
-        password,
-        f_name,
-        l_name,
-        prefix,
-        type,
+        email: userCreate.email,
+        password: userCreate.pass,
+        f_name: userCreate.f_name,
+        l_name: userCreate.l_name,
+        prefix: userCreate.prefix,
+        type: userCreate.type,
     }
 
     return dispatch => {
@@ -223,6 +222,7 @@ export function createUser(email, password, f_name, l_name, prefix, type) {
             .then(json => {
                 if (!json.error) {
                     dispatch(createUserSuccess(json));
+                    dispatch(createUserClear());
                 } else {
                     dispatch(createUserFail(json));
                 }
