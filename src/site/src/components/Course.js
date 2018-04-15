@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './styles/Course.css';
 
 class Course extends Component {
     constructor(props) {
@@ -48,31 +49,40 @@ class Course extends Component {
     render() {
         if (!this.state.editing) {
             return (
-                <div>
-                    <div>Course Name: {this.props.course.course_name}</div>
-                    <div>Semester: {this.props.course.semester}</div>
-                    <div>Year: {this.props.course.year}</div>
-                    <button onClick={this.onEdit}>Edit</button>
-                    <button onClick={this.onDelete}>Delete</button>
+                <div className="courseBox">
+                    <div className="courseItemBox"><b>Course Name:</b> {this.props.course.course_name}</div>
+                    <div className="courseItemBox"><b>Semester:</b> {this.props.course.semester}</div>
+                    <div className="courseItemBox"><b>Year:</b> {this.props.course.year}</div>
+                    <button className="courseButton" onClick={this.onEdit}>Edit</button>
+                    <button className="courseButton" onClick={this.onDelete}>Delete</button>
                 </div>
             );
         } else {
             return (
-                <div>
-                    <input type="text" value={this.state.course_name}
-                        onChange={event => this.setState({course_name: event.target.value})}
-                    />
-                    <select value={this.state.semester}
-                        onChange={event => this.setState({semester: event.target.value})}>
-                        <option value='Fall'>Fall</option>
-                        <option value='Spring'>Spring</option>
-                        <option value='Summer'>Summer</option>
-                    </select>
-                    <input type="number" value={this.state.year}
-                        onChange={event => this.setState({year: event.target.value})}
-                    />
-                    <button onClick={this.onUpdate}>Update</button>
-                    <button onClick={this.onEditCancel}>Cancel</button>
+                <div className="courseBox">
+                    <div className="courseItemBox">
+                        <b>Course Name:</b>
+                        <input type="text" value={this.state.course_name}
+                            onChange={event => this.setState({course_name: event.target.value})}
+                        />
+                    </div>
+                    <div className="courseItemBox">
+                        <b>Semester:</b>
+                        <select value={this.state.semester}
+                            onChange={event => this.setState({semester: event.target.value})}>
+                            <option value='Fall'>Fall</option>
+                            <option value='Spring'>Spring</option>
+                            <option value='Summer'>Summer</option>
+                        </select>
+                    </div>
+                    <div className="courseItemBox">
+                        <b>Year:</b>
+                        <input type="number" value={this.state.year}
+                            onChange={event => this.setState({year: event.target.value})}
+                        />
+                    </div>
+                    <button className="courseButton" onClick={this.onUpdate}>Update</button>
+                    <button className="courseButton" onClick={this.onEditCancel}>Cancel</button>
                 </div>
             );
         }

@@ -63,7 +63,7 @@ class CourseAdmin extends Component {
                 <div>
                     <h5 onClick={this.onCourseListClick}>Course List</h5>
                     <button onClick={this.onCourseListClick}>{this.props.isOpen ? "hide" : "show"}</button>
-                    <div className={this.props.isOpen ? "" : "hidden"}>
+                    <div className={this.props.isOpen ? "listBox" : "hidden"}>
                         {courses}
                     </div>
                 </div>
