@@ -33,6 +33,7 @@ class UserAdmin extends Component {
 
     onCreateUserClick() {
         this.props.createUser(this.props.userCreate);
+        this.props.getUserList();
     }
 
     onUserListClick() {
