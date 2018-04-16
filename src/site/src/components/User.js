@@ -12,10 +12,11 @@ class User extends Component {
         this.state = {
             user_id: this.props.user.user_id,
             email: this.props.user.email,
-            prefix: this.props.user.prefix,
             f_name: this.props.user.f_name,
             l_name: this.props.user.l_name,
+            prefix: this.props.user.prefix,
             type: this.props.user.type,
+            password: '',
             editing: false,
         }
 
@@ -58,10 +59,11 @@ class User extends Component {
         this.setState({
             user_id: this.props.user.user_id,
             email: this.props.user.email,
-            prefix: this.props.user.prefix,
             f_name: this.props.user.f_name,
             l_name: this.props.user.l_name,
+            prefix: this.props.user.prefix,
             type: this.props.user.type,
+            password: '',
             editing: false,
         })
     }
@@ -86,6 +88,11 @@ class User extends Component {
                         <b>Email:</b>
                         <input type="text" value={this.state.email}
                             onChange={event => this.setState({email: event.target.value})} />
+                    </div>
+                    <div className="userItemBox">
+                        <b>Password:</b>
+                        <input type="text" value={this.state.password}
+                            onChange={event => this.setState({password: event.target.value})} />
                     </div>
                     <div className="userItemBox">
                         <b>Prefix:</b>
@@ -122,8 +129,8 @@ class User extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateUser: (username, email, type) => {
-            dispatch(updateUser(username, email, type));
+        updateUser: (user_id, email, password, prefix, f_name, l_name, type) => {
+            dispatch(updateUser(user_id, email, password, prefix, f_name, l_name, type));
         },
         deleteUser: (email) => {
             dispatch(deleteUser(email));

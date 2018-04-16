@@ -191,13 +191,7 @@ export function getUserList(email = null) {
 /*
     Dispatches fetch request with a user, pass, email and type
     Params:
-        user: the username of the new user
-        pass: the password of the new user
-        email: the email of the new user
-        type: the user type of the new user
     Returns:
-        A function (thunk) that dispatchs requestCreateUser() then
-        inserts the new user into the database.
 */
 export function createUser(userCreate) {
     let body = {
@@ -230,11 +224,28 @@ export function createUser(userCreate) {
     }
 }
 
-export function updateUser(username, email, type) {
-    let body = {
-        username,
-        email,
-        type,
+export function updateUser(user_id, email, password, prefix, f_name, l_name, type) {
+    let body;
+    // if password is '' or undefined then we don't send the password
+    if (!password) {
+        body = {
+            user_id,
+            email,
+            f_name,
+            l_name,
+            prefix,
+            type,
+        }
+    } else {
+        body = {
+            user_id,
+            email,
+            password,
+            f_name,
+            l_name,
+            prefix,
+            type,
+        }
     }
 
     return dispatch => {
