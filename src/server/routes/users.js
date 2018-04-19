@@ -144,9 +144,9 @@ async function update_user(req, res, next) {
 
     let query;
     if(password === undefined || password === "") {
-        let query = db.query("UPDATE users SET email=$1, f_name=$2, l_name=$3, prefix=$4, type=$5 WHERE user_id=$6", [email, f_name, l_name, prefix, type, user_id]);
+        query = db.query("UPDATE users SET email=$1, f_name=$2, l_name=$3, prefix=$4, type=$5 WHERE user_id=$6", [email, f_name, l_name, prefix, type, user_id]);
     } else {
-        let query = db.query("UPDATE users SET email=$1, f_name=$2, l_name=$3, prefix=$4, type=$5, password=$6 WHERE user_id=$7", [email, f_name, l_name, prefix, type, password, user_id]);
+        query = db.query("UPDATE users SET email=$1, f_name=$2, l_name=$3, prefix=$4, type=$5, password=$6 WHERE user_id=$7", [email, f_name, l_name, prefix, type, password, user_id]);
     }
     query.then(result => {
         res.json({message: 'User updated.'});
