@@ -1,6 +1,7 @@
 var express = require('express');
 var session = require('express-session');
 
+
 var router = express.Router();
 
 // Setup the express session middleware
@@ -17,6 +18,7 @@ var auth = require('./authenticate');
 var admin = require('./admin');
 var courses = require('./courses');
 var forms = require('./forms');
+var file = require('./file');
 
 router.get('/', index.index);
 
@@ -45,5 +47,10 @@ router.post('/forms/update', auth.require_login, forms.update_form);
 
 router.get('/admin/create_db', auth.require_admin, admin.create_db);
 router.get('/admin/insert_test_data', auth.require_admin, admin.insert_test_data);
+
+router.get('/files', /*auth.require_login, */ file.get_file);
+router.get('/files/download', /*auth.require_login, */ file.download_file);
+router.post('/files/upload', /*auth.require_login, */ file.upload_files);
+router.get('/files/delete', auth.require_login, file.delete_file);
 
 module.exports = router;
