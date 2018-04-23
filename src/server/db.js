@@ -4,7 +4,6 @@
 */
 var fs = require('fs');
 var pg = require('pg');
-
 const DBNAME = 'cctabet';
 
 function create_client(database) {
