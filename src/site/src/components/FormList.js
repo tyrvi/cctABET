@@ -7,10 +7,6 @@ class FormList extends Component {
             numStudents: 0,
             pointsPossible: 0,
             students: [
-                {studentName: '', pointsEarned: 0},
-                {studentName: 'Thais', pointsEarned: 10},
-                {studentName: 'Conner', pointsEarned: 20},
-                {studentName: 'Andrew', pointsEarned: 9},
             ],
         };
         this.addNumStudent = this.addNumStudent.bind(this);

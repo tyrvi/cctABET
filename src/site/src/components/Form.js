@@ -8,13 +8,6 @@ class Form extends Component {
     constructor() {
         super();
         this.state = {
-            assessmentCoor: 'Arisoa',
-            email: 'Arisoa@bing.com',
-            semester: 'Spring 2018',
-            course: 'CS 4453 Artificial Intelligence',
-            performanceIndicator: 'Submits works effectively',
-            outcomeLevel: 'Emphasized',
-            assignments: 'Another question again????',
         }
         this.updateCoordinator = this.updateCoordinator.bind(this);
         this.updateSemester = this.updateSemester.bind(this);
@@ -124,3 +117,15 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Form);
+
+
+/*
+
+    assessmentCoor: 'Arisoa',
+    email: 'Arisoa@bing.com',
+    semester: 'Spring 2018',
+    course: 'CS 4453 Artificial Intelligence',
+    performanceIndicator: 'Submits works effectively',
+    outcomeLevel: 'Emphasized',
+    assignments: 'Another question again????',
+*/

@@ -7,9 +7,10 @@ export function requestFormData(query) {
 }
 
 export const FORM_DATA_SUCCESS = 'FORM_DATA_SUCCESS';
-export function formDataSuccess() {
+export function formDataSuccess(response) {
     return {
         type: FORM_DATA_SUCCESS,
+        response,
     }
 }
 
@@ -37,7 +38,7 @@ export function getFormData(form_id) {
         dispatch(requestFormData(query));
         return fetch('forms?' + query, {
             method: 'GET',
-            credential: 'same-origin',
+            credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
                 if (!json.error) {
@@ -48,4 +49,3 @@ export function getFormData(form_id) {
             })
     };
 }
-
