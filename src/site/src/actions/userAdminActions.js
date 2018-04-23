@@ -224,29 +224,8 @@ export function createUser(userCreate) {
     }
 }
 
-export function updateUser(user_id, email, password, prefix, f_name, l_name, type) {
-    let body;
-    // if password is '' or undefined then we don't send the password
-    if (!password) {
-        body = {
-            user_id,
-            email,
-            f_name,
-            l_name,
-            prefix,
-            type,
-        }
-    } else {
-        body = {
-            user_id,
-            email,
-            password,
-            f_name,
-            l_name,
-            prefix,
-            type,
-        }
-    }
+export function updateUser(user) {
+    let body = user;
 
     return dispatch => {
         dispatch(requestUpdateUser(body));
@@ -261,6 +240,7 @@ export function updateUser(user_id, email, password, prefix, f_name, l_name, typ
             .then(json => {
                 if (!json.error) {
                     dispatch(updateUserSuccess(json));
+                    dispatch(getUserList());
                 } else {
                     dispatch(updateUserFail(json));
                 }
