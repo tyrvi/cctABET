@@ -281,6 +281,7 @@ export function deleteUser(user_id) {
             .then(json => {
                 if (!json.error) {
                     dispatch(deleteUserSuccess(json));
+                    dispatch(getUserList());
                 } else {
                     dispatch(deleteUserFail(json));
                 }

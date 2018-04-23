@@ -127,31 +127,31 @@ const mapDispatchToProps = dispatch => {
             dispatch(userListFilterChange(email));
         },
         showHide: () => {
-            dispatch(userListShowHide())
+            dispatch(userListShowHide());
         },
         createUser: (userCreate) => {
-            dispatch(createUser(userCreate))
+            dispatch(createUser(userCreate));
         },
         userCreateClear: () => {
-            dispatch(createUserClear())
+            dispatch(createUserClear());
         },
         updateUserCreateEmail: (email) => {
-            dispatch(createUserEmailChange(email))
+            dispatch(createUserEmailChange(email));
         },
         updateUserCreatePass: (pass) => {
-            dispatch(createUserPassChange(pass))
+            dispatch(createUserPassChange(pass));
         },
         updateUserCreateFName: (f_name) => {
-            dispatch(createUserFNameChange(f_name))
+            dispatch(createUserFNameChange(f_name));
         },
         updateUserCreateLName: (l_name) => {
-            dispatch(createUserLNameChange(l_name))
+            dispatch(createUserLNameChange(l_name));
         },
         updateUserCreatePrefix: (prefix) => {
-            dispatch(createUserPrefixChange(prefix))
+            dispatch(createUserPrefixChange(prefix));
         },
         updateUserCreateType: (type) => {
-            dispatch(createUserTypeChange(type))
+            dispatch(createUserTypeChange(type));
         },
     }
 }

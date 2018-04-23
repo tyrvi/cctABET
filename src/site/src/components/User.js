@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_TYPES } from '../actions/loginActions.js';
-import { updateUser, deleteUser } from '../actions/userAdminActions.js';
+import { updateUser, deleteUser, getUserList } from '../actions/userAdminActions.js';
 import './styles/User.css'
 
 
@@ -30,10 +30,7 @@ class User extends Component {
         // TODO: add confirmation of user delete
         console.log("user being deleted");
 
-        // this.props.deleteUser(this.state.email);
-
-        // TODO: add refetching of User List
-
+        this.props.deleteUser(this.state.user_id);
     }
 
     onUpdate() {
@@ -132,8 +129,11 @@ const mapDispatchToProps = dispatch => {
         updateUser: (user_id, email, password, prefix, f_name, l_name, type) => {
             dispatch(updateUser(user_id, email, password, prefix, f_name, l_name, type));
         },
-        deleteUser: (email) => {
-            dispatch(deleteUser(email));
+        deleteUser: (user_id) => {
+            dispatch(deleteUser(user_id));
+        },
+        getUserList: () => {
+            dispatch(getUserList());
         }
     }
 }
