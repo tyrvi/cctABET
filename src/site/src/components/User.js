@@ -28,24 +28,25 @@ class User extends Component {
 
     onDelete() {
         // TODO: add confirmation of user delete
-        console.log("user being deleted");
-
-        this.props.deleteUser(this.state.user_id);
+        this.props.deleteUser(this.props.user.user_id);
     }
 
     onUpdate() {
         // TODO: add confirmation of user update`
         console.log("user being updated");
+        let user = {
+            user_id: this.state.user_id,
+            email: this.state.email,
+            password: this.state.password,
+            f_name: this.state.f_name,
+            l_name: this.state.l_name,
+            prefix: this.state.prefix,
+            type: this.state.type,
+        };
 
-        // this.props.updateUser(
-        //     this.state.username,
-        //     this.state.email,
-        //     this.state.type
-        // );
+        this.props.updateUser(user);
 
         this.setState({editing: false});
-
-        // TODO: add refetching of User List
     }
 
     onEdit() {
@@ -62,7 +63,7 @@ class User extends Component {
             type: this.props.user.type,
             password: '',
             editing: false,
-        })
+        });
     }
 
     render() {
@@ -126,8 +127,8 @@ class User extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateUser: (user_id, email, password, prefix, f_name, l_name, type) => {
-            dispatch(updateUser(user_id, email, password, prefix, f_name, l_name, type));
+        updateUser: (user) => {
+            dispatch(updateUser(user));
         },
         deleteUser: (user_id) => {
             dispatch(deleteUser(user_id));
