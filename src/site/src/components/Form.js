@@ -95,7 +95,7 @@ class Form extends Component {
                     Assignments / Questions / Tasks
                 </div>
                 <FormList list={this.props}/>
-                <FileList />
+                <FileList form={this.props}/>
 
                 <button>SAVE</button>
                 <input type='checkbox'/>completed
