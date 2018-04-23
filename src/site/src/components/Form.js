@@ -56,7 +56,7 @@ class Form extends Component {
                     Course:
                 </div>
                 <FormList list={this.props}/>
-                <FileList />
+                <FileList form={this.props}/>
 
                 <button>SAVE</button>
                 <input type='checkbox'/>completed

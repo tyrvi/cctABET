@@ -1,7 +1,10 @@
 var db = require('../db');
+var fs = require('fs');
 var multer = require('multer');
-var upload = multer({dest: 'uploads/'});
 
+let UPLOAD_PATH = '/uploads/';
+
+var upload = multer({dest: UPLOAD_PATH});
 
 /*
     ?form_id - The id of the form related to this file
@@ -109,7 +112,13 @@ async function upload_files(req, res, next) {
     Removes files not associated with the database
 */
 async function remove_orphan_files() {
+    let query = db.query("SELECT file_name FROM");
+    query.then(result => {
 
+    }).catch(err => {
+        res.json({error: 'Bad db query'});
+        console.log(err);
+    });
 }
 
 module.exports.download_file = download_file;
