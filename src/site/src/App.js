@@ -9,7 +9,6 @@ class App extends Component {
         return (
             <div>
                 <Navigator />
-                <Modal />
             </div>
         );
     }

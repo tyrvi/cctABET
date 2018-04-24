@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_TYPES } from '../actions/loginActions.js';
 import { updateUser, deleteUser, getUserList } from '../actions/userAdminActions.js';
+import { showModal } from '../actions/modalActions.js';
 import './styles/User.css'
 
 
@@ -32,7 +33,7 @@ class User extends Component {
     }
 
     onUpdate() {
-        // TODO: add confirmation of user update`
+        // TODO: add confirmation of user update
         console.log("user being updated");
         let user = {
             user_id: this.state.user_id,
@@ -43,6 +44,23 @@ class User extends Component {
             prefix: this.state.prefix,
             type: this.state.type,
         };
+
+        // let name = 'Are you sure you want to create the user?';
+        // let message =  <div>
+        //     <div><b>Email:</b> {this.state.email}</div>
+        //     <div><b>Prefix:</b> {this.state.prefix}</div>
+        //     <div><b>First Name:</b> {this.state.f_name}</div>
+        //     <div><b>Last Name:</b> {this.state.l_name}</div>
+        //     <div><b>User Type:</b> {this.state.type ? "Standard" : "Admin"}</div>
+        // </div>
+        // let onCancel = () => { console.log('cancel user update') }
+        // let onConfirm = (user) => { this.props.updateUser(user) }
+        // let payload = {
+        //     onCancel: null,
+        //     onConfirm: user,
+        // }
+
+        // this.props.confirmUserUpdate(name, message, onCancel, onConfirm, payload);
 
         this.props.updateUser(user);
 
@@ -135,6 +153,9 @@ const mapDispatchToProps = dispatch => {
         },
         getUserList: () => {
             dispatch(getUserList());
+        },
+        confirmUserUpdate: (name, message, onCancel, onConfirm, payload) => {
+            dispatch(showModal(name, message, onCancel, onConfirm, payload))
         }
     }
 }

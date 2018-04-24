@@ -1,3 +1,8 @@
+import {
+    showModal,
+    hideModal
+} from './modalActions.js';
+
 export const REQUEST_CREATE_USER = "REQUEST_CREATE_USER";
 export function requestCreateUser(body) {
     return {
