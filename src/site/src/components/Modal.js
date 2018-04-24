@@ -4,25 +4,33 @@ import './styles/Modal.css';
 import { hideModal } from '../actions/modalActions.js';
 
 class Modal extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onCancel = this.onCancel.bind(this);
+        this.onConfirm = this.onConfirm.bind(this);
+    }
 
     onCancel() {
-
+        this.props.onCancel();
+        this.props.hide();
     }
 
     onConfirm() {
-
+        this.props.onConfirm();
+        this.props.hide();
     }
 
     render() {
         return (
-            <div className={this.props.visible ? "hidden" : "modalOverlay"}>
+            <div className={this.props.isOpen ? "modalOverlay" : "hidden"}>
                 <div className="modal">
                     <h2>{this.props.name}</h2>
                     <div className="content">
                         <div>{this.props.message}</div>
                         <div>
-                            <button>Cancel</button>
-                            <button>Confirm</button>
+                            <button onClick={this.onCancel}>Cancel</button>
+                            <button onClick={this.onConfirm}>Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -33,17 +41,19 @@ class Modal extends Component {
 
 const mapStateToProps = state => {
     return {
-        visible: state.modal.visible,
+        isOpen: state.modal.isOpen,
         name: state.modal.name,
         message: state.modal.message,
-        modalType: state.modal.modalType,
+        onCancel: state.modal.onCancel,
+        onConfirm: state.modal.onConfirm,
+        payload: state.modal.payload,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        cancel: () => {
-
+        hide: () => {
+            dispatch(hideModal());
         }
     }
 }
