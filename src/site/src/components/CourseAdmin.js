@@ -6,7 +6,13 @@ import {
     getCourseList,
     courseListFilterSemesterChange,
     courseListFilterYearChange,
-    courseListShowHide
+    courseListShowHide,
+    createCourseClear,
+    createCourseEmailChange,
+    createCourseNameChange,
+    createCourseSemesterChange,
+    createCourseYearChange,
+    createCourse,
 } from '../actions/courseAdminActions.js';
 
 
@@ -16,6 +22,7 @@ class CourseAdmin extends Component {
 
         this.onCourseListClick = this.onCourseListClick.bind(this);
         this.onFilterClick = this.onFilterClick.bind(this);
+        this.onCreateCourseClick = this.onCreateCourseClick.bind(this);
     }
 
     componentDidMount() {
@@ -27,6 +34,13 @@ class CourseAdmin extends Component {
     }
 
     onFilterClick() {
+        this.props.getCourseList(this.props.filter.semester, this.props.filter.year);
+    }
+
+    onCreateCourseClick() {
+        // add actions for creating a course
+        console.log('course being created');
+        this.props.createCourse(this.props.courseCreate);
         this.props.getCourseList(this.props.filter.semester, this.props.filter.year);
     }
 
@@ -46,6 +60,27 @@ class CourseAdmin extends Component {
             <div>
                 <h3>Courses</h3>
                 <div>
+                    <div>
+                        <h4>Create Course</h4>
+                        <input type="text" value={this.props.courseCreate.email}
+                            onChange={event => this.props.createCourseEmailChange(event.target.value)}
+                            placeholder="email"/>
+                        <input type="text" value={this.props.courseCreate.course_name}
+                            onChange={event => this.props.createCourseNameChange(event.target.value)}
+                            placeholder="course name"/>
+                        <select value={this.props.courseCreate.semester}
+                            onChange={event => this.props.createCourseSemesterChange(event.target.value)}>
+                            <option value=''></option>
+                            <option value='Fall'>Fall</option>
+                            <option value='Spring'>Spring</option>
+                            <option value='Summer'>Summer</option>
+                        </select>
+                        <input type="number" value={this.props.courseCreate.year}
+                            onChange={event => this.props.createCourseYearChange(event.target.value)}
+                            />
+                        <button onClick={this.onCreateCourseClick}>create course</button>
+                        <button onClick={this.props.createCourseClear}>clear</button>
+                    </div>
                     <h5>Course Filters</h5>
                     <div>
                         Semester:<select value={this.props.filter.semester}
@@ -76,7 +111,8 @@ const mapStateToProps = state => {
     return {
         courseList: state.courses.courseList,
         filter: state.courses.filter,
-        isOpen: state.courses.showHide
+        isOpen: state.courses.showHide,
+        courseCreate: state.courses.courseCreate,
     }
 }
 
@@ -93,6 +129,24 @@ const mapDispatchToProps = dispatch => {
         },
         showHide: () => {
             dispatch(courseListShowHide())
+        },
+        createCourse: (courseCreate) => {
+            dispatch(createCourse(courseCreate));
+        },
+        createCourseClear: () => {
+            dispatch(createCourseClear());
+        },
+        createCourseEmailChange: (email) => {
+            dispatch(createCourseEmailChange(email));
+        },
+        createCourseNameChange: (course_name) => {
+            dispatch(createCourseNameChange(course_name));
+        },
+        createCourseSemesterChange: (semester) => {
+            dispatch(createCourseSemesterChange(semester));
+        },
+        createCourseYearChange: (year) => {
+            dispatch(createCourseYearChange(year));
         }
     }
 }
