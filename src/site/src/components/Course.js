@@ -8,6 +8,7 @@ class Course extends Component {
 
         this.state = {
             course_name: this.props.course.course_name,
+            email: this.props.course.email,
             semester: this.props.course.semester,
             year: this.props.course.year,
             editing: false,
@@ -40,6 +41,7 @@ class Course extends Component {
     onEditCancel() {
         this.setState({
             course_name: this.props.course.course_name,
+            email: this.props.course.email,
             semester: this.props.course.semester,
             year: this.props.course.year,
             editing: false,
@@ -50,6 +52,7 @@ class Course extends Component {
         if (!this.state.editing) {
             return (
                 <div className="courseBox">
+                    <div className="courseItemBox"><b>Email:</b> {this.props.course.email}</div>
                     <div className="courseItemBox"><b>Course Name:</b> {this.props.course.course_name}</div>
                     <div className="courseItemBox"><b>Semester:</b> {this.props.course.semester}</div>
                     <div className="courseItemBox"><b>Year:</b> {this.props.course.year}</div>
@@ -60,6 +63,12 @@ class Course extends Component {
         } else {
             return (
                 <div className="courseBox">
+                    <div className="courseItemBox">
+                        <b>Email:</b>
+                        <input type="text" value={this.state.email}
+                            onChange={event => this.setState({email: event.target.value})}
+                        />
+                    </div>
                     <div className="courseItemBox">
                         <b>Course Name:</b>
                         <input type="text" value={this.state.course_name}

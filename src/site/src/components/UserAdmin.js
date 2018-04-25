@@ -89,15 +89,15 @@ class UserAdmin extends Component {
                         <button onClick={this.onCreateUserClick}>Create User</button>
                         <button onClick={this.props.userCreateClear}>clear</button>
                     </div>
-                    <h4>User List</h4>
                     <div>
-                        <h5>Filter</h5>
+                        <h5>User Filters</h5>
                             Email: <input value={this.props.filter.email}
                                         onChange={event => this.props.updateFilter(event.target.value)}
                                     />
                         <button onClick={this.onFilterClick}>Filter</button>
                     </div>
                     <div>
+                        <h5 onClick={this.onUserListClick}>User List</h5>
                         <button onClick={this.onUserListClick}>{this.props.isOpen ? "hide list" : "show list"}</button>
                         <div className={this.props.isOpen ? "listBox" : "hidden"}>
                             {users}
