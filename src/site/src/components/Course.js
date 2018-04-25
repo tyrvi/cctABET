@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import './styles/Course.css';
 import {
     deleteCourse,
-    updateCourse
+    updateCourse,
+    getCourseList
 } from '../actions/courseAdminActions.js';
 
 
@@ -30,6 +31,11 @@ class Course extends Component {
         console.log("course being deleted");
 
         this.props.deleteCourse(this.props.course.course_id);
+        this.props.getCourseList(
+            this.props.filter.email,
+            this.props.filter.semester,
+            this.props.filter.year
+        );
     }
 
     onUpdate() {
@@ -45,6 +51,11 @@ class Course extends Component {
         };
 
         this.props.updateCourse(course);
+        this.props.getCourseList(
+            this.props.filter.email,
+            this.props.filter.semester,
+            this.props.filter.year
+        );
 
         this.setState({editing: false});
         // TODO: add refetching of Course List
@@ -114,8 +125,17 @@ class Course extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        filter: state.courses.filter,
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
+        getCourseList: (email = null, semester = null, year = null) => {
+            dispatch(getCourseList(email, semester, year));
+        },
         updateCourse: (course) => {
             dispatch(updateCourse(course));
         },
@@ -126,6 +146,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Course);
