@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/Course.css';
+import {
+    deleteCourse,
+    updateCourse
+} from '../actions/courseAdminActions.js';
+
 
 class Course extends Component {
     constructor(props) {
@@ -23,14 +28,25 @@ class Course extends Component {
     onDelete() {
         // TODO: add confirmation of course deletion
         console.log("course being deleted");
+
+        this.props.deleteCourse(this.props.course.course_id);
     }
 
     onUpdate() {
         // TODO: add confirmation of course update
         console.log("course being updated");
 
-        this.setState({editing: false});
+        let course = {
+            course_id: this.props.course.course_id,
+            course_name: this.state.course_name,
+            email: this.state.email,
+            semester: this.state.semester,
+            year: this.state.year,
+        };
 
+        this.props.updateCourse(course);
+
+        this.setState({editing: false});
         // TODO: add refetching of Course List
     }
 
@@ -98,7 +114,18 @@ class Course extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        updateCourse: (course) => {
+            dispatch(updateCourse(course));
+        },
+        deleteCourse: (course) => {
+            dispatch(deleteCourse(course));
+        }
+    }
+}
+
 export default connect(
     null,
-    null
+    mapDispatchToProps
 )(Course);
