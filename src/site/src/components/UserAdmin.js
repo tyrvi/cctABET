@@ -33,7 +33,7 @@ class UserAdmin extends Component {
 
     onCreateUserClick() {
         this.props.createUser(this.props.userCreate);
-        this.props.getUserList();
+        this.props.getUserList(this.props.filter.email);
     }
 
     onUserListClick() {
@@ -41,11 +41,13 @@ class UserAdmin extends Component {
     }
 
     onFilterClick() {
-        if (this.props.filter.email) {
-            this.props.getUserList(this.props.filter.email);
-        } else {
-            this.props.getUserList();
-        }
+        // if (this.props.filter.email) {
+        //     this.props.getUserList(this.props.filter.email);
+        // } else {
+        //     this.props.getUserList();
+        // }
+
+        this.props.getUserList(this.props.filter.email);
     }
 
     render() {

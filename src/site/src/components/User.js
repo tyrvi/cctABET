@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_TYPES } from '../actions/loginActions.js';
 import { updateUser, deleteUser, getUserList } from '../actions/userAdminActions.js';
-import { showModal } from '../actions/modalActions.js';
 import './styles/User.css'
 
 
@@ -30,6 +29,7 @@ class User extends Component {
     onDelete() {
         // TODO: add confirmation of user delete
         this.props.deleteUser(this.props.user.user_id);
+        this.props.getUserList(this.props.filter.email);
     }
 
     onUpdate() {
@@ -45,24 +45,8 @@ class User extends Component {
             type: this.state.type,
         };
 
-        // let name = 'Are you sure you want to create the user?';
-        // let message =  <div>
-        //     <div><b>Email:</b> {this.state.email}</div>
-        //     <div><b>Prefix:</b> {this.state.prefix}</div>
-        //     <div><b>First Name:</b> {this.state.f_name}</div>
-        //     <div><b>Last Name:</b> {this.state.l_name}</div>
-        //     <div><b>User Type:</b> {this.state.type ? "Standard" : "Admin"}</div>
-        // </div>
-        // let onCancel = () => { console.log('cancel user update') }
-        // let onConfirm = (user) => { this.props.updateUser(user) }
-        // let payload = {
-        //     onCancel: null,
-        //     onConfirm: user,
-        // }
-
-        // this.props.confirmUserUpdate(name, message, onCancel, onConfirm, payload);
-
         this.props.updateUser(user);
+        this.props.getUserList(this.props.filter.email);
 
         this.setState({editing: false});
     }
@@ -142,6 +126,11 @@ class User extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        filter: state.users.filter,
+    }
+}
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -151,17 +140,14 @@ const mapDispatchToProps = dispatch => {
         deleteUser: (user_id) => {
             dispatch(deleteUser(user_id));
         },
-        getUserList: () => {
-            dispatch(getUserList());
-        },
-        confirmUserUpdate: (name, message, onCancel, onConfirm, payload) => {
-            dispatch(showModal(name, message, onCancel, onConfirm, payload))
+        getUserList: (email) => {
+            dispatch(getUserList(email));
         }
     }
 }
 
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(User);
