@@ -118,6 +118,55 @@ export function createCourseFail(response) {
     }
 }
 
+export const REQUEST_UPDATE_COURSE = 'REQUEST_UPDATE_COURSE';
+export function requestUpdateCourse(query) {
+    return {
+        type: REQUEST_UPDATE_COURSE,
+        query,
+    }
+}
+
+export const UPDATE_COURSE_SUCCESS = 'UPDATE_COURSE_SUCCESS';
+export function updateCourseSuccess(response) {
+    return {
+        type: UPDATE_COURSE_SUCCESS,
+        response,
+    }
+}
+
+export const UPDATE_COURSE_FAIL = 'UPDATE_COURSE_FAIL';
+export function updateCourseFail(response) {
+    return {
+        type: UPDATE_COURSE_FAIL,
+        response,
+    }
+}
+
+
+export const REQUEST_DELETE_COURSE = 'REQUEST_DELETE_COURSE';
+export function requestDeleteCourse(query) {
+    return {
+        type: REQUEST_DELETE_COURSE,
+        query,
+    }
+}
+
+export const DELETE_COURSE_SUCCESS = 'DELETE_COURSE_SUCCESS';
+export function deleteCourseSuccess(response) {
+    return {
+        type: DELETE_COURSE_SUCCESS,
+        response,
+    }
+}
+
+export const DELETE_COURSE_FAIL = 'DELETE_COURSE_FAIL';
+export function deleteCourseFail(response) {
+    return {
+        type: DELETE_COURSE_FAIL,
+        response,
+    }
+}
+
 
 export function getCourseList(email = null, semester = null, year = null) {
     let e = email ? 'email=' + email : '';
@@ -169,5 +218,47 @@ export function createCourse(courseCreate) {
                     dispatch(createCourseFail(json));
                 }
             });
+    }
+}
+
+export function updateCourse(course) {
+    let body = course;
+    console.log(body);
+    return dispatch => {
+        dispatch(requestUpdateCourse(body));
+        return fetch('courses/update', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(body),
+        }).then(res => res.json())
+            .then(json => {
+                if (!json.error) {
+                    dispatch(updateCourseSuccess(json));
+                } else {
+                    dispatch(updateCourseFail(json));
+                }
+            })
+    }
+}
+
+export function deleteCourse(course_id) {
+    let query = 'course_id=' + course_id;
+
+    return dispatch => {
+        dispatch(requestDeleteCourse);
+        return fetch('courses/delete?' + query, {
+            method: 'GET',
+            credentials: 'same-origin'
+        }).then(res => res.json())
+            .then(json => {
+                if (!json.error) {
+                    dispatch(deleteCourseSuccess(json));
+                } else {
+                    dispatch(deleteCourseFail(json));
+                }
+            })
     }
 }

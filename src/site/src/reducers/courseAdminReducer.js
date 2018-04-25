@@ -14,6 +14,12 @@ import {
     REQUEST_CREATE_COURSE,
     CREATE_COURSE_SUCCESS,
     CREATE_COURSE_FAIL,
+    REQUEST_UPDATE_COURSE,
+    UPDATE_COURSE_SUCCESS,
+    UPDATE_COURSE_FAIL,
+    REQUEST_DELETE_COURSE,
+    DELETE_COURSE_SUCCESS,
+    DELETE_COURSE_FAIL,
 } from '../actions/courseAdminActions.js';
 
 function courseAdminReducer(state = {
@@ -143,7 +149,43 @@ function courseAdminReducer(state = {
                 isDoingRequest: false,
                 requestMessage: null,
                 requestError: action.response.error,
-            })
+            });
+        case REQUEST_UPDATE_COURSE:
+            return Object.assign({}, state, {
+                isDoingRequest: true,
+                requestMessage: null,
+                requestError: null,
+            });
+        case UPDATE_COURSE_SUCCESS:
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: action.response,
+                requestError: null,
+            });
+        case UPDATE_COURSE_FAIL:
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: null,
+                requestError: action.response.error,
+            });
+        case REQUEST_DELETE_COURSE:
+            return Object.assign({}, state, {
+                isDoingRequest: true,
+                requestMessage: null,
+                requestError: null,
+            });
+        case DELETE_COURSE_SUCCESS:
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: action.response,
+                requestError: null,
+            });
+        case DELETE_COURSE_FAIL:
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: null,
+                requestError: action.response.error,
+            });
         default:
             return state;
     }
