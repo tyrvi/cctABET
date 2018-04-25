@@ -22,6 +22,14 @@ export function courseListFail(response) {
     }
 }
 
+export const COURSE_LIST_FILTER_EMAIL_CHANGE = 'COURSE_LIST_FILTER_EMAIL_CHANGE';
+export function courseListFilterEmailChange(email) {
+    return {
+        type: COURSE_LIST_FILTER_EMAIL_CHANGE,
+        email,
+    }
+}
+
 export const COURSE_LIST_FILTER_SEMESTER_CHANGE = 'COURSE_LIST_FILTER_SEMESTER_CHANGE';
 export function courseListFilterSemesterChange(semester) {
     return {
@@ -111,15 +119,13 @@ export function createCourseFail(response) {
 }
 
 
-export function getCourseList(semester = null, year = null) {
-    let query = '';
-    if (semester && !year) {
-        query = 'semester=' + semester;
-    } else if (!semester && year) {
-        query = 'year=' + year;
-    } else if (semester && year) {
-        query = 'semester=' + semester + '&year=' + year;
-    }
+export function getCourseList(email = null, semester = null, year = null) {
+    let e = email ? 'email=' + email : '';
+    let s = semester ? 'semester=' + semester : '';
+    let y = year ? 'year=' + year : '';
+
+    let query = e + '&' + s + '&' + y;
+    console.log(query);
 
     return dispatch => {
         dispatch(requestCourseList(query));

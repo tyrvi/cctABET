@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Navigator from './components/Navigator.js';
-import Modal from './components/Modal.js';
 import './App.css';
 import { connect } from 'react-redux';
 

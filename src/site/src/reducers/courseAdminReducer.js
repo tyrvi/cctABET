@@ -2,6 +2,7 @@ import {
     REQUEST_COURSE_LIST,
     COURSE_LIST_SUCCESS,
     COURSE_LIST_FAIL,
+    COURSE_LIST_FILTER_EMAIL_CHANGE,
     COURSE_LIST_FILTER_SEMESTER_CHANGE,
     COURSE_LIST_FILTER_YEAR_CHANGE,
     COURSE_LIST_SHOW_HIDE,
@@ -22,6 +23,7 @@ function courseAdminReducer(state = {
     courseList: null,
     showHide: false,
     filter: {
+        email: '',
         semester: '',
         year: ''
     },
@@ -51,9 +53,18 @@ function courseAdminReducer(state = {
                 requestMessage: null,
                 requestError: action.response.error,
             });
+        case COURSE_LIST_FILTER_EMAIL_CHANGE:
+            return Object.assign({}, state, {
+                filter: {
+                    email: action.email,
+                    semester: state.filter.semester,
+                    year: state.filter.year,
+                }
+            });
         case COURSE_LIST_FILTER_SEMESTER_CHANGE:
             return Object.assign({}, state, {
                 filter: {
+                    email: state.filter.email,
                     semester: action.semester,
                     year: state.filter.year
                 }
@@ -61,6 +72,7 @@ function courseAdminReducer(state = {
         case COURSE_LIST_FILTER_YEAR_CHANGE:
             return Object.assign({}, state, {
                 filter: {
+                    email: state.filter.email,
                     semester: state.filter.semester,
                     year: action.year
                 }

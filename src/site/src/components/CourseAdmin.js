@@ -4,6 +4,7 @@ import Course from './Course.js';
 import './styles/CourseAdmin.css';
 import {
     getCourseList,
+    courseListFilterEmailChange,
     courseListFilterSemesterChange,
     courseListFilterYearChange,
     courseListShowHide,
@@ -26,7 +27,11 @@ class CourseAdmin extends Component {
     }
 
     componentDidMount() {
-        this.props.getCourseList(this.props.filter.semester, this.props.filter.year);
+        this.props.getCourseList(
+            this.props.filter.email,
+            this.props.filter.semester,
+            this.props.filter.year
+        );
     }
 
     onCourseListClick() {
@@ -34,14 +39,22 @@ class CourseAdmin extends Component {
     }
 
     onFilterClick() {
-        this.props.getCourseList(this.props.filter.semester, this.props.filter.year);
+        this.props.getCourseList(
+            this.props.filter.email,
+            this.props.filter.semester,
+            this.props.filter.year
+        );
     }
 
     onCreateCourseClick() {
         // add actions for creating a course
         console.log('course being created');
         this.props.createCourse(this.props.courseCreate);
-        this.props.getCourseList(this.props.filter.semester, this.props.filter.year);
+        this.props.getCourseList(
+            this.props.filter.email,
+            this.props.filter.semester,
+            this.props.filter.year
+        );
     }
 
     render() {
@@ -83,6 +96,9 @@ class CourseAdmin extends Component {
                     </div>
                     <h5>Course Filters</h5>
                     <div>
+                        Email:<input type="text" value={this.props.filter.email}
+                            onChange={event => this.props.updateFilterEmail(event.target.value)}
+                            />
                         Semester:<select value={this.props.filter.semester}
                             onChange={event => this.props.updateFilterSemester(event.target.value)}>
                             <option value=''></option>
@@ -118,8 +134,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getCourseList: (semester = null, year = null) => {
-            dispatch(getCourseList(semester, year));
+        getCourseList: (email = null, semester = null, year = null) => {
+            dispatch(getCourseList(email, semester, year));
+        },
+        updateFilterEmail: (email) => {
+            dispatch(courseListFilterEmailChange(email))
         },
         updateFilterSemester: (semester) => {
             dispatch(courseListFilterSemesterChange(semester))
