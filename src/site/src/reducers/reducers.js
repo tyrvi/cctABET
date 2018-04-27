@@ -6,7 +6,7 @@ import adminReducer from './adminReducer.js';
 import userListReducer from './userAdminReducer.js';
 import courseAdminReducer from './courseAdminReducer.js';
 import formReducer from './formReducer.js';
-import modalReducer from './modalReducer.js';
+import formAdminReducer from './formAdminReducer.js';
 
 export default combineReducers({
     page: pageReducer,
@@ -16,5 +16,5 @@ export default combineReducers({
     users: userListReducer,
     courses: courseAdminReducer,
     form: formReducer,
-    modal: modalReducer,
+    formAdmin: formAdminReducer,
 })
