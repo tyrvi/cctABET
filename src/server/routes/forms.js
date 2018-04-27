@@ -63,6 +63,12 @@ async function get_forms(req, res, next) {
             } else {
                 res.json({error: 'Form does not exist'});
             }
+        }  else if (course_id !== undefined) {
+            if (result.rows.length === 0) {
+                res.json({error: 'There are no forms for this course'})
+            } else {
+                res.json(result.rows);
+            }
         } else {
             res.json(result.rows);
         }
