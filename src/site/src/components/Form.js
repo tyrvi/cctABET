@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FormList from './FormList.js';
+import FileList from './FileList.js';
 
 
 class Form extends Component {
@@ -53,6 +54,7 @@ class Form extends Component {
                     Course:
                 </div>
                 <FormList list={this.props}/>
+                <FileList form={this.props}/>
             </div>
         )
     }

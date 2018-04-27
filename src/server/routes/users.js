@@ -94,6 +94,10 @@ async function create_user(req, res, next) {
         l_name = '';
     }
 
+    if (prefix === undefined) {
+        prefix = '';
+    }
+
     if(email === undefined || password === undefined || type === undefined) {
         res.json({error: 'Bad body'});
         return;
@@ -115,7 +119,7 @@ async function create_user(req, res, next) {
     {
         user_id: int,
         email: string,
-        password: string,
+        password: optional string,
         f_name: string,
         l_name: string,
         prefix: string,
@@ -133,12 +137,17 @@ async function update_user(req, res, next) {
     let prefix = req.body.prefix;
     let type = req.body.type;
 
-    if(user_id === undefined || email === undefined || password === undefined || f_name === undefined || l_name === undefined || prefix === undefined || type === undefined) {
+    if(user_id === undefined || email === undefined || f_name === undefined || l_name === undefined || prefix === undefined || type === undefined) {
         res.json({error: 'Bad body'});
         return;
     }
 
-    let query = db.query("UPDATE users SET email=$1, password=$2, f_name=$3, l_name=$4, prefix=$5, type=$6 WHERE user_id=$7", [email, password, f_name, l_name, prefix, type, user_id]);
+    let query;
+    if(password === undefined || password === "") {
+        let query = db.query("UPDATE users SET email=$1, f_name=$2, l_name=$3, prefix=$4, type=$5 WHERE user_id=$6", [email, f_name, l_name, prefix, type, user_id]);
+    } else {
+        let query = db.query("UPDATE users SET email=$1, f_name=$2, l_name=$3, prefix=$4, type=$5, password=$6 WHERE user_id=$7", [email, f_name, l_name, prefix, type, password, user_id]);
+    }
     query.then(result => {
         res.json({message: 'User updated.'});
     }).catch(err => {

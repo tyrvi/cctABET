@@ -1,4 +1,6 @@
 var db = require('../db');
+const path_to_test_data_script = __dirname + '/../dbscripts/testdata.sql';
+const path_to_create_db_script = __dirname + '/../dbscripts/init.sql';
 
 /*
     Creates the schema of the database.
@@ -10,8 +12,6 @@ var db = require('../db');
            This is to ensure that the person doing the operation knows what they are doing.
 */
 function create_db(req, res, next) {
-    const path_to_create_db_script = __dirname + '/../dbscripts/init.sql';
-
     if (req.query.db && req.query.db.toLowerCase() === db.DBNAME) {
         db.reset_database().then(() => {
             db.run_script(path_to_create_db_script).then(() => {
@@ -39,12 +39,21 @@ function create_db(req, res, next) {
            This is to ensure that the person doing the operation knows what they are doing.
 */
 function insert_test_data(req, res, next) {
-    const path_to_test_data_script = __dirname + '/../dbscripts/testdata.sql';
-
     if (req.query.db && req.query.db.toLowerCase() === db.DBNAME) {
-        db.run_script(path_to_test_data_script).then(() => {
-            res.json({valid: true, message: 'Inserted test data'});
+        db.reset_database().then(() => {
+            db.run_script(path_to_create_db_script).then(() => {
+                db.run_script(path_to_test_data_script).then(() => {
+                    res.json({valid: true, message: 'Inserted test data'});
+                }).catch(err => {
+                    console.log(err);
+                    res.json({error: 'DB Error'});
+                });
+            }).catch(err => {
+                console.log(err);
+                res.json({error: 'DB Error'});
+            });
         }).catch(err => {
+            console.error(err);
             res.json({error: 'DB Error'});
         });
     } else {

@@ -16,6 +16,7 @@ if [ "$1" = "-i" ] || [ "$1" = "--interactive" ]; then
 docker run \
 --mount type=bind,source=$server_path,target=/app \
 --mount source=postgresql,target=/var/lib/postgresql/9.5/main \
+--mount source=uploads,target=/uploads \
 --publish=$server_host_port:$server_docker_port \
 --publish=$site_host_port:$site_docker_port \
 --entrypoint=/bin/bash \
@@ -24,6 +25,7 @@ else
 docker run \
 --mount type=bind,source=$server_path,target=/app \
 --mount source=postgresql,target=/var/lib/postgresql/9.5/main \
+--mount source=uploads,target=/uploads \
 --publish=$server_host_port:$server_docker_port \
 --publish=$site_host_port:$site_docker_port \
 -it cctabet
