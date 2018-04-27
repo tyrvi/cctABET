@@ -19,7 +19,7 @@ async function download_file(req, res, next) {
     let query = db.query("SELECT file_name, original_file_name FROM files WHERE form_id = $1", [form_id]);
     query.then(result => {
         if(result.rows.length >= 1) {
-            res.download(__dirname + '/../uploads/' + result.rows[0].file_name, result.rows[0].original_file_name);
+            res.download(UPLOAD_PATH + result.rows[0].file_name, result.rows[0].original_file_name);
         } else {
             res.json({error: 'Could not find file to download'});
         }
@@ -33,7 +33,23 @@ async function download_file(req, res, next) {
 
 */
 async function delete_file(req, res, next) {
+    let form_id = req.query.form_id;
+    if(form_id === undefined) {
+        res.json({error: 'missing form_id'});
+        return;
+    }
 
+    let delete_query = db.query("DELETE FROM files WHERE form_id = $1", [form_id]);
+    delete_query.then(() => {
+        // It's removing files. Too close to deadline to fix
+        /*
+        remove_orphan_files().then(() => {
+            res.json({message: 'success'});
+        });*/
+        res.json({message: 'Success'});
+    }).catch((err) => {
+        res.json({error: 'DB error'});
+    });
 }
 
 /*
@@ -63,7 +79,7 @@ async function get_file(req, res, next) {
     Route function that creates a new file on the server
 */
 async function upload_files(req, res, next) {
-    upload.any()(req, res, (err) => {
+    upload.any()(req, res, async (err) => {
         if (err) {
           res.json(err);
           return;
@@ -90,10 +106,13 @@ async function upload_files(req, res, next) {
             res.json({error: 'Not a zip file', not_zip: true});
         }
 
-        // Delete file associated with form. Only one file per form for now boyos
-        let delete_query = db.query("DELETE FROM files WHERE form_id = $1", [form_id]);
-        delete_query.then(() => {
-            remove_orphan_files();
+        try {
+            // Delete file associated with form. Only one file per form for now boyos
+            let delete_query = db.query("DELETE FROM files WHERE form_id = $1", [form_id]);
+            await delete_query;
+
+            // It's removing files. Too close to deadline to fix
+            // await remove_orphan_files();
 
             let query = db.query("INSERT INTO files (file_name, original_file_name, form_id) VALUES ($1, $2, $3)", [file.filename, file.originalname, form_id]);
             query.then(() => {
@@ -101,10 +120,11 @@ async function upload_files(req, res, next) {
             }).catch(err => {
                 res.json({message: 'File uploaded but DB entry failed'});
             });
-        }).catch(err => {
+        }
+        catch(err) {
             res.json("Error: bad delete query in " + __filename);
             console.log(err);
-        });
+        }
     });
 }
 
@@ -112,13 +132,22 @@ async function upload_files(req, res, next) {
     Removes files not associated with the database
 */
 async function remove_orphan_files() {
-    let query = db.query("SELECT file_name FROM");
-    query.then(result => {
+    let query = db.query("SELECT file_name FROM files");
 
-    }).catch(err => {
-        res.json({error: 'Bad db query'});
+    try {
+        let result = await query;
+        let db_files = result.rows.map((file) => file.file_name);
+        let on_system_files = fs.readdirSync(UPLOAD_PATH);
+
+        for(let file of on_system_files) {
+            if(!db_files.includes(file)) {
+                fs.unlinkSync(UPLOAD_PATH + file);
+            }
+        }
+    }
+    catch(err) {
         console.log(err);
-    });
+    }
 }
 
 module.exports.download_file = download_file;

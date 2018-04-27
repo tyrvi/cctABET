@@ -80,31 +80,43 @@ class FileList extends Component {
         var formData = new FormData();
         let file = this.fileInput.files[0];
         if(file === undefined) {
-            return;
+            fetch('files/delete?form_id=' + this.props.form.formID, {
+                method: 'GET',
+                credentials: 'same-origin'
+            })
+            .then(res =>
+                res.json())
+            .then(res => {
+                if(res.error) {
+                    console.error(res.error);
+                    this.setState({file_error: res.error});
+                }
+            });
         }
+        else {
+            formData.append('file', file, file.name);
 
-        formData.append('file', file, file.name);
+            fetch('files/upload?form_id=' + this.props.form.formID, {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: formData
+            })
+            .then(res =>
+                res.json())
+            .then(res => {
+                console.log(res);
 
-        fetch('files/upload?form_id=' + this.props.form.formID, {
-            method: 'POST',
-            credentials: 'same-origin',
-            body: formData
-        })
-        .then(res =>
-            res.json())
-        .then(res => {
-            console.log(res);
+                if(res.not_zip) {
+                    this.setState({file_error: "File not a zip"});
+                } else if(res.file_missing) {
+                    this.setState({file_error: "No file uploaded"});
+                } else if(res.error) {
+                    this.setState({file_error: "Something went wrong: " + res.error});
+                } else {
 
-            if(res.not_zip) {
-                this.setState({file_error: "File not a zip"});
-            } else if(res.file_missing) {
-                this.setState({file_error: "No file uploaded"});
-            } else if(res.error) {
-                this.setState({file_error: "Something went wrong: " + res.error});
-            } else {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     render() {
