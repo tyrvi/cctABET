@@ -19,7 +19,7 @@ function formReducer(state = {
         case FORM_DATA_SUCCESS:
             return Object.assign({}, state, {
                 isDoingRequest: false,
-                formData: action.response.formData,
+                formData: action.response,
             });
         case FORM_DATA_FAIL:
             return Object.assign({}, state, {

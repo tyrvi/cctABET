@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import FormList from './FormList.js';
 import { connect } from 'react-redux';
-import { getFormData } from '../actions/formActions.js'
-import { updateFormData } from '../actions/formActions.js'
+import { updateFormData, getFormData } from '../actions/formActions.js'
 
 
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            assessmentCoor: 'Arisoa',
-            email: 'Arisoa@bing.com',
-            semester: 'Spring 2018',
-            course: 'CS 4453 Artificial Intelligence',
-            performanceIndicator: 'Submits works effectively',
-            outcomeLevel: 'Emphasized',
-            assignments: 'Another question again????',
-            completed: false,
+            assessmentCoor: "",
+            email: "",
+            semester: "",
+            course: "",
+            performanceIndicator: "",
+            outcomeLevel: "",
+            assignments: "",
+            completed: "",
         }
         this.updateCoordinator = this.updateCoordinator.bind(this);
         this.updateSemester = this.updateSemester.bind(this);
@@ -66,10 +65,10 @@ class Form extends Component {
 
     updateForms() {
         let form = {
-            form_id: this.props.formID,
-            course_id: this.props.courseID,
-            outcome: this.props.outcome,
-            completed: this.state.completed,
+            form_id: this.props.formData.form_id,
+            course_id: this.props.formData.course_id,
+            outcome: this.props.formData.outcome,
+            completed: this.props.formData.completed,
             data: this.state,
         }
         this.props.updateFormData(form);
@@ -130,9 +129,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return {
         formData: state.form.formData,
-        courseID: state.page.courseID,
         formID: state.page.formID,
-        outcome: state.page.outcome,
     }
 }
 
