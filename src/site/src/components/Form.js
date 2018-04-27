@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import FormList from './FormList.js';
 import { connect } from 'react-redux';
 import { getFormData } from '../actions/formActions.js'
+import { updateFormData } from '../actions/formActions.js'
 
 
 class Form extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            assessmentCoor: 'Arisoa',
+            email: 'Arisoa@bing.com',
+            semester: 'Spring 2018',
+            course: 'CS 4453 Artificial Intelligence',
+            performanceIndicator: 'Submits works effectively',
+            outcomeLevel: 'Emphasized',
+            assignments: 'Another question again????',
+            completed: false,
         }
         this.updateCoordinator = this.updateCoordinator.bind(this);
         this.updateSemester = this.updateSemester.bind(this);
@@ -16,10 +25,10 @@ class Form extends Component {
         this.updatePerformanceIndicator = this.updatePerformanceIndicator.bind(this);
         this.updateOutcomeLevel = this.updateOutcomeLevel.bind(this);
         this.updateAssignments = this.updateAssignments.bind(this);
+        this.updateForms = this.updateForms.bind(this);
     }
 
     componentDidMount() {
-        // TODO: Testing
         this.props.getFormData(this.props.formID);
     }
 
@@ -53,6 +62,17 @@ class Form extends Component {
 
     updateAssignments(event) {
         this.setState({assignments: event.target.value});
+    }
+
+    updateForms() {
+        let form = {
+            form_id: this.props.formID,
+            course_id: this.props.courseID,
+            outcome: this.props.outcome,
+            completed: this.state.completed,
+            data: this.state,
+        }
+        this.props.updateFormData(form);
     }
 
     render() {
@@ -89,9 +109,8 @@ class Form extends Component {
                 <FormList list={this.props}/>
 
 
-                <button>SAVE</button>
+                <button type="button" onClick={this.updateForms}>SAVE</button>
                 <input type='checkbox'/>completed
-
             </div>
         )
     }
@@ -101,15 +120,19 @@ const mapDispatchToProps = dispatch => {
     return {
         getFormData: (formID) => {
             dispatch(getFormData(formID));
+        },
+        updateFormData: (json) => {
+            dispatch(updateFormData(json));
         }
     }
 }
 
-
 const mapStateToProps = state => {
     return {
         formData: state.form.formData,
+        courseID: state.page.courseID,
         formID: state.page.formID,
+        outcome: state.page.outcome,
     }
 }
 
@@ -118,9 +141,7 @@ export default connect(
     mapDispatchToProps
 )(Form);
 
-
 /*
-
     assessmentCoor: 'Arisoa',
     email: 'Arisoa@bing.com',
     semester: 'Spring 2018',

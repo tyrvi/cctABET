@@ -27,9 +27,11 @@ export function gotoAdmin() {
 }
 
 export const GOTO_FORM = "GOTO_FORM";
-export function gotoForm(formID) {
+export function gotoForm(formID, courseID, outcome) {
     return {
         type: GOTO_FORM,
         formID,
+        courseID,
+        outcome,
     }
 }

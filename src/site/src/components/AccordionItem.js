@@ -19,16 +19,15 @@ class AccordionItem extends Component {
         this.setState({isOpen: !this.state.isOpen})
     }
 
-    onFormClick(formID, outcome) {
-        console.log("formID = " + formID + " outcome = " + outcome);
-        this.props.gotoForm(formID)
+    onFormClick(formID, courseID, outcome) {
+        this.props.gotoForm(formID, courseID, outcome)
     }
 
     render() {
         const forms = this.props.forms.map(form => {
             return (
                 <button className="formButton" key={form.form_id}
-                    onClick={() => this.onFormClick(form.form_id, form.outcome)} >
+                    onClick={() => this.onFormClick(form.form_id, this.props.key, form.outcome)} >
                     {form.outcome}
                 </button>
             );

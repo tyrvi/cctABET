@@ -7,6 +7,10 @@ class FormList extends Component {
             numStudents: 0,
             pointsPossible: 0,
             students: [
+                {studentName: '', pointsEarned: 0},
+                {studentName: 'Thais', pointsEarned: 10},
+                {studentName: 'Conner', pointsEarned: 20},
+                {studentName: 'Andrew', pointsEarned: 9},
             ],
         };
         this.addNumStudent = this.addNumStudent.bind(this);
@@ -49,7 +53,6 @@ class FormList extends Component {
 
     render() {
         const studentList = this.state.students.map((student, idx) => {
-            this.updateStudentAmount();
             return (<div key={idx}>
                         <input type="text" value={student.studentName} onChange={this.updateStudentName.bind(this, student)} />
                         <input type="number" value={student.pointsEarned} onChange={this.updateStudentPoints.bind(this, student)}/>
