@@ -4,8 +4,11 @@ import './styles/Course.css';
 import {
     deleteCourse,
     updateCourse,
-    getCourseList
+    getCourseList,
 } from '../actions/courseAdminActions.js';
+import { getFormsByCourseID } from '../actions/formAdminActions.js';
+import FormAdmin from './FormAdmin.js';
+
 import ReactModal from 'react-modal';
 
 ReactModal.setAppElement('body');
@@ -20,16 +23,16 @@ class Course extends Component {
             semester: this.props.course.semester,
             year: this.props.course.year,
             editing: false,
-            addForms: false,
+            editForms: false,
         }
 
         this.onDelete = this.onDelete.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onEdit = this.onEdit.bind(this);
         this.onEditCancel = this.onEditCancel.bind(this);
-        this.onAddForms = this.onAddForms.bind(this);
-        this.cancelAddForms = this.cancelAddForms.bind(this);
-        this.submitAddForms = this.submitAddForms.bind(this);
+        this.onEditForms = this.onEditForms.bind(this);
+        this.cancelEditForms = this.cancelEditForms.bind(this);
+        this.submitEditForms = this.submitEditForms.bind(this);
     }
 
     onDelete() {
@@ -80,19 +83,20 @@ class Course extends Component {
         });
     }
 
-    onAddForms() {
-        this.setState({addForms: true});
+    onEditForms() {
+        this.props.getForms(this.props.course.course_id);
+        this.setState({editForms: true});
     }
 
-    cancelAddForms() {
+    cancelEditForms() {
         console.log('canceling form metadata');
-        this.setState({addForms: false})
+        this.setState({editForms: false})
     }
 
-    submitAddForms() {
+    submitEditForms() {
         // TODO: add dispatch of forms submission
-        console.log('submitting forms metadata')
-        this.setState({addForms: false})
+        console.log('submitting forms metadata');
+        this.setState({editForms: false})
     }
 
     render() {
@@ -105,13 +109,16 @@ class Course extends Component {
                     <div className="courseItemBox"><b>Year:</b> {this.props.course.year}</div>
                     <button className="courseButton" onClick={this.onEdit}>Edit</button>
                     <button className="courseButton" onClick={this.onDelete}>Delete</button>
-                    <button className="courseButton" onClick={this.onAddForms}>Add Forms</button>
+                    <button className="courseButton" onClick={this.onEditForms}>Edit Forms</button>
                     <ReactModal
-                        isOpen={this.state.addForms}
-                        contentLabel="modal example"
+                        isOpen={this.state.editForms}
+                        contentLabel="Form Editor"
                     >
-                        <button onClick={this.cancelAddForms}>Cancel</button>
-                        <button onClick={this.submitAddForms}>Submit</button>
+                        <div>
+                            <FormAdmin course_id={this.props.course.course_id}/>
+                        </div>
+                        <button onClick={this.cancelEditForms}>Cancel</button>
+                        <button onClick={this.submitEditForms}>Submit</button>
                     </ReactModal>
                 </div>
             );
@@ -169,6 +176,9 @@ const mapDispatchToProps = dispatch => {
         },
         deleteCourse: (course) => {
             dispatch(deleteCourse(course));
+        },
+        getForms: (course_id) => {
+            dispatch(getFormsByCourseID(course_id));
         }
     }
 }
