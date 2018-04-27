@@ -6,22 +6,15 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            assessmentCoor: "",
-            email: "",
-            semester: "",
-            course: "",
-            performanceIndicator: "",
-            outcomeLevel: "",
-            assignments: "",
-            completed: "",
+            assessmentCoor: 'Arisoa',
+            email: 'Arisoa@bing.com',
+            semester: 'Spring 2018',
+            course: 'CS 4453 Artificial Intelligence',
         }
         this.updateCoordinator = this.updateCoordinator.bind(this);
         this.updateSemester = this.updateSemester.bind(this);
         this.updateCourse = this.updateCourse.bind(this);
         this.updateEmail = this.updateEmail.bind(this);
-        this.updatePerformanceIndicator = this.updatePerformanceIndicator.bind(this);
-        this.updateOutcomeLevel = this.updateOutcomeLevel.bind(this);
-        this.updateAssignments = this.updateAssignments.bind(this);
     }
 
     updateCoordinator(event) {
@@ -38,22 +31,6 @@ class Form extends Component {
 
     updateCourse(event) {
         this.setState({course: event.target.value});
-    }
-
-    updatePointsPossible(event) {
-        this.setState({pointsPossible: event.target.value});
-    }
-
-    updatePerformanceIndicator(event) {
-        this.setState({performanceIndicator: event.target.value});
-    }
-
-    updateOutcomeLevel(event) {
-        this.setState({outcomeLevel: event.target.value});
-    }
-
-    updateAssignments(event) {
-        this.setState({assignments: event.target.value});
     }
 
     render() {
@@ -75,24 +52,11 @@ class Form extends Component {
                     <input type='text' value={this.state.course} onChange={this.updateCourse}/>
                     Course:
                 </div>
-                <div>
-                    <input type='text' value={this.state.performanceIndicator} onChange={this.updatePerformanceIndicator}/>
-                    Performance Indicator:
-                </div>
-                <div>
-                    <input type='text' value={this.state.outcomeLevel} onChange={this.updateOutcomeLevel}/>
-                    Expected Level of Outcome Mastery:
-                </div>
-                <div>
-                    <input type='text' value={this.state.assignments} onChange={this.updateAssignments}/>
-                    Assignments / Questions / Tasks
-                </div>
                 <FormList list={this.props}/>
             </div>
         )
     }
 }
-
 
 export default Form;
 

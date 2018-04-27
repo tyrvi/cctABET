@@ -16,17 +16,50 @@ class FormList extends Component {
                 {studentName: 'Conner', pointsEarned: 20},
                 {studentName: 'Andrew', pointsEarned: 9},
             ],
+            performanceIndicator: "",
+            outcomeLevel: "",
+            assignments: "",
         };
         this.addNumStudent = this.addNumStudent.bind(this);
         this.updateStudentName = this.updateStudentName.bind(this);
         this.updateStudentPoints = this.updateStudentPoints.bind(this);
         this.updatePointsPossible = this.updatePointsPossible.bind(this);
-
+        this.updatePerformanceIndicator = this.updatePerformanceIndicator.bind(this);
+        this.updateOutcomeLevel = this.updateOutcomeLevel.bind(this);
+        this.updateAssignments = this.updateAssignments.bind(this);
         this.updateForms = this.updateForms.bind(this);
+        this.updateForms = this.updateForms.bind(this);
+        this.updateComplete = this.updateComplete.bind(this);
     }
     componentDidMount() {
         this.props.getFormData(this.props.formID);
-        console.log("props",this.props)
+    }
+    updateComplete(event) {
+        console.log("event", event.target.checked);
+
+        if(event.target.checked)
+        {
+            this.props.formData.completed = 1;
+        }
+        else {
+            this.props.formData.completed = 0;
+        }
+
+    }
+    updatePointsPossible(event) {
+        this.setState({pointsPossible: event.target.value});
+    }
+
+    updatePerformanceIndicator(event) {
+        this.setState({performanceIndicator: event.target.value});
+    }
+
+    updateOutcomeLevel(event) {
+        this.setState({outcomeLevel: event.target.value});
+    }
+
+    updateAssignments(event) {
+        this.setState({assignments: event.target.value});
     }
 
     updateStudentAmount() {
@@ -57,9 +90,6 @@ class FormList extends Component {
         this.setState({tmp:tmp});
     }
 
-    updatePointsPossible(event) {
-        this.setState({pointsPossible: event.target.value});
-    }
 
     updateForms() {
         let form = {
@@ -84,18 +114,30 @@ class FormList extends Component {
         return (
             <div>
                 <div>
+                    <input type='text' value={this.state.performanceIndicator} onChange={this.updatePerformanceIndicator}/>
+                    Performance Indicator:
+                </div>
+                <div>
+                    <input type='text' value={this.state.outcomeLevel} onChange={this.updateOutcomeLevel}/>
+                    Expected Level of Outcome Mastery:
+                </div>
+                <div>
+                    <input type='text' value={this.state.assignments} onChange={this.updateAssignments}/>
+                    Assignments / Questions / Tasks
+                </div>
+                <div>
                     <input type='number' value={this.state.pointsPossible} onChange={this.updatePointsPossible}/>
                     Points Possible:
                 </div>
+
                 <input type="number" value={this.state.numStudents}/>
                 <button type="button" onClick={this.addNumStudent}>+</button>
                 <div>Name: Points:</div>
+
                 {studentList}
 
-
-
                 <button type="button" onClick={this.updateForms}>SAVE</button>
-                <input type='checkbox'/>completed
+                <input type='checkbox' onChange={this.updateComplete}/>completed
             </div>
         )
     }
