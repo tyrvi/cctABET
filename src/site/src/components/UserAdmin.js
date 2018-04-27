@@ -41,12 +41,6 @@ class UserAdmin extends Component {
     }
 
     onFilterClick() {
-        // if (this.props.filter.email) {
-        //     this.props.getUserList(this.props.filter.email);
-        // } else {
-        //     this.props.getUserList();
-        // }
-
         this.props.getUserList(this.props.filter.email);
     }
 
