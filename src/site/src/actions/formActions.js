@@ -7,9 +7,10 @@ export function requestFormData(query) {
 }
 
 export const FORM_DATA_SUCCESS = 'FORM_DATA_SUCCESS';
-export function formDataSuccess() {
+export function formDataSuccess(response) {
     return {
         type: FORM_DATA_SUCCESS,
+        response,
     }
 }
 
@@ -21,10 +22,10 @@ export function formDataFail(response) {
     }
 }
 
-export const SAVE_FORM_DATA = 'SAVE_FORM_DATA';
-export function saveFormData(response) {
+export const REQUEST_FORM_UPDATE = 'UPDATE_FORM_DATA';
+export function requestFormUpdate(response) {
     return {
-        type: SAVE_FORM_DATA,
+        type: REQUEST_FORM_UPDATE,
         response,
     }
 }
@@ -37,7 +38,7 @@ export function getFormData(form_id) {
         dispatch(requestFormData(query));
         return fetch('forms?' + query, {
             method: 'GET',
-            credential: 'same-origin',
+            credentials: 'same-origin',
         }).then(res => res.json())
             .then(json => {
                 if (!json.error) {
@@ -49,3 +50,28 @@ export function getFormData(form_id) {
     };
 }
 
+export function updateFormData(form) {
+    console.log("THAIS IS DANISH!");
+    console.log(form);
+    let body = form;
+
+    return dispatch => {
+        dispatch(requestFormUpdate(body));
+        return fetch('forms/update', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(body),
+        }).then(res => res.json())
+            .then(json => {
+                console.log(json);
+                if (!json.error) {
+                    dispatch(formDataSuccess(json));
+                } else {
+                    dispatch(formDataFail(json));
+                }
+            })
+    }
+}

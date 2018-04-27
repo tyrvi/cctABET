@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateFormData, getFormData } from '../actions/formActions.js';
+
 
 class FormList extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
         this.state = {
             numStudents: 0,
             pointsPossible: 0,
@@ -12,11 +16,50 @@ class FormList extends Component {
                 {studentName: 'Conner', pointsEarned: 20},
                 {studentName: 'Andrew', pointsEarned: 9},
             ],
+            performanceIndicator: "",
+            outcomeLevel: "",
+            assignments: "",
         };
         this.addNumStudent = this.addNumStudent.bind(this);
         this.updateStudentName = this.updateStudentName.bind(this);
         this.updateStudentPoints = this.updateStudentPoints.bind(this);
         this.updatePointsPossible = this.updatePointsPossible.bind(this);
+        this.updatePerformanceIndicator = this.updatePerformanceIndicator.bind(this);
+        this.updateOutcomeLevel = this.updateOutcomeLevel.bind(this);
+        this.updateAssignments = this.updateAssignments.bind(this);
+        this.updateForms = this.updateForms.bind(this);
+        this.updateForms = this.updateForms.bind(this);
+        this.updateComplete = this.updateComplete.bind(this);
+    }
+    componentDidMount() {
+        this.props.getFormData(this.props.formID);
+    }
+    updateComplete(event) {
+        console.log("event", event.target.checked);
+
+        if(event.target.checked)
+        {
+            this.props.formData.completed = 1;
+        }
+        else {
+            this.props.formData.completed = 0;
+        }
+
+    }
+    updatePointsPossible(event) {
+        this.setState({pointsPossible: event.target.value});
+    }
+
+    updatePerformanceIndicator(event) {
+        this.setState({performanceIndicator: event.target.value});
+    }
+
+    updateOutcomeLevel(event) {
+        this.setState({outcomeLevel: event.target.value});
+    }
+
+    updateAssignments(event) {
+        this.setState({assignments: event.target.value});
     }
 
     updateStudentAmount() {
@@ -47,13 +90,20 @@ class FormList extends Component {
         this.setState({tmp:tmp});
     }
 
-    updatePointsPossible(event) {
-        this.setState({pointsPossible: event.target.value});
+
+    updateForms() {
+        let form = {
+            form_id: this.props.formData.form_id,
+            course_id: this.props.formData.course_id,
+            outcome: this.props.formData.outcome,
+            completed: this.props.formData.completed,
+            data: this.state,
+        }
+        this.props.updateFormData(form);
     }
 
     render() {
         const studentList = this.state.students.map((student, idx) => {
-            this.updateStudentAmount();
             return (<div key={idx}>
                         <input type="text" value={student.studentName} onChange={this.updateStudentName.bind(this, student)} />
                         <input type="number" value={student.pointsEarned} onChange={this.updateStudentPoints.bind(this, student)}/>
@@ -64,15 +114,54 @@ class FormList extends Component {
         return (
             <div>
                 <div>
+                    <input type='text' value={this.state.performanceIndicator} onChange={this.updatePerformanceIndicator}/>
+                    Performance Indicator:
+                </div>
+                <div>
+                    <input type='text' value={this.state.outcomeLevel} onChange={this.updateOutcomeLevel}/>
+                    Expected Level of Outcome Mastery:
+                </div>
+                <div>
+                    <input type='text' value={this.state.assignments} onChange={this.updateAssignments}/>
+                    Assignments / Questions / Tasks
+                </div>
+                <div>
                     <input type='number' value={this.state.pointsPossible} onChange={this.updatePointsPossible}/>
                     Points Possible:
                 </div>
+
                 <input type="number" value={this.state.numStudents}/>
                 <button type="button" onClick={this.addNumStudent}>+</button>
                 <div>Name: Points:</div>
+
                 {studentList}
+
+                <button type="button" onClick={this.updateForms}>SAVE</button>
+                <input type='checkbox' onChange={this.updateComplete}/>completed
             </div>
         )
     }
 }
-export default FormList;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getFormData: (formID) => {
+            dispatch(getFormData(formID));
+        },
+        updateFormData: (json) => {
+            dispatch(updateFormData(json));
+        }
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        formData: state.form.formData,
+        formID: state.page.formID,
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FormList);
