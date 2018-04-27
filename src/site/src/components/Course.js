@@ -6,7 +6,9 @@ import {
     updateCourse,
     getCourseList
 } from '../actions/courseAdminActions.js';
+import ReactModal from 'react-modal';
 
+ReactModal.setAppElement('body');
 
 class Course extends Component {
     constructor(props) {
@@ -18,12 +20,16 @@ class Course extends Component {
             semester: this.props.course.semester,
             year: this.props.course.year,
             editing: false,
+            addForms: false,
         }
 
         this.onDelete = this.onDelete.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onEdit = this.onEdit.bind(this);
         this.onEditCancel = this.onEditCancel.bind(this);
+        this.onAddForms = this.onAddForms.bind(this);
+        this.cancelAddForms = this.cancelAddForms.bind(this);
+        this.submitAddForms = this.submitAddForms.bind(this);
     }
 
     onDelete() {
@@ -58,7 +64,6 @@ class Course extends Component {
         );
 
         this.setState({editing: false});
-        // TODO: add refetching of Course List
     }
 
     onEdit() {
@@ -75,6 +80,21 @@ class Course extends Component {
         });
     }
 
+    onAddForms() {
+        this.setState({addForms: true});
+    }
+
+    cancelAddForms() {
+        console.log('canceling form metadata');
+        this.setState({addForms: false})
+    }
+
+    submitAddForms() {
+        // TODO: add dispatch of forms submission
+        console.log('submitting forms metadata')
+        this.setState({addForms: false})
+    }
+
     render() {
         if (!this.state.editing) {
             return (
@@ -85,6 +105,14 @@ class Course extends Component {
                     <div className="courseItemBox"><b>Year:</b> {this.props.course.year}</div>
                     <button className="courseButton" onClick={this.onEdit}>Edit</button>
                     <button className="courseButton" onClick={this.onDelete}>Delete</button>
+                    <button className="courseButton" onClick={this.onAddForms}>Add Forms</button>
+                    <ReactModal
+                        isOpen={this.state.addForms}
+                        contentLabel="modal example"
+                    >
+                        <button onClick={this.cancelAddForms}>Cancel</button>
+                        <button onClick={this.submitAddForms}>Submit</button>
+                    </ReactModal>
                 </div>
             );
         } else {
