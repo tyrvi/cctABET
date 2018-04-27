@@ -44,6 +44,7 @@ router.get('/forms', auth.require_login, forms.get_forms);
 router.get('/forms/delete', auth.require_login, forms.delete_form);
 router.post('/forms/create', auth.require_login, forms.create_form);
 router.post('/forms/update', auth.require_login, forms.update_form);
+router.post('/forms/massupdate', auth.require_login, forms.mass_update_forms);
 
 router.get('/admin/create_db', auth.require_admin, admin.create_db);
 router.get('/admin/insert_test_data', auth.require_admin, admin.insert_test_data);
