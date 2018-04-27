@@ -1,24 +1,64 @@
 var db = require('../db');
+var knex = require('knex')({client: 'pg'});
 
 /*
     Route function that gets a form
     ?form_id - Optional. The form to get
+    ?course_id - Optional. The course id of the forms to get
 
     Returns json response with error variable set on failure
 */
 async function get_forms(req, res, next) {
-    let form_id = req.query.form_id;
+    // let form_id = req.query.form_id;
 
-    let query;
-    if(form_id === undefined) {
-        query = db.query("SELECT * FROM forms");
-    } else {
-        query = db.query("SELECT * FROM forms WHERE form_id=$1", [form_id]);
+    // let query;
+    // if(form_id === undefined) {
+    //     query = db.query("SELECT * FROM forms");
+    // } else {
+    //     query = db.query("SELECT * FROM forms WHERE form_id=$1", [form_id]);
+    // }
+
+
+    // query.then(result => {
+    //     if(form_id !== undefined) {
+    //         if(result.rows.length === 1) {
+    //             res.json(result.rows[0]);
+    //         } else {
+    //             res.json({error: 'Form does not exist'});
+    //         }
+    //     } else {
+    //         res.json(result.rows);
+    //     }
+    // }).catch(err => {
+    //     console.error('Error in forms: ', err);
+    //     res.json({error: 'Error fetching form data'});
+    // });
+
+    let form_id = req.query.form_id;
+    let course_id = req.query.course_id;
+
+    let knex_query = knex.select(
+        'forms.form_id',
+        'forms.course_id',
+        'forms.outcome',
+        'forms.completed',
+        'forms.data'
+    ).from('forms');
+
+    if (form_id !== undefined) {
+        knex_query.andWhere('forms.form_id', '=', form_id);
     }
 
+    if (course_id !== undefined) {
+        knex_query.andWhere('forms.course_id', '=', course_id);
+    }
+
+    knex_query = knex_query.toSQL().toNative();
+
+    let query = db.query(knex_query.sql, knex_query.bindings);
     query.then(result => {
-        if(form_id !== undefined) {
-            if(result.rows.length === 1) {
+        if (form_id !== undefined) {
+            if (result.rows.length === 1) {
                 res.json(result.rows[0]);
             } else {
                 res.json({error: 'Form does not exist'});
@@ -27,7 +67,7 @@ async function get_forms(req, res, next) {
             res.json(result.rows);
         }
     }).catch(err => {
-        console.error('Error in forms: ', err);
+        console.error('Error in forms', err);
         res.json({error: 'Error fetching form data'});
     });
 }
