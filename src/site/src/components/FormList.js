@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateFormData, getFormData } from '../actions/formActions.js';
+
 
 class FormList extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
         this.state = {
             numStudents: 0,
             pointsPossible: 0,
@@ -17,6 +21,12 @@ class FormList extends Component {
         this.updateStudentName = this.updateStudentName.bind(this);
         this.updateStudentPoints = this.updateStudentPoints.bind(this);
         this.updatePointsPossible = this.updatePointsPossible.bind(this);
+
+        this.updateForms = this.updateForms.bind(this);
+    }
+    componentDidMount() {
+        this.props.getFormData(this.props.formID);
+        console.log("props",this.props)
     }
 
     updateStudentAmount() {
@@ -51,6 +61,17 @@ class FormList extends Component {
         this.setState({pointsPossible: event.target.value});
     }
 
+    updateForms() {
+        let form = {
+            form_id: this.props.formData.form_id,
+            course_id: this.props.formData.course_id,
+            outcome: this.props.formData.outcome,
+            completed: this.props.formData.completed,
+            data: this.state,
+        }
+        this.props.updateFormData(form);
+    }
+
     render() {
         const studentList = this.state.students.map((student, idx) => {
             return (<div key={idx}>
@@ -70,8 +91,35 @@ class FormList extends Component {
                 <button type="button" onClick={this.addNumStudent}>+</button>
                 <div>Name: Points:</div>
                 {studentList}
+
+
+
+                <button type="button" onClick={this.updateForms}>SAVE</button>
+                <input type='checkbox'/>completed
             </div>
         )
     }
 }
-export default FormList;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getFormData: (formID) => {
+            dispatch(getFormData(formID));
+        },
+        updateFormData: (json) => {
+            dispatch(updateFormData(json));
+        }
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        formData: state.form.formData,
+        formID: state.page.formID,
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FormList);

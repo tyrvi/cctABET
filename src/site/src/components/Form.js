@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import FormList from './FormList.js';
-import { connect } from 'react-redux';
-import { updateFormData, getFormData } from '../actions/formActions.js'
 
 
 class Form extends Component {
@@ -24,11 +22,6 @@ class Form extends Component {
         this.updatePerformanceIndicator = this.updatePerformanceIndicator.bind(this);
         this.updateOutcomeLevel = this.updateOutcomeLevel.bind(this);
         this.updateAssignments = this.updateAssignments.bind(this);
-        this.updateForms = this.updateForms.bind(this);
-    }
-
-    componentDidMount() {
-        this.props.getFormData(this.props.formID);
     }
 
     updateCoordinator(event) {
@@ -63,17 +56,6 @@ class Form extends Component {
         this.setState({assignments: event.target.value});
     }
 
-    updateForms() {
-        let form = {
-            form_id: this.props.formData.form_id,
-            course_id: this.props.formData.course_id,
-            outcome: this.props.formData.outcome,
-            completed: this.props.formData.completed,
-            data: this.state,
-        }
-        this.props.updateFormData(form);
-    }
-
     render() {
         return (
             <div>
@@ -106,37 +88,13 @@ class Form extends Component {
                     Assignments / Questions / Tasks
                 </div>
                 <FormList list={this.props}/>
-
-
-                <button type="button" onClick={this.updateForms}>SAVE</button>
-                <input type='checkbox'/>completed
             </div>
         )
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getFormData: (formID) => {
-            dispatch(getFormData(formID));
-        },
-        updateFormData: (json) => {
-            dispatch(updateFormData(json));
-        }
-    }
-}
 
-const mapStateToProps = state => {
-    return {
-        formData: state.form.formData,
-        formID: state.page.formID,
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Form);
+export default Form;
 
 /*
     assessmentCoor: 'Arisoa',
