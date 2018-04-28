@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFormData } from '../actions/formActions.js';
+import {
+    getFormData,
+    outcomeMasteryChange,
+    questionsChange,
+    pointsPossibleChange,
+    addStudent,
+    removeStudent
+} from '../actions/formActions.js';
 
 class Form extends Component {
 
@@ -9,6 +16,34 @@ class Form extends Component {
     }
 
     render() {
+        let students = null;
+        if (this.props.formData.data.studentList) {
+            let students = this.props.formData.studentList.map((student, idx) => {
+                return (
+                    <tr key={idx}>
+                        <td>
+                            <input type='text'
+                                value={student.studentName}
+                            />
+                        </td>
+                        <td>
+                            <input type='number'
+                                value={student.pointsObtained}
+                            />
+                        </td>
+                        <td>
+                            {(student.pointsObtained / this.props.formData.pointsPossible) * 100} %
+                        </td>
+                        <td>
+                            <textarea rows="2" cols="30"
+                                value={student.specialComments}
+                            />
+                        </td>
+                    </tr>
+                );
+            });
+        }
+
         return (
             <div>
                 <h4>Assessment of Student Outcome: {this.props.formData.outcome}</h4>
@@ -33,23 +68,53 @@ class Form extends Component {
                 </div>
                 <div>
                     <b>Expected Level of Outcome Mastery: </b>
-                    <input type='text' />
+                    <input type='text' value={this.props.formData.outcomeMastery}
+                        onChange={event => this.props.outcomeMasteryChange(event.target.value)}
+                    />
                 </div>
                 <div>
                     <b>Assignments/Questions/Tasks: </b>
-                    <textarea rows="5" cols="50" />
+                    <textarea rows="5" cols="50"
+                        value={this.props.formData.questions}
+                        onChange={event => this.props.questionsChange(event.target.value)}
+                    />
                 </div>
                 <div>
                     <b>Total number of Points Possible: </b>
-                    <input type="number" />
+                    <input type="number"
+                        value={this.props.formData.pointsPossible}
+                        onChange={event => this.props.pointsPossibleChange(event.target.value)}
+                    />
                 </div>
                 <div>
                     <b>Number of Students Assessed: </b>
-                    <input type="number" />
-                    <button type="button">+</button>
+                    {/*<input type="number"
+                        value={this.props.formData.studentList.length}
+        />*/}
+                    <div>{this.props.formData.length}</div>
+                    <button type="button"
+                        onClick={this.props.addStudent}
+                    >
+                    +
+                    </button>
+                    <button type="button"
+                        onClick={this.props.removeStudent}
+                    >
+                    -
+                    </button>
                 </div>
                 <div>
-                    Table of students
+                    <table style={{width: 100 + '%'}}>
+                        <tbody>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Points Obtained</th>
+                                <th>Points Percent</th>
+                                <th>Special Comments</th>
+                            </tr>
+                            {students}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         );
@@ -63,6 +128,7 @@ stuff in form formData
         string
     ]
     expectedOutcomeMaster: string
+    questions: string
     pointsPossible: int
     numberOfStudents: int
     studentlist: [
@@ -89,6 +155,21 @@ const mapDispatchToProps = dispatch => {
     return {
         getFormData: (form_id) => {
             dispatch(getFormData(form_id));
+        },
+        outcomeMasteryChange: (outcomeMastery) => {
+            dispatch(outcomeMasteryChange(outcomeMastery));
+        },
+        questionsChange: (questions) => {
+            dispatch(questionsChange(questions));
+        },
+        pointsPossibleChange: (points) => {
+            dispatch(pointsPossibleChange(points));
+        },
+        addStudent: () => {
+            dispatch(addStudent());
+        },
+        removeStudent: () => {
+            dispatch(removeStudent());
         }
     }
 }

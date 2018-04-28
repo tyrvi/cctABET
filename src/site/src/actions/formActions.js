@@ -40,3 +40,68 @@ export function getFormData(form_id) {
             })
     }
 }
+
+export const OUTCOME_MASTERY_CHANGE = 'OUTCOME_MASTERY_CHANGE';
+export function outcomeMasteryChange(outcomeMastery) {
+    return {
+        type: OUTCOME_MASTERY_CHANGE,
+        outcomeMastery
+    }
+}
+
+export const QUESTIONS_CHANGE = 'QUESTION_CHANGE';
+export function questionsChange(questions) {
+    return {
+        type: QUESTIONS_CHANGE,
+        questions
+    }
+}
+
+export const POINTS_POSSIBLE_CHANGE = 'POINTS_POSSIBLE_CHANGE';
+export function pointsPossibleChange(points) {
+    return {
+        type: POINTS_POSSIBLE_CHANGE,
+        points,
+    }
+}
+
+export const STUDENT_NAME_CHANGE = 'STUDENT_NAME_CHANGE';
+export function studentNameChange(studentName, idx) {
+    return {
+        type: STUDENT_NAME_CHANGE,
+        studentName,
+        idx,
+    }
+}
+
+export const STUDENT_POINTS_CHANGE = 'STUDENT_POINTS_CHANGE';
+export function studentPointsChange(points, idx) {
+    return {
+        type: STUDENT_NAME_CHANGE,
+        points,
+        idx,
+    }
+}
+
+export const STUDENT_COMMENTS_CHANGE = 'STUDENT_COMMENTS_CHANGE';
+export function studentCommentsChange(comments, idx) {
+    return {
+        type: STUDENT_NAME_CHANGE,
+        comments,
+        idx,
+    }
+}
+
+export const ADD_STUDENT = 'ADD_STUDENT';
+export function addStudent() {
+    return {
+        type: ADD_STUDENT,
+    }
+}
+
+export const REMOVE_STUDENT = 'REMOVE_STUDENT';
+export function removeStudent() {
+    return {
+        type: REMOVE_STUDENT,
+    }
+}
