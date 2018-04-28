@@ -400,3 +400,12 @@ On error:
 
 `?form_id` - The form associated with this file
 
+## Admin Endpoints
+
+### GET `/admin/create_db`
+
+`?db` - The name of the database to create
+
+### GET `/admin/insert_test_data`
+
+`?db` - The name of the database to insert test data into
