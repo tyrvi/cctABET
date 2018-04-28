@@ -18,8 +18,6 @@ class Login extends Component {
     }
 
     onLoginClick() {
-        console.log("Login attempt");
-
         // don't authenticate if user or pass is not provided
         if (!this.state.email || !this.state.pass) {
             this.setState({ retry: true });
@@ -32,14 +30,18 @@ class Login extends Component {
     render() {
         return (
             <div id="Login">
-                <h1>CCT ABET</h1>
                 <div>
-                    <input type="text" value={this.state.email}
+                    <h1>CCT ABET</h1>
+                </div>
+                <div>
+                    <input className="_input _input-1"
+                        type="email" value={this.state.email} name="email"
                         onChange={event => this.setState({ email: event.target.value })}
                         placeholder="Email" />
                 </div>
                 <div>
-                    <input type="password" value={this.state.pass}
+                    <input className="_input _input-2"
+                        type="password" value={this.state.pass} name="password"
                         onChange={event => this.setState({ pass: event.target.value })}
                         placeholder="Password" />
                 </div>
@@ -49,7 +51,8 @@ class Login extends Component {
                     </p>
                 </div>
                 <div>
-                    <button onClick={this.onLoginClick}>Login</button>
+                    <button className="_button"
+                        onClick={this.onLoginClick}>Login</button>
                 </div>
             </div>
         );
