@@ -162,13 +162,18 @@ On error:
 
 ### POST `/users/create`
 
-`?user` - The username
-    
-`?pass` - The password
+Parameters:
 
-`?email` - The email of the user
-
-`?type` - The type of the user
+```
+{
+    email: string,
+    password: string,
+    f_name: optional string,
+    l_name: optional string,
+    prefix: optional string,
+    type: int
+}
+```
 
 On success:
 
@@ -210,14 +215,16 @@ On error:
 
 ### GET `/forms`
 
-`?form` - The form to get
+`?form_id` - Optional. The form to get
 
-Returns:
+On success:
 ```
 {
-  form_id: int
-  outcome: string
-  data: object
+    form_id: int,
+    course_id: int,
+    outcome: string,
+    completed: int,
+    data: json
 }
 ```
 
@@ -230,11 +237,35 @@ On error:
 ```
 
 ### POST `/forms/update`
-???
+Parameters:
+```
+{
+    form_id: integer
+    course_id: integer,
+    outcome: optional string,
+    completed: int,
+    data: object
+}
+```
+
+On success:
+```
+{
+    message: string
+}
+```
+
+On error:
+
+```
+{
+  error: string
+}
+```
 
 ### GET `/forms/delete`
 
-`?form` - The form id to delete
+`?form_id` - The form id to delete
 
 On success:
 
@@ -253,17 +284,21 @@ On error:
 ```
 
 ### POST `/forms/create`
-`?course` - The course id that owns this form
-
-`?outcome` - Optional. The outcome of this form
-
-`body.data` - The json data associated with the form
+Parameters:
+```
+{
+    course_id: int,
+    outcome: optional string,
+    completed: optional int,
+    data: optional object
+}
+```
 
 On success:
 
 ```
 {
-  message: string
+    message: string
 }
 ```
 
@@ -271,6 +306,37 @@ On error:
 
 ```
 {
-  error: string
+    error: string
+}
+```
+
+### POST `/forms/massupdate`
+Parameters:
+```
+[
+    {
+        form_id: string null if you want to create this form
+        course_id: int,
+        outcome: optional string,
+        completed: optional int,
+        data: optional object
+    },
+    ...
+]
+```
+
+On success:
+
+```
+{
+    message: string
+}
+```
+
+On error:
+
+```
+{
+    error: string
 }
 ```
