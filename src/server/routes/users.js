@@ -103,7 +103,12 @@ async function create_user(req, res, next) {
         return;
     }
 
-    let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, password, f_name, l_name, prefix, type]);
+    // properly hashes plain text password before insertion
+    let hash = crypto.createHash('sha256');
+    hash.update(pass);
+    let hash_string = hash.digest('hex').toUpperCase();
+
+    let query = db.query("INSERT INTO users (email, password, f_name, l_name, prefix, type) VALUES ($1, $2, $3, $4, $5, $6)", [email, hash_string, f_name, l_name, prefix, type]);
     query.then(result => {
         res.json({message: 'User created.'});
     }).catch(err => {
