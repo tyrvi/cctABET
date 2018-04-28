@@ -39,6 +39,7 @@ When making fetch requests be sure to add `credentials: 'same-origin'` or you wi
 
 Example:
 
+```
 fetch('forms/create', {
     method: 'POST',
     credentials: 'same-origin',
@@ -46,3 +47,4 @@ fetch('forms/create', {
         ...
     }
 });
+```
