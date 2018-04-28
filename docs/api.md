@@ -130,6 +130,28 @@ On Error:
 }
 ```
 
+### POST `/users/update`
+Parameters:
+```
+{
+    user_id: int,
+    email: string,
+    password: optional string,
+    f_name: string,
+    l_name: string,
+    prefix: string,
+    type: int
+}
+```
+
+On success:
+
+```
+{
+  message: string
+}
+```
+
 On error:
 
 ```
@@ -137,9 +159,6 @@ On error:
   error: string
 }
 ```
-
-### POST `/users/update`
-???
 
 ### POST `/users/create`
 
