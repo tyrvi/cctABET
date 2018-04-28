@@ -406,6 +406,34 @@ On error:
 
 `?db` - The name of the database to create
 
+On success:
+```
+{
+    message: string
+}
+```
+
+On error:
+```
+{
+    error: string
+}
+```
 ### GET `/admin/insert_test_data`
 
 `?db` - The name of the database to insert test data into
+
+On success:
+```
+{
+    message: string
+}
+```
+
+On error:
+```
+{
+    error: string
+}
+```
+
