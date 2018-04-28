@@ -17,7 +17,8 @@ class Accordion extends Component {
                 return <AccordionItem key={course.course_id}
                         course_id={course.course_id}
                         courseName={course.course_name}
-                        forms={course.forms} />
+                        forms={course.forms}
+                        />
             });
         }
 

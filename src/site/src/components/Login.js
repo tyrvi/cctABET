@@ -32,7 +32,9 @@ class Login extends Component {
     render() {
         return (
             <div id="Login">
-                <h1>CCT ABET</h1>
+                <div>
+                    <h1>CCT ABET</h1>
+                </div>
                 <div>
                     <input className="_input _input-1"
                         type="email" value={this.state.email} name="email"

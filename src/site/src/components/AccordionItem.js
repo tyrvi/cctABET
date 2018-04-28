@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/AccordionItem.css';
+import './styles/Accordion.css';
 import { gotoForm } from '../actions/pageActions.js';
 
 class AccordionItem extends Component {
@@ -16,6 +17,7 @@ class AccordionItem extends Component {
     }
 
     onCourseClick() {
+        console.log(this.state.isOpen);
         this.setState({isOpen: !this.state.isOpen})
     }
 
@@ -26,17 +28,27 @@ class AccordionItem extends Component {
     render() {
         const forms = this.props.forms.map(form => {
             return (
-                <button className="formButton" key={form.form_id}
+                <div className="form" key={form.form_id}
                     onClick={() => this.onFormClick(form.form_id, this.props.course_id, form.outcome)} >
                     {form.outcome}
-                </button>
+                </div>
             );
         });
 
+        // return (
+        //     <div className="courseButtonContainer" key={this.props.key}>
+        //         <button className="courseButton" onClick={this.onCourseClick}>{this.props.courseName}</button>
+        //         <div className={this.state.isOpen ? "" : "hidden"}>
+        //             {forms}
+        //         </div>
+        //     </div>
+        // );
         return (
-            <div className="courseButtonContainer" key={this.props.key}>
-                <button className="courseButton" onClick={this.onCourseClick}>{this.props.courseName}</button>
-                <div className={this.state.isOpen ? "" : "hidden"}>
+            <div>
+                <button className="accordion" key={this.props.key} onClick={this.onCourseClick}>
+                {this.props.courseName}
+                </button>
+                <div className={this.state.isOpen ? "visible" : "hidden"}>
                     {forms}
                 </div>
             </div>
