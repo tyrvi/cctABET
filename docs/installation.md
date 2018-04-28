@@ -63,11 +63,11 @@ This script creates a new docker container. Docker will build the entire server 
 
 11. To access the site portion, go to:
 ```
-http://localhost:3000
+[http://localhost:3000](http://localhost:3000)
 ```
 
 12. To access the server portion for testing, go to:
 
 ```
-http://localhost:3001
+[http://localhost:3001](http://localhost:3001)
 ```
