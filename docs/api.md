@@ -340,3 +340,63 @@ On error:
     error: string
 }
 ```
+
+## Files
+
+### GET `/files`
+
+`?form_id` - The file associated with a form
+
+On success:
+```
+{
+    file_id: int,
+    file_name: string,
+    original_file_name: string,
+    form_id: int
+}
+```
+
+On error:
+```
+{
+    error: string
+}
+```
+
+### GET `/files/download`
+
+`?form_id` - The form associated with the file
+
+On success: Downloads file
+
+On error:
+```
+{
+    error: string
+}
+```
+
+### GET `/files/delete`
+
+`?form_id` - The form associated with the file
+
+On success:
+```
+{
+    message: string
+}
+```
+
+
+On error:
+```
+{
+    error: string
+}
+```
+
+### POST `/files/upload`
+
+`?form_id` - The form associated with this file
+
