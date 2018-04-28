@@ -4,8 +4,11 @@
 Parameters:
 
 `?user_id` - Optional parameter. Filters courses by user
+`?year` - Optional parameter. Filters courses by year
+`?semester` - Optional parameter. Filters courses by semester
+`?email` - Optional parameter. Filters courses by email
 
-Returns:
+On Success:
 
 ```
 [
@@ -38,7 +41,11 @@ On error:
 Parameters:
 ```
 {
-    
+    course_id: int
+    course_name: string,
+    email: optional string,
+    semester: string,
+    year: int
 }
 ```
 
@@ -65,13 +72,15 @@ On error:
 
 
 ### POST `/courses/create`
-`?name` - The name of the new course
 
-`?email` - Optional. The email of the professor
-
-`?semester` - The semester this course is
-
-`?year` - The year the course is
+```
+ {
+    course_name: string,
+    email: optional string,
+    semester: string,
+    year: int
+}
+```
 
 On success:
 
@@ -93,29 +102,54 @@ On error:
 
 ### GET `/users`
 
+`?user_id` - Optional. Filters users by user_id
 `?email` - Optional. Filters users by email
 
-Returns if `?email is set`:
 
-```
-{
-  username: string,
-  email: string,
-  type: int
-}
-```
-
-Otherwise returns:
+On Success:
 
 ```
 [
-  {
-    username: string,
-    email: string,
-    type: int
-  },
-  ...
+    {
+      user_id: int,
+      email: string, 
+      f_name: string, 
+      l_name: string, 
+      prefix: string, 
+      type: int
+    },
+    ...
 ]
+```
+
+On Error:
+
+```
+{
+    error: string
+}
+```
+
+### POST `/users/update`
+Parameters:
+```
+{
+    user_id: int,
+    email: string,
+    password: optional string,
+    f_name: string,
+    l_name: string,
+    prefix: string,
+    type: int
+}
+```
+
+On success:
+
+```
+{
+  message: string
+}
 ```
 
 On error:
@@ -126,18 +160,20 @@ On error:
 }
 ```
 
-### POST `/users/update`
-???
-
 ### POST `/users/create`
 
-`?user` - The username
-    
-`?pass` - The password
+Parameters:
 
-`?email` - The email of the user
-
-`?type` - The type of the user
+```
+{
+    email: string,
+    password: string,
+    f_name: optional string,
+    l_name: optional string,
+    prefix: optional string,
+    type: int
+}
+```
 
 On success:
 
@@ -179,14 +215,16 @@ On error:
 
 ### GET `/forms`
 
-`?form` - The form to get
+`?form_id` - Optional. The form to get
 
-Returns:
+On success:
 ```
 {
-  form_id: int
-  outcome: string
-  data: object
+    form_id: int,
+    course_id: int,
+    outcome: string,
+    completed: int,
+    data: json
 }
 ```
 
@@ -199,11 +237,35 @@ On error:
 ```
 
 ### POST `/forms/update`
-???
+Parameters:
+```
+{
+    form_id: integer
+    course_id: integer,
+    outcome: optional string,
+    completed: int,
+    data: object
+}
+```
+
+On success:
+```
+{
+    message: string
+}
+```
+
+On error:
+
+```
+{
+  error: string
+}
+```
 
 ### GET `/forms/delete`
 
-`?form` - The form id to delete
+`?form_id` - The form id to delete
 
 On success:
 
@@ -222,17 +284,21 @@ On error:
 ```
 
 ### POST `/forms/create`
-`?course` - The course id that owns this form
-
-`?outcome` - Optional. The outcome of this form
-
-`body.data` - The json data associated with the form
+Parameters:
+```
+{
+    course_id: int,
+    outcome: optional string,
+    completed: optional int,
+    data: optional object
+}
+```
 
 On success:
 
 ```
 {
-  message: string
+    message: string
 }
 ```
 
@@ -240,6 +306,134 @@ On error:
 
 ```
 {
-  error: string
+    error: string
 }
 ```
+
+### POST `/forms/massupdate`
+Parameters:
+```
+[
+    {
+        form_id: string null if you want to create this form
+        course_id: int,
+        outcome: optional string,
+        completed: optional int,
+        data: optional object
+    },
+    ...
+]
+```
+
+On success:
+
+```
+{
+    message: string
+}
+```
+
+On error:
+
+```
+{
+    error: string
+}
+```
+
+## Files
+
+### GET `/files`
+
+`?form_id` - The file associated with a form
+
+On success:
+```
+{
+    file_id: int,
+    file_name: string,
+    original_file_name: string,
+    form_id: int
+}
+```
+
+On error:
+```
+{
+    error: string
+}
+```
+
+### GET `/files/download`
+
+`?form_id` - The form associated with the file
+
+On success: Downloads file
+
+On error:
+```
+{
+    error: string
+}
+```
+
+### GET `/files/delete`
+
+`?form_id` - The form associated with the file
+
+On success:
+```
+{
+    message: string
+}
+```
+
+
+On error:
+```
+{
+    error: string
+}
+```
+
+### POST `/files/upload`
+
+`?form_id` - The form associated with this file
+
+## Admin Endpoints
+
+### GET `/admin/create_db`
+
+`?db` - The name of the database to create
+
+On success:
+```
+{
+    message: string
+}
+```
+
+On error:
+```
+{
+    error: string
+}
+```
+### GET `/admin/insert_test_data`
+
+`?db` - The name of the database to insert test data into
+
+On success:
+```
+{
+    message: string
+}
+```
+
+On error:
+```
+{
+    error: string
+}
+```
+
