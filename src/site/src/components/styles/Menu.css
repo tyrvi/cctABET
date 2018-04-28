@@ -14,14 +14,23 @@
     border-width: 0;
     outline: none;
     border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 
     background-color: #fcc332;
     color: #001514;
 
-    transition: background-color .3s;
+    transition: background-color 0.3s;
 }
 
 .menuButton:hover {
     background-color: #f5ad06;
+}
+
+.link {
+    display: block;
+    font-size: 1em;
+    color: rgb(0, 0, 0);
+}
+.link:hover {
+    text-decoration: underline;
 }

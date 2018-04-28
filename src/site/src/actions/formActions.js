@@ -51,8 +51,6 @@ export function getFormData(form_id) {
 }
 
 export function updateFormData(form) {
-    console.log("THAIS IS DANISH!");
-    console.log(form);
     let body = form;
 
     return dispatch => {
@@ -66,7 +64,6 @@ export function updateFormData(form) {
             body: JSON.stringify(body),
         }).then(res => res.json())
             .then(json => {
-                console.log(json);
                 if (!json.error) {
                     dispatch(formDataSuccess(json));
                 } else {

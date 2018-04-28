@@ -15,7 +15,8 @@ class Admin extends Component {
 
         this.state = {
             resetDB: '',
-            testDataDB: ''
+            testDataDB: '',
+            isOpen: false,
         }
 
         this.onResetDBClick = this.onResetDBClick.bind(this);
@@ -44,17 +45,25 @@ class Admin extends Component {
                         Success: {this.props.requestMessage}
                     </div>
                 </div>
-                <div>
-                    <input type="text" value={this.state.resetDB}
-                        onChange={event => this.setState({ resetDB: event.target.value })}
-                        placeholder="Database Name" />
-                    <button onClick={this.onResetDBClick}>Reset Database</button>
-                </div>
-                <div>
-                    <input type="text" value={this.state.testDataDB}
-                        onChange={event => this.setState({ testDataDB: event.target.value })}
-                        placeholder="Database Name" />
-                    <button onClick={this.onInsertDataClick}>Insert Test Data</button>
+
+                <button className="accordion"
+                    onClick={event => this.setState({isOpen: !this.state.isOpen})}
+                >
+                    Database
+                </button>
+                <div className={this.state.isOpen ? "" : "hidden"}>
+                    <div>
+                        <input type="text" value={this.state.resetDB}
+                            onChange={event => this.setState({ resetDB: event.target.value })}
+                            placeholder="Database Name" />
+                        <button onClick={this.onResetDBClick}>Reset Database</button>
+                    </div>
+                    <div>
+                        <input type="text" value={this.state.testDataDB}
+                            onChange={event => this.setState({ testDataDB: event.target.value })}
+                            placeholder="Database Name" />
+                        <button onClick={this.onInsertDataClick}>Insert Test Data</button>
+                    </div>
                 </div>
                 <UserAdmin />
                 <CourseAdmin />

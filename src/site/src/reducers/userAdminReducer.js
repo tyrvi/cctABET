@@ -125,30 +125,53 @@ function userListReducer(state ={
                 requestError: null,
             });
         case CREATE_USER_SUCCESS:
-            console.log(action);
             return Object.assign({}, state, {
-                isDoingRequest: true,
+                isDoingRequest: false,
                 requestMessage: action.response.message,
                 requestError: null,
             });
         case CREATE_USER_FAIL:
             return Object.assign({}, state, {
-                isDoingRequest: true,
+                isDoingRequest: false,
                 requestMessage: null,
                 requestError: action.response.error,
             });
         case REQUEST_UPDATE_USER:
-            return state;
+            return Object.assign({}, state, {
+                isDoingRequest: true,
+                requestMessage: null,
+                requestError: null,
+            });
         case UPDATE_USER_SUCCESS:
-            return state;
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: action.response.message,
+                requestError: null,
+            });
         case UPDATE_USER_FAIL:
-            return state;
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: null,
+                requestError: action.response.error,
+            });
         case REQUEST_DELETE_USER:
-            return state;
+            return Object.assign({}, state, {
+                isDoingRequest: true,
+                requestMessage: null,
+                requestError: null,
+            });
         case DELETE_USER_SUCCESS:
-            return state;
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: action.response.message,
+                requestError: null,
+            });
         case DELETE_USER_FAIL:
-            return state;
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: null,
+                requestError: action.response.error,
+            });
         case REQUEST_USER_LIST:
             return Object.assign({}, state, {
                 isDoingRequest: true,

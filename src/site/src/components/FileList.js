@@ -27,8 +27,6 @@ class FileList extends Component {
         .then(res =>
             res.json())
         .then(res => {
-            console.log('HELLO!');
-            console.log(res);
             if(res.file !== undefined) {
                 if(res.file.original_file_name !== undefined) {
                     this.setState({file: res.file.original_file_name});

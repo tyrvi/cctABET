@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_TYPES } from '../actions/loginActions.js';
-import { updateUser, deleteUser } from '../actions/userAdminActions.js';
+import { updateUser, deleteUser, getUserList } from '../actions/userAdminActions.js';
 import './styles/User.css'
 
 
@@ -28,27 +28,26 @@ class User extends Component {
 
     onDelete() {
         // TODO: add confirmation of user delete
-        console.log("user being deleted");
-
-        // this.props.deleteUser(this.state.email);
-
-        // TODO: add refetching of User List
-
+        this.props.deleteUser(this.props.user.user_id);
+        this.props.getUserList(this.props.filter.email);
     }
 
     onUpdate() {
-        // TODO: add confirmation of user update`
-        console.log("user being updated");
+        // TODO: add confirmation of user update
+        let user = {
+            user_id: this.state.user_id,
+            email: this.state.email,
+            password: this.state.password,
+            f_name: this.state.f_name,
+            l_name: this.state.l_name,
+            prefix: this.state.prefix,
+            type: this.state.type,
+        };
 
-        // this.props.updateUser(
-        //     this.state.username,
-        //     this.state.email,
-        //     this.state.type
-        // );
+        this.props.updateUser(user);
+        this.props.getUserList(this.props.filter.email);
 
         this.setState({editing: false});
-
-        // TODO: add refetching of User List
     }
 
     onEdit() {
@@ -65,7 +64,7 @@ class User extends Component {
             type: this.props.user.type,
             password: '',
             editing: false,
-        })
+        });
     }
 
     render() {
@@ -126,20 +125,28 @@ class User extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        filter: state.users.filter,
+    }
+}
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateUser: (user_id, email, password, prefix, f_name, l_name, type) => {
-            dispatch(updateUser(user_id, email, password, prefix, f_name, l_name, type));
+        updateUser: (user) => {
+            dispatch(updateUser(user));
         },
-        deleteUser: (email) => {
-            dispatch(deleteUser(email));
+        deleteUser: (user_id) => {
+            dispatch(deleteUser(user_id));
+        },
+        getUserList: (email) => {
+            dispatch(getUserList(email));
         }
     }
 }
 
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(User);

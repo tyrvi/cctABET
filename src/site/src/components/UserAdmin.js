@@ -22,6 +22,10 @@ class UserAdmin extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            isOpen: false,
+        }
+
         this.onUserListClick = this.onUserListClick.bind(this);
         this.onFilterClick = this.onFilterClick.bind(this);
         this.onCreateUserClick = this.onCreateUserClick.bind(this);
@@ -33,7 +37,7 @@ class UserAdmin extends Component {
 
     onCreateUserClick() {
         this.props.createUser(this.props.userCreate);
-        this.props.getUserList();
+        this.props.getUserList(this.props.filter.email);
     }
 
     onUserListClick() {
@@ -41,11 +45,7 @@ class UserAdmin extends Component {
     }
 
     onFilterClick() {
-        if (this.props.filter.email) {
-            this.props.getUserList(this.props.filter.email);
-        } else {
-            this.props.getUserList();
-        }
+        this.props.getUserList(this.props.filter.email);
     }
 
     render() {
@@ -62,8 +62,12 @@ class UserAdmin extends Component {
 
         return (
             <div>
-                <h3>Users</h3>
-                <div>
+                <button className="accordion"
+                    onClick={event => this.setState({isOpen: !this.state.isOpen})}
+                >
+                    Users
+                </button>
+                <div className={this.state.isOpen ? "" : "hidden"}>
                     <div>
                         <h4>Create User</h4>
                         <input type="text" value={this.props.userCreate.email}
@@ -89,15 +93,15 @@ class UserAdmin extends Component {
                         <button onClick={this.onCreateUserClick}>Create User</button>
                         <button onClick={this.props.userCreateClear}>clear</button>
                     </div>
-                    <h4>User List</h4>
                     <div>
-                        <h5>Filter</h5>
+                        <h5>User Filters</h5>
                             Email: <input value={this.props.filter.email}
                                         onChange={event => this.props.updateFilter(event.target.value)}
                                     />
                         <button onClick={this.onFilterClick}>Filter</button>
                     </div>
                     <div>
+                        <h5 onClick={this.onUserListClick}>User List</h5>
                         <button onClick={this.onUserListClick}>{this.props.isOpen ? "hide list" : "show list"}</button>
                         <div className={this.props.isOpen ? "listBox" : "hidden"}>
                             {users}
@@ -127,31 +131,31 @@ const mapDispatchToProps = dispatch => {
             dispatch(userListFilterChange(email));
         },
         showHide: () => {
-            dispatch(userListShowHide())
+            dispatch(userListShowHide());
         },
         createUser: (userCreate) => {
-            dispatch(createUser(userCreate))
+            dispatch(createUser(userCreate));
         },
         userCreateClear: () => {
-            dispatch(createUserClear())
+            dispatch(createUserClear());
         },
         updateUserCreateEmail: (email) => {
-            dispatch(createUserEmailChange(email))
+            dispatch(createUserEmailChange(email));
         },
         updateUserCreatePass: (pass) => {
-            dispatch(createUserPassChange(pass))
+            dispatch(createUserPassChange(pass));
         },
         updateUserCreateFName: (f_name) => {
-            dispatch(createUserFNameChange(f_name))
+            dispatch(createUserFNameChange(f_name));
         },
         updateUserCreateLName: (l_name) => {
-            dispatch(createUserLNameChange(l_name))
+            dispatch(createUserLNameChange(l_name));
         },
         updateUserCreatePrefix: (prefix) => {
-            dispatch(createUserPrefixChange(prefix))
+            dispatch(createUserPrefixChange(prefix));
         },
         updateUserCreateType: (type) => {
-            dispatch(createUserTypeChange(type))
+            dispatch(createUserTypeChange(type));
         },
     }
 }
