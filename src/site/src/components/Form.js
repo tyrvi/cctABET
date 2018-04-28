@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import FormList from './FormList.js';
 import FileList from './FileList.js';
-import { connect } from 'react-redux';
-import { getFormData } from '../actions/formActions.js'
 
 
 class Form extends Component {
