@@ -5,7 +5,9 @@ import {
     updateFormItemOutcome,
     updateNewFormCompleted,
     updateNewFormOutcome,
-    addForm
+    addForm,
+    deleteForm,
+    deleteListForm
 } from '../actions/formAdminActions.js';
 
 class FormAdmin extends Component {
@@ -25,6 +27,18 @@ class FormAdmin extends Component {
 
         let completed = event.target.checked ? 1 : 0;
         this.props.updateCompleted(idx, completed);
+    }
+
+    deleteForm(idx, form_id, event) {
+        // console.log(form_id);
+
+        if (form_id !== null) {
+            this.props.deleteListForm(form_id);
+            this.props.deleteForm(idx);
+        } else {
+            this.props.deleteForm(idx);
+        }
+
     }
 
     onAddForm() {
@@ -52,7 +66,7 @@ class FormAdmin extends Component {
                     <input type="checkbox" checked={form.completed ? true : false}
                         onChange={this.onCompletedChange.bind(this, idx)}
                     />
-                    <button>Delete</button>
+                    <button onClick={this.deleteForm.bind(this, idx, form.form_id)}>Delete</button>
                 </div>
             );
         });
@@ -88,7 +102,7 @@ const mapDispatchToProps = dispatch => {
         updateCompleted: (idx, completed) => {
             dispatch(updateFormItemCompleted(idx, completed));
         },
-        updateOutcome: (idx,outcome) => {
+        updateOutcome: (idx, outcome) => {
             dispatch(updateFormItemOutcome(idx, outcome));
         },
         updateNewCompleted: (completed) => {
@@ -98,8 +112,14 @@ const mapDispatchToProps = dispatch => {
         updateNewOutcome: (outcome) => {
             dispatch(updateNewFormOutcome(outcome));
         },
-        addForm: (form) => {
-            dispatch(addForm(form));
+        addForm: (form_id) => {
+            dispatch(addForm(form_id));
+        },
+        deleteForm: (idx) => {
+            dispatch(deleteForm(idx));
+        },
+        deleteListForm: (form) => {
+            dispatch(deleteListForm(form));
         }
     }
 }

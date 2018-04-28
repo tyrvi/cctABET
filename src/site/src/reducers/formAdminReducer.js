@@ -6,7 +6,13 @@ import {
     UPDATE_FORM_ITEM_OUTCOME,
     ADD_FORM,
     UPDATE_NEW_FORM_COMPLETED,
-    UPDATE_NEW_FORM_OUTCOME
+    UPDATE_NEW_FORM_OUTCOME,
+    REQUEST_MASS_UPDATE_FORMS,
+    MASS_UPDATE_FORMS_SUCCESS,
+    MASS_UPDATE_FORMS_FAIL,
+    CANCEL_UPDATE_FORMS,
+    DELETE_FORM,
+    DELETE_LIST_FORM
 } from '../actions/formAdminActions.js';
 
 function insertItem(array, idx, item) {
@@ -62,6 +68,7 @@ function formAdminReducer(state = {
     requestMessage: null,
     requestError: null,
     forms: [],
+    formsToDelete: [],
     newForm: {
         form_id: null,
         course_id: null,
@@ -106,6 +113,14 @@ function formAdminReducer(state = {
                     action.outcome
                 ),
             });
+        case DELETE_LIST_FORM:
+            return Object.assign({}, state, {
+                formsToDelete: appendItem(state.formsToDelete, action.form_id),
+            });
+        case DELETE_FORM:
+            return Object.assign({}, state, {
+                forms: removeItem(state.forms, action.idx),
+            });
         case ADD_FORM:
             return Object.assign({}, state, {
                 forms: appendItem(state.forms, action.form),
@@ -134,6 +149,45 @@ function formAdminReducer(state = {
                     course_id: null,
                     outcome: action.outcome,
                     completed: state.newForm.completed,
+                    data: {}
+                }
+            });
+        case REQUEST_MASS_UPDATE_FORMS:
+            return Object.assign({}, state, {
+                isDoingRequest: true,
+                requestMessage: null,
+                requestError: null,
+            });
+        case MASS_UPDATE_FORMS_SUCCESS:
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: action.response,
+                requestError: null,
+                forms: [],
+                formsToDelete: [],
+                newForm: {
+                    form_id: null,
+                    course_id: null,
+                    outcome: '',
+                    completed: 0,
+                    data: {}
+                }
+            });
+        case MASS_UPDATE_FORMS_FAIL:
+            return Object.assign({}, state, {
+                isDoingRequest: false,
+                requestMessage: null,
+                requestError: action.response.error,
+            });
+        case CANCEL_UPDATE_FORMS:
+            return Object.assign({}, state, {
+                forms: [],
+                formsToDelete: [],
+                newForm: {
+                    form_id: null,
+                    course_id: null,
+                    outcome: '',
+                    completed: 0,
                     data: {}
                 }
             });

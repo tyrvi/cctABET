@@ -6,7 +6,12 @@ import {
     updateCourse,
     getCourseList,
 } from '../actions/courseAdminActions.js';
-import { getFormsByCourseID } from '../actions/formAdminActions.js';
+import {
+    getFormsByCourseID,
+    cancelUpdateForms,
+    massUpdateForms,
+    apiDeleteForm
+} from '../actions/formAdminActions.js';
 import FormAdmin from './FormAdmin.js';
 
 import ReactModal from 'react-modal';
@@ -90,12 +95,15 @@ class Course extends Component {
 
     cancelEditForms() {
         console.log('canceling form metadata');
+        this.props.cancelForms();
+
         this.setState({editForms: false})
     }
 
     submitEditForms() {
-        // TODO: add dispatch of forms submission
         console.log('submitting forms metadata');
+        this.props.deleteMarkedForms(this.props.markedForms);
+        this.props.submitForms(this.props.forms);
         this.setState({editForms: false})
     }
 
@@ -163,6 +171,8 @@ class Course extends Component {
 const mapStateToProps = state => {
     return {
         filter: state.courses.filter,
+        forms: state.formAdmin.forms,
+        markedForms: state.formAdmin.formsToDelete
     }
 }
 
@@ -179,6 +189,19 @@ const mapDispatchToProps = dispatch => {
         },
         getForms: (course_id) => {
             dispatch(getFormsByCourseID(course_id));
+        },
+        deleteMarkedForms: (formIDList) => {
+            formIDList.map((form_id) => {
+                dispatch(apiDeleteForm(form_id))
+
+                return form_id;
+            });
+        },
+        submitForms: (forms) => {
+            dispatch(massUpdateForms(forms));
+        },
+        cancelForms: () => {
+            dispatch(cancelUpdateForms());
         }
     }
 }
