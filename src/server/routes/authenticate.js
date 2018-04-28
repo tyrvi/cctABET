@@ -1,4 +1,5 @@
 var db = require('../db');
+var crypto = require('crypto');
 
 const USER_TYPES = {
     ADMIN_USER: 0,
@@ -21,7 +22,12 @@ function login(req, res, next) {
     if(!email || !pass) {
         res.json({error: 'Missing email or password'});
     } else {
-        db.query("SELECT * FROM users WHERE email=$1 AND password=$2", [email, pass], (err, result) => {
+        // hashes plaintext password before database comparison
+        let hash = crypto.createHash('sha256');
+        hash.update(pass);
+        let hash_string = hash.digest('hex').toUpperCase();
+
+        db.query("SELECT * FROM users WHERE email=$1::text AND password=$2::text", [email, hash_string], (err, result) => {
             if(err) {
                 console.log('Error in authenticate: ' + err);
                 res.json({error: 'Authentication error'});
