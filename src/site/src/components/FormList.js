@@ -20,6 +20,7 @@ class FormList extends Component {
             outcomeLevel: "",
             assignments: "",
         };
+
         this.addNumStudent = this.addNumStudent.bind(this);
         this.updateStudentName = this.updateStudentName.bind(this);
         this.updateStudentPoints = this.updateStudentPoints.bind(this);
@@ -31,21 +32,20 @@ class FormList extends Component {
         this.updateForms = this.updateForms.bind(this);
         this.updateComplete = this.updateComplete.bind(this);
     }
+
     componentDidMount() {
         this.props.getFormData(this.props.formID);
     }
-    updateComplete(event) {
-        console.log("event", event.target.checked);
 
-        if(event.target.checked)
-        {
+    updateComplete(event) {
+        if (event.target.checked) {
             this.props.formData.completed = 1;
-        }
-        else {
+        } else {
             this.props.formData.completed = 0;
         }
 
     }
+
     updatePointsPossible(event) {
         this.setState({pointsPossible: event.target.value});
     }
@@ -90,7 +90,6 @@ class FormList extends Component {
         this.setState({tmp:tmp});
     }
 
-
     updateForms() {
         let form = {
             form_id: this.props.formData.form_id,
@@ -99,16 +98,19 @@ class FormList extends Component {
             completed: this.props.formData.completed,
             data: this.state,
         }
+
         this.props.updateFormData(form);
     }
 
     render() {
         const studentList = this.state.students.map((student, idx) => {
-            return (<div key={idx}>
-                        <input type="text" value={student.studentName} onChange={this.updateStudentName.bind(this, student)} />
-                        <input type="number" value={student.pointsEarned} onChange={this.updateStudentPoints.bind(this, student)}/>
-                        <button type="button" onClick={this.removeStudent.bind(this, student)}>-</button>
-                    </div>)
+            return (
+                <div key={idx}>
+                    <input type="text" value={student.studentName} onChange={this.updateStudentName.bind(this, student)} />
+                    <input type="number" value={student.pointsEarned} onChange={this.updateStudentPoints.bind(this, student)}/>
+                    <button type="button" onClick={this.removeStudent.bind(this, student)}>-</button>
+                </div>
+            );
         });
 
         return (

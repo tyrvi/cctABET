@@ -58,9 +58,8 @@ class Form extends Component {
                 <FormList list={this.props}/>
                 <FileList form={this.props}/>
 
-                <button>SAVE</button>
-                <input type='checkbox'/>completed
-
+                {/*<button>SAVE</button>
+                <input type='checkbox'/>completed*/}
             </div>
         )
     }
