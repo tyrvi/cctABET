@@ -34,8 +34,13 @@ npm install
 
 This will install all the library dependencies for the site portion (the HTTP server and frontend).
 
-7. Next go to the server folder located at `cctABET/src/server`.
+7. Next go to the server folder located at 
+```
+cctABET/src/server
+```
+
 8. Once in the directory run:
+
 ```
 npm install
 ```
