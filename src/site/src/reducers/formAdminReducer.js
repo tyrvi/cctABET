@@ -15,13 +15,14 @@ import {
     DELETE_LIST_FORM
 } from '../actions/formAdminActions.js';
 
-function insertItem(array, idx, item) {
-    return [
-        ...array.slice(0, idx),
-        item,
-        ...array.slice(idx)
-    ];
-}
+// Not currently used in this reducer
+// function insertItem(array, idx, item) {
+//     return [
+//         ...array.slice(0, idx),
+//         item,
+//         ...array.slice(idx)
+//     ];
+// }
 
 function appendItem(array, item)  {
     return [
