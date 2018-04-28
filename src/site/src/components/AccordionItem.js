@@ -20,15 +20,15 @@ class AccordionItem extends Component {
         this.setState({isOpen: !this.state.isOpen})
     }
 
-    onFormClick(formID, courseID, outcome) {
-        this.props.gotoForm(formID, courseID, outcome)
+    onFormClick(formID, course) {
+        this.props.gotoForm(formID, course)
     }
 
     render() {
         const forms = this.props.forms.map(form => {
             return (
                 <div className="form" key={form.form_id}
-                    onClick={() => this.onFormClick(form.form_id, this.props.course_id, form.outcome)} >
+                    onClick={() => this.onFormClick(form.form_id, this.props.course)} >
                     {form.outcome}
                 </div>
             );
@@ -49,8 +49,8 @@ class AccordionItem extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        gotoForm: (formID) => {
-            dispatch(gotoForm(formID));
+        gotoForm: (formID, course) => {
+            dispatch(gotoForm(formID, course));
         }
     }
 }

@@ -1,73 +1,99 @@
 import React, { Component } from 'react';
-import FormList from './FormList.js';
-import FileList from './FileList.js';
-
+import { connect } from 'react-redux';
+import { getFormData } from '../actions/formActions.js';
 
 class Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            assessmentCoor: 'Arisoa',
-            email: 'Arisoa@bing.com',
-            semester: 'Spring 2018',
-            course: 'CS 4453 Artificial Intelligence',
-        }
-        this.updateCoordinator = this.updateCoordinator.bind(this);
-        this.updateSemester = this.updateSemester.bind(this);
-        this.updateCourse = this.updateCourse.bind(this);
-        this.updateEmail = this.updateEmail.bind(this);
-    }
 
-    updateCoordinator(event) {
-        this.setState({assessmentCoor: event.target.value});
-    }
-
-    updateEmail(event) {
-        this.setState({email: event.target.value});
-    }
-
-    updateSemester(event) {
-        this.setState({semester: event.target.value});
-    }
-
-    updateCourse(event) {
-        this.setState({course: event.target.value});
+    componentDidMount() {
+        this.props.getFormData(this.props.formID);
     }
 
     render() {
         return (
             <div>
+                <h4>Assessment of Student Outcome: {this.props.formData.outcome}</h4>
                 <div>
-                    <input type='text' value={this.state.assessmentCoor} onChange={this.updateCoordinator} />
-                    Assessment Coodinator:
+                    <b>Assessment Coordinator: </b>
+                    {this.props.user.f_name + ' ' + this.props.user.l_name}
                 </div>
                 <div>
-                    <input type='text' value={this.state.email} onChange={this.updateEmail}/>
-                    Email:
+                    <b>Email: </b>{this.props.course.email}
                 </div>
                 <div>
-                    <input type='text' value={this.state.semester} onChange={this.updateSemester}/>
-                    Semester/Year:
+                    <b>Course: </b>{this.props.course.course_name}
                 </div>
                 <div>
-                    <input type='text' value={this.state.course} onChange={this.updateCourse}/>
-                    Course:
+                    <b>Semester and Year: </b>
+                    {this.props.course.semester + ' ' + this.props.course.year}
                 </div>
-                <FormList list={this.props}/>
-                <FileList form={this.props}/>
+                <div></div>
+                <div>
+                    <b>Performance Indicators: </b>
+                    Some list of stuff here
+                </div>
+                <div>
+                    <b>Expected Level of Outcome Mastery: </b>
+                    <input type='text' />
+                </div>
+                <div>
+                    <b>Assignments/Questions/Tasks: </b>
+                    <textarea rows="5" cols="50" />
+                </div>
+                <div>
+                    <b>Total number of Points Possible: </b>
+                    <input type="number" />
+                </div>
+                <div>
+                    <b>Number of Students Assessed: </b>
+                    <input type="number" />
+                    <button type="button">+</button>
+                </div>
+                <div>
+                    Table of students
+                </div>
             </div>
-        )
+        );
     }
 }
 
-export default Form;
-
 /*
-    assessmentCoor: 'Arisoa',
-    email: 'Arisoa@bing.com',
-    semester: 'Spring 2018',
-    course: 'CS 4453 Artificial Intelligence',
-    performanceIndicator: 'Submits works effectively',
-    outcomeLevel: 'Emphasized',
-    assignments: 'Another question again????',
+stuff in form formData
+{
+    performanceIndicators: [
+        string
+    ]
+    expectedOutcomeMaster: string
+    pointsPossible: int
+    numberOfStudents: int
+    studentlist: [
+        {
+            studentName: string,
+            pointsObtained: int,
+            Points Percent: float, // CALCULATE THIS TO DISPLAY BASED ON pointsObtained
+            special comments: string // text area field
+        }
+    ]
+}
 */
+
+const mapStateToProps = state => {
+    return {
+        formID: state.page.formID,
+        formData: state.form.formData,
+        user: state.login.userData,
+        course: state.page.course,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getFormData: (form_id) => {
+            dispatch(getFormData(form_id));
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Form);

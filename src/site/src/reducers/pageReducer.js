@@ -9,8 +9,7 @@ import {
 function pageReducer(state = {
     currentPage: "",
     formID: null,
-    courseID: null,
-    outcome: null,
+    course: null,
 }, action) {
     switch(action.type) {
         case GOTO_LOGIN:
@@ -29,8 +28,7 @@ function pageReducer(state = {
             return Object.assign({}, state, {
                 currentPage: PAGES.FORM,
                 formID: action.formID,
-                courseID: action.courseID,
-                outcome: action.outcome,
+                course: action.course,
             });
         default:
             return state;

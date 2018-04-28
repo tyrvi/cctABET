@@ -18,6 +18,7 @@ class Accordion extends Component {
                         course_id={course.course_id}
                         courseName={course.course_name}
                         forms={course.forms}
+                        course={course}
                         />
             });
         }
