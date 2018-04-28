@@ -102,29 +102,32 @@ On error:
 
 ### GET `/users`
 
+`?user_id` - Optional. Filters users by user_id
 `?email` - Optional. Filters users by email
 
-Returns if `?email is set`:
 
-```
-{
-  username: string,
-  email: string,
-  type: int
-}
-```
-
-Otherwise returns:
+On Success:
 
 ```
 [
-  {
-    username: string,
-    email: string,
-    type: int
-  },
-  ...
+    {
+      user_id: int,
+      email: string, 
+      f_name: string, 
+      l_name: string, 
+      prefix: string, 
+      type: int
+    },
+    ...
 ]
+```
+
+On Error:
+
+```
+{
+    error: string
+}
 ```
 
 On error:
