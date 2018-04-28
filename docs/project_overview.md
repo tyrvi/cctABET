@@ -64,6 +64,6 @@ Docker has the following:
 - PostgreSQL
 
 
-
+![alt text](images/flow.png)
 
 
