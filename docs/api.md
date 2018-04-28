@@ -4,8 +4,11 @@
 Parameters:
 
 `?user_id` - Optional parameter. Filters courses by user
+`?year` - Optional parameter. Filters courses by year
+`?semester` - Optional parameter. Filters courses by semester
+`?email` - Optional parameter. Filters courses by email
 
-Returns:
+On Success:
 
 ```
 [
@@ -38,7 +41,11 @@ On error:
 Parameters:
 ```
 {
-    
+    course_id: int
+    course_name: string,
+    email: optional string,
+    semester: string,
+    year: int
 }
 ```
 
@@ -65,13 +72,15 @@ On error:
 
 
 ### POST `/courses/create`
-`?name` - The name of the new course
 
-`?email` - Optional. The email of the professor
-
-`?semester` - The semester this course is
-
-`?year` - The year the course is
+```
+ {
+    course_name: string,
+    email: optional string,
+    semester: string,
+    year: int
+}
+```
 
 On success:
 
