@@ -9,31 +9,6 @@ var knex = require('knex')({client: 'pg'});
     Returns json response with error variable set on failure
 */
 async function get_forms(req, res, next) {
-    // let form_id = req.query.form_id;
-
-    // let query;
-    // if(form_id === undefined) {
-    //     query = db.query("SELECT * FROM forms");
-    // } else {
-    //     query = db.query("SELECT * FROM forms WHERE form_id=$1", [form_id]);
-    // }
-
-
-    // query.then(result => {
-    //     if(form_id !== undefined) {
-    //         if(result.rows.length === 1) {
-    //             res.json(result.rows[0]);
-    //         } else {
-    //             res.json({error: 'Form does not exist'});
-    //         }
-    //     } else {
-    //         res.json(result.rows);
-    //     }
-    // }).catch(err => {
-    //     console.error('Error in forms: ', err);
-    //     res.json({error: 'Error fetching form data'});
-    // });
-
     let form_id = req.query.form_id;
     let course_id = req.query.course_id;
 
