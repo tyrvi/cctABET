@@ -35,18 +35,10 @@ class AccordionItem extends Component {
             );
         });
 
-        // return (
-        //     <div className="courseButtonContainer" key={this.props.key}>
-        //         <button className="courseButton" onClick={this.onCourseClick}>{this.props.courseName}</button>
-        //         <div className={this.state.isOpen ? "" : "hidden"}>
-        //             {forms}
-        //         </div>
-        //     </div>
-        // );
         return (
             <div>
                 <button className="accordion" key={this.props.key} onClick={this.onCourseClick}>
-                {this.props.courseName}
+                    {this.props.courseName}
                 </button>
                 <div className={this.state.isOpen ? "visible" : "hidden"}>
                     {forms}

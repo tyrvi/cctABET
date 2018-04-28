@@ -21,6 +21,10 @@ class CourseAdmin extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            isOpen: false,
+        }
+
         this.onCourseListClick = this.onCourseListClick.bind(this);
         this.onFilterClick = this.onFilterClick.bind(this);
         this.onCreateCourseClick = this.onCreateCourseClick.bind(this);
@@ -71,7 +75,12 @@ class CourseAdmin extends Component {
 
         return (
             <div>
-                <h3>Courses</h3>
+                <button className="accordion"
+                    onClick={event => this.setState({isOpen: !this.state.isOpen})}
+                >
+                    Courses & Forms
+                </button>
+                <div className={this.state.isOpen ? "" : "hidden"}>
                 <div>
                     <div>
                         <h4>Create Course</h4>
@@ -118,6 +127,7 @@ class CourseAdmin extends Component {
                         {courses}
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

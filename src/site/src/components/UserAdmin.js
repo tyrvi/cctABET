@@ -22,6 +22,10 @@ class UserAdmin extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            isOpen: false,
+        }
+
         this.onUserListClick = this.onUserListClick.bind(this);
         this.onFilterClick = this.onFilterClick.bind(this);
         this.onCreateUserClick = this.onCreateUserClick.bind(this);
@@ -58,8 +62,12 @@ class UserAdmin extends Component {
 
         return (
             <div>
-                <h3>Users</h3>
-                <div>
+                <button className="accordion"
+                    onClick={event => this.setState({isOpen: !this.state.isOpen})}
+                >
+                    Users
+                </button>
+                <div className={this.state.isOpen ? "" : "hidden"}>
                     <div>
                         <h4>Create User</h4>
                         <input type="text" value={this.props.userCreate.email}

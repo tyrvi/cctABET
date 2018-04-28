@@ -27,15 +27,6 @@
     content: "\2212";
 }
 
-.panel {
-    padding: 0 18px;
-    background-color: white;
-    color: #212121;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-}
-
 .visible {
     content: '\002B';
     color: #212121;
