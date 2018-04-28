@@ -3,7 +3,10 @@ import {
     FORMS_REQUEST_FAIL,
     FORMS_REQUEST_SUCCESS,
     UPDATE_FORM_ITEM_COMPLETED,
-    UPDATE_FORM_ITEM_OUTCOME
+    UPDATE_FORM_ITEM_OUTCOME,
+    ADD_FORM,
+    UPDATE_NEW_FORM_COMPLETED,
+    UPDATE_NEW_FORM_OUTCOME
 } from '../actions/formAdminActions.js';
 
 function insertItem(array, idx, item) {
@@ -59,6 +62,13 @@ function formAdminReducer(state = {
     requestMessage: null,
     requestError: null,
     forms: [],
+    newForm: {
+        form_id: null,
+        course_id: null,
+        outcome: '',
+        completed: 0,
+        data: {}
+    }
 }, action) {
     switch(action.type) {
         case REQUEST_FORMS:
@@ -95,6 +105,37 @@ function formAdminReducer(state = {
                     action.idx,
                     action.outcome
                 ),
+            });
+        case ADD_FORM:
+            return Object.assign({}, state, {
+                forms: appendItem(state.forms, action.form),
+                newForm: {
+                    form_id: null,
+                    course_id: null,
+                    outcome: '',
+                    completed: 0,
+                    data: {}
+                }
+            });
+        case UPDATE_NEW_FORM_COMPLETED:
+            return Object.assign({}, state, {
+                newForm: {
+                    form_id: null,
+                    course_id: null,
+                    outcome: state.newForm.outcome,
+                    completed: action.completed,
+                    data: {}
+                }
+            });
+        case UPDATE_NEW_FORM_OUTCOME:
+            return Object.assign({}, state, {
+                newForm: {
+                    form_id: null,
+                    course_id: null,
+                    outcome: action.outcome,
+                    completed: state.newForm.completed,
+                    data: {}
+                }
             });
         default:
             return state;

@@ -59,3 +59,27 @@ export function updateFormItemCompleted(idx, completed) {
         idx
     }
 }
+
+export const UPDATE_NEW_FORM_OUTCOME = 'UPDATE_NEW_FORM_OUTCOME';
+export function updateNewFormOutcome(outcome) {
+    return {
+        type: UPDATE_NEW_FORM_OUTCOME,
+        outcome
+    }
+}
+
+export const UPDATE_NEW_FORM_COMPLETED = 'UPDATE_NEW_FORM_COMPLETED';
+export function updateNewFormCompleted(completed) {
+    return {
+        type: UPDATE_NEW_FORM_COMPLETED,
+        completed
+    }
+}
+
+export const ADD_FORM = 'ADD_FORM';
+export function addForm(form) {
+    return {
+        type: ADD_FORM,
+        form
+    }
+}
