@@ -1,11 +1,15 @@
 
-## Tools
+## Stack
 
 - Docker
 - PostgresQL v9.5
 - Trello
 - Slack
 - Git/GitHub
+- Postgres
+- React
+- NodeJs
+- .editorconfig
 
 ## Libraries
 
@@ -52,9 +56,14 @@ git commit -m 'YOUR_COMMENT_HERE`
 ```
 
 # Docker
-Docker needs to have the following:
+Docker has the following:
 
 - Ubuntu server 16.04 LTS
 - Apache
 - node v8.9.4 LTS (includes npm)
 - PostgreSQL
+
+
+
+
+
