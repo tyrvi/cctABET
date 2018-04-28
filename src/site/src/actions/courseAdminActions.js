@@ -172,9 +172,7 @@ export function getCourseList(email = null, semester = null, year = null) {
     let e = email ? 'email=' + email : '';
     let s = semester ? 'semester=' + semester : '';
     let y = year ? 'year=' + year : '';
-
     let query = e + '&' + s + '&' + y;
-    console.log(query);
 
     return dispatch => {
         dispatch(requestCourseList(query));

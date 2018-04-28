@@ -51,8 +51,6 @@ export function getFormData(form_id) {
 }
 
 export function updateFormData(form) {
-    console.log("THAIS IS DANISH!");
-    console.log(form);
     let body = form;
 
     return dispatch => {
