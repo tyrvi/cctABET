@@ -125,7 +125,6 @@ function userListReducer(state ={
                 requestError: null,
             });
         case CREATE_USER_SUCCESS:
-            console.log(action);
             return Object.assign({}, state, {
                 isDoingRequest: false,
                 requestMessage: action.response.message,

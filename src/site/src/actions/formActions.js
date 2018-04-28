@@ -64,7 +64,6 @@ export function updateFormData(form) {
             body: JSON.stringify(body),
         }).then(res => res.json())
             .then(json => {
-                console.log(json);
                 if (!json.error) {
                     dispatch(formDataSuccess(json));
                 } else {

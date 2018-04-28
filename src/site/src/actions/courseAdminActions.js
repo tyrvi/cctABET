@@ -221,7 +221,7 @@ export function createCourse(courseCreate) {
 
 export function updateCourse(course) {
     let body = course;
-    console.log(body);
+
     return dispatch => {
         dispatch(requestUpdateCourse(body));
         return fetch('courses/update', {

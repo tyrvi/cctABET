@@ -17,7 +17,6 @@ class AccordionItem extends Component {
     }
 
     onCourseClick() {
-        console.log(this.state.isOpen);
         this.setState({isOpen: !this.state.isOpen})
     }
 

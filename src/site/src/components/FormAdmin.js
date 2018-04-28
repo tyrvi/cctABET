@@ -18,20 +18,15 @@ class FormAdmin extends Component {
     }
 
     onOutcomeChange(idx, event) {
-        console.log('idx: ', idx, 'event: ', event.target.value);
         this.props.updateOutcome(idx, event.target.value);
     }
 
     onCompletedChange(idx, event) {
-        console.log('idx: ', idx, 'event: ', event.target.checked);
-
         let completed = event.target.checked ? 1 : 0;
         this.props.updateCompleted(idx, completed);
     }
 
     deleteForm(idx, form_id, event) {
-        // console.log(form_id);
-
         if (form_id !== null) {
             this.props.deleteListForm(form_id);
             this.props.deleteForm(idx);
@@ -42,8 +37,6 @@ class FormAdmin extends Component {
     }
 
     onAddForm() {
-        console.log('adding form to list', this.props.newForm);
-
         let form = {
             form_id: null,
             course_id: this.props.course_id,
@@ -106,7 +99,6 @@ const mapDispatchToProps = dispatch => {
             dispatch(updateFormItemOutcome(idx, outcome));
         },
         updateNewCompleted: (completed) => {
-            console.log('blah', completed);
             dispatch(updateNewFormCompleted(completed));
         },
         updateNewOutcome: (outcome) => {

@@ -42,8 +42,6 @@ class Course extends Component {
 
     onDelete() {
         // TODO: add confirmation of course deletion
-        console.log("course being deleted");
-
         this.props.deleteCourse(this.props.course.course_id);
         this.props.getCourseList(
             this.props.filter.email,
@@ -54,8 +52,6 @@ class Course extends Component {
 
     onUpdate() {
         // TODO: add confirmation of course update
-        console.log("course being updated");
-
         let course = {
             course_id: this.props.course.course_id,
             course_name: this.state.course_name,
@@ -94,14 +90,12 @@ class Course extends Component {
     }
 
     cancelEditForms() {
-        console.log('canceling form metadata');
         this.props.cancelForms();
 
         this.setState({editForms: false})
     }
 
     submitEditForms() {
-        console.log('submitting forms metadata');
         this.props.deleteMarkedForms(this.props.markedForms);
         this.props.submitForms(this.props.forms);
         this.setState({editForms: false})

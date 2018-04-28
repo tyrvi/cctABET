@@ -34,7 +34,6 @@ class User extends Component {
 
     onUpdate() {
         // TODO: add confirmation of user update
-        console.log("user being updated");
         let user = {
             user_id: this.state.user_id,
             email: this.state.email,

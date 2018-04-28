@@ -125,7 +125,6 @@ export function massUpdateFormsFail(response) {
 }
 
 export function massUpdateForms(forms) {
-    console.log(forms);
     let body = forms;
 
     return dispatch => {

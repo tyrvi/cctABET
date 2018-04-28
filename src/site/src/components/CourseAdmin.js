@@ -52,7 +52,6 @@ class CourseAdmin extends Component {
 
     onCreateCourseClick() {
         // add actions for creating a course
-        console.log('course being created');
         this.props.createCourse(this.props.courseCreate);
         this.props.getCourseList(
             this.props.filter.email,

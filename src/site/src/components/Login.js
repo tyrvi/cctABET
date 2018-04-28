@@ -18,8 +18,6 @@ class Login extends Component {
     }
 
     onLoginClick() {
-        console.log("Login attempt");
-
         // don't authenticate if user or pass is not provided
         if (!this.state.email || !this.state.pass) {
             this.setState({ retry: true });
